@@ -7,11 +7,11 @@ plugins {
 spotless {
     kotlin {
         target("core/engine/src/**/*.kt")
-        ktlint(libs.versions.ktlint.get()).editorConfigOverride(mapOf("ktlint_code_style" to "kotlin_official"))
+        ktlint(libs.versions.ktlint.get()).editorConfigOverride(mapOf("ktlint_code_style" to "intellij_idea"))
     }
     kotlinGradle {
         target("*.gradle.kts", "core/engine/build.gradle.kts")
-        ktlint(libs.versions.ktlint.get()).editorConfigOverride(mapOf("ktlint_code_style" to "kotlin_official"))
+        ktlint(libs.versions.ktlint.get()).editorConfigOverride(mapOf("ktlint_code_style" to "intellij_idea"))
     }
 }
 
