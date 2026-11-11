@@ -1,0 +1,15 @@
+[versions]
+kotlin = "2.4.21"
+kotest = "6.2.6"
+spotless = "8.11.0"
+ktlint = "1.8.0"
+
+[libraries]
+kotest-runner = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
+kotest-assertions = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
+kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
+junit-launcher = { module = "org.junit.platform:junit-platform-launcher", version = "1.14.1" }
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
