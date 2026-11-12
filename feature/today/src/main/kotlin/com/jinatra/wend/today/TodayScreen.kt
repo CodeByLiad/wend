@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
@@ -165,7 +166,14 @@ private fun Header(state: TodayUiState, time: TimeFormat, actions: TodayActions)
         }
         if (state.canUndo) {
             // Undo stays reachable after the snackbar has gone, for the rest of the day.
-            QuietButton(stringResource(R.string.action_undo_last), actions::undo, Modifier.align(Alignment.End))
+            QuietButton(
+                stringResource(R.string.action_undo_last),
+                actions::undo,
+                // The button's own padding hangs into the gutter so its text lines up with the date.
+                Modifier
+                    .align(Alignment.End)
+                    .offset(x = Space.lg),
+            )
         } else {
             Spacer(Modifier.height(Space.md))
         }
@@ -228,7 +236,7 @@ private fun Stats(model: TodayModel) {
         StatRow(
             Modifier
                 .height(IntrinsicSize.Min)
-                .padding(vertical = Space.lg),
+                .padding(top = Space.lg),
         ) {
             StatColumn(stringResource(R.string.stat_done), model.done.toString(), Modifier.weight(1f))
             VerticalHairline()
