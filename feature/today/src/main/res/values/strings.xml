@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="today_wordmark">Wend</string>
+    <string name="today_sample_label">Sample day · %1$s</string>
+
+    <string name="hero_left_of">min left of</string>
+    <string name="hero_over_on">min over on</string>
+    <string name="hero_until">min until</string>
+    <string name="hero_done_count">done today</string>
+    <string name="hero_done_body">That\'s the plan for today. The rest is yours.</string>
+    <string name="hero_next">Next: %1$s at %2$s</string>
+    <string name="hero_a11y_left">%1$d minutes left of %2$s</string>
+    <string name="hero_a11y_over">%2$s is %1$d minutes over</string>
+    <string name="hero_a11y_until">%1$d minutes until %2$s</string>
+
+    <string name="stat_done">Done</string>
+    <string name="stat_skipped">Skipped</string>
+    <string name="stat_left">Left</string>
+
+    <string name="part_morning">Morning</string>
+    <string name="part_afternoon">Afternoon</string>
+    <string name="part_evening">Evening</string>
+    <string name="anchor_wake">Wake up</string>
+    <string name="anchor_bedtime">Bedtime</string>
+    <string name="gap_free">%1$s free</string>
+
+    <string name="duration_min">%1$d min</string>
+    <string name="duration_h">%1$d h</string>
+    <string name="duration_h_min">%1$d h %2$d min</string>
+
+    <string name="label_now">Now</string>
+    <string name="label_done">Done</string>
+    <string name="label_skipped">Skipped</string>
+    <string name="label_fixed">Fixed</string>
+    <string name="label_optional">Optional</string>
+    <string name="meta_separator">%1$s · %2$s</string>
+
+    <string name="off_plan_title">Off today\'s plan</string>
+    <string name="off_missed">Missed</string>
+    <string name="off_dropped">Dropped to fit</string>
+    <string name="off_unplaced">Didn\'t fit</string>
+    <string name="action_put_back">Put back</string>
+
+    <string name="action_running_late">I\'m running late</string>
+    <string name="action_rebuild">Rebuild my day</string>
+    <string name="action_mark_done">Mark done</string>
+    <string name="action_more">More actions</string>
+    <string name="action_undo_last">Undo last change</string>
+
+    <string name="late_title">How late are you?</string>
+    <string name="late_body">Fixed plans and what\'s done stay put. Everything else moves to fit.</string>
+    <string name="late_option">%1$d minutes</string>
+    <string name="late_unit">Minutes</string>
+
+    <string name="block_start">Start now</string>
+    <string name="block_later_30">Move 30 min later</string>
+    <string name="block_later_60">Move 1 hour later</string>
+    <string name="block_ran_over_15">Ran over by 15 min</string>
+    <string name="block_ran_over_30">Ran over by 30 min</string>
+    <string name="block_skip">Skip today</string>
+    <string name="block_fixed">Keep it at this time</string>
+
+    <string name="review_title_ok">Here\'s the new plan</string>
+    <string name="review_title_infeasible">Not everything fits</string>
+    <string name="review_title_conflict">Some plans overlap</string>
+    <string name="review_body_ok">Nothing changes until you apply it.</string>
+    <string name="review_body_infeasible">Apply this and choose what to let go, or let the evening run past bedtime.</string>
+    <string name="review_body_conflict">Two plans that can\'t move overlap. Move or skip one of them first.</string>
+    <string name="review_apply">Apply changes</string>
+    <string name="review_keep">Keep current plan</string>
+    <string name="review_past_bedtime">Allow past bedtime</string>
+    <string name="review_note">Every change can be undone.</string>
+    <string name="review_a11y_was">was %1$s</string>
+    <string name="review_a11y_now">now %1$s</string>
+
+    <string name="effect_added">Added</string>
+    <string name="effect_restored">Restored</string>
+    <string name="effect_dropped">Dropped for today</string>
+    <string name="effect_unplaced">Doesn\'t fit today</string>
+    <string name="effect_missed">Marked missed</string>
+    <string name="effect_skipped">Skipped</string>
+    <string name="effect_extended">Runs until %1$s</string>
+    <string name="effect_moved_shrunk">Moves, shortened to %1$s</string>
+    <string name="effect_moved">Moves</string>
+    <string name="effect_shrunk">Shortened to %1$s</string>
+    <string name="effect_made_fixed">Stays at this time</string>
+    <string name="effect_retried">Back on the plan</string>
+
+    <string name="reason_late_wake">Because the day started later.</string>
+    <string name="reason_overrun">Because it ran over.</string>
+    <string name="reason_displaced_by">To make room for %1$s.</string>
+    <string name="reason_displaced">To make room.</string>
+    <string name="reason_follows">So it still comes after %1$s.</string>
+    <string name="reason_follows_plain">So it still follows what it depends on.</string>
+    <string name="reason_dependency_shrink">Shortened so %1$s still fits after it.</string>
+    <string name="reason_dependency_shrink_plain">Shortened so what follows still fits.</string>
+    <string name="reason_shrunk_to_fit">Shortened toward its minimum to fit.</string>
+    <string name="reason_dropped_to_fit">It\'s optional, so it gives way to higher priorities.</string>
+    <string name="reason_no_room">There\'s no room left before bedtime.</string>
+    <string name="reason_window_passed">The time it could happen has passed.</string>
+    <string name="reason_fixed_expired">Its time has passed.</string>
+    <string name="reason_past_bedtime">It runs past bedtime, as you allowed.</string>
+    <string name="reason_bedtime_changed">Because bedtime changed.</string>
+    <string name="reason_user_move">You moved it.</string>
+    <string name="reason_user_skip">You skipped it.</string>
+    <string name="reason_user_add">You added it.</string>
+    <string name="reason_set_fixed">You kept it at this time.</string>
+    <string name="reason_retried">You put it back.</string>
+    <string name="reason_undo">Undone.</string>
+
+    <string name="msg_done">%1$s done</string>
+    <string name="msg_started">Started %1$s</string>
+    <string name="msg_skipped">Skipped %1$s</string>
+    <string name="msg_updated">Plan updated</string>
+    <string name="msg_undone">Change undone</string>
+    <string name="msg_nothing">Your plan already fits</string>
+    <string name="msg_no_time">There\'s no time left today to rebuild.</string>
+    <string name="msg_undo">Undo</string>
+    <string name="error_generic">That change isn\'t possible right now.</string>
+    <string name="error_overlaps_locked">That time overlaps a fixed plan or something already done.</string>
+    <string name="error_outside_window">That\'s outside the time this can happen.</string>
+    <string name="error_in_the_past">That time has already passed.</string>
+    <string name="error_past_bedtime">That would run past bedtime.</string>
+    <string name="error_dependency">That would put it after something that has to follow it.</string>
+    <string name="error_invalid_target">That can\'t be changed right now.</string>
+</resources>
