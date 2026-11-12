@@ -12,5 +12,6 @@ Link any approved specification change. Include manual verification steps where 
 - [ ] `./gradlew build`
 - [ ] `./gradlew test`
 - [ ] `./gradlew :core:engine:test`
+- [ ] `./gradlew lint`
 - [ ] `./gradlew spotlessCheck`
 - [ ] Relevant docs updated when behavior changes

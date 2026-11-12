@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Wend Benchmark</string>
+    <string name="title">Phase 0 · Model benchmark</string>
+    <string name="description">Import a compatible local model, then run ten minutes of inference. Results stay on this device until you export them.</string>
+    <string name="runtime_litert_cpu">LiteRT-LM · CPU</string>
+    <string name="runtime_litert_gpu">LiteRT-LM · GPU</string>
+    <string name="runtime_llama">llama.cpp · CPU</string>
+    <string name="import_model">Import local model</string>
+    <string name="model_ready">Model ready · %1$d MB</string>
+    <string name="model_help">LiteRT-LM requires a .litertlm model; llama.cpp requires a .gguf model. Import the matching format before running.</string>
+    <string name="start">Run ten-minute benchmark</string>
+    <string name="stop">Stop benchmark</string>
+    <string name="export">Export result as JSON</string>
+    <string name="loading">Importing or loading model…</string>
+    <string name="progress">Running · %1$d / 600 seconds</string>
+    <string name="stopping">Stopping after the current native operation…</string>
+    <string name="completed">Completed</string>
+    <string name="cancelled">Cancelled · partial measurement</string>
+    <string name="failed">Model operation failed. Check the file format, available RAM and selected runtime.</string>
+    <string name="import_failed">Could not import the file. Check available storage and file access.</string>
+    <string name="export_failed">Could not save the result.</string>
+    <string name="result">Load: %1$.2f seconds\nDecode speed: %2$s tokens/second\nSampled peak PSS: %3$d MB\nPeak battery temperature: %4$s °C\nBattery drain: %5$s percentage points\nCompleted generations: %6$d</string>
+    <string name="unavailable">Unavailable</string>
+    <string name="measurement_note">RAM is sampled once per second. Temperature is the battery sensor, not CPU or surface temperature. Charging or unsupported sensors make battery drain unavailable. Keep this screen open; leaving it cancels the run.</string>
+    <string name="benchmark_prompt">List practical ways to organize a busy day.</string>
+</resources>
