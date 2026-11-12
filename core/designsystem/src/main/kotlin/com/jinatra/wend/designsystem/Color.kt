@@ -25,8 +25,8 @@ internal object Night {
     val inkSecondary = Color(0xFFB5ABA0)
     val rule = Color(0xFF3B332D)
     val track = Color(0xFF2B2420)
-    val crimson = Color(0xFFF07A8A)
-    val onCrimson = Color(0xFF3D0710)
+    val crimson = Color(0xFFE5485F)
+    val onCrimson = Color(0xFF1A0408)
     val crimsonContainer = Color(0xFF5C1522)
     val onCrimsonContainer = Color(0xFFFFD9DC)
 }

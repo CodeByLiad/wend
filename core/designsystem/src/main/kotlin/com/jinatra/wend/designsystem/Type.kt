@@ -5,6 +5,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 
@@ -27,7 +28,7 @@ const val TABULAR = "tnum, lnum"
 
 internal val WendTypography = Typography(
     // The hero numeral.
-    displayLarge = TextStyle(fontFamily = SerifDisplay, fontWeight = FontWeight.Bold, fontSize = 112.sp, lineHeight = 104.sp, letterSpacing = (-0.03).em, fontFeatureSettings = "lnum"),
+    displayLarge = TextStyle(fontFamily = SerifDisplay, fontWeight = FontWeight.Bold, fontSize = 112.sp, lineHeight = 96.sp, letterSpacing = (-0.03).em, fontFeatureSettings = "lnum", lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Bottom, LineHeightStyle.Trim.Both)),
     // Stat numerals.
     displayMedium = TextStyle(fontFamily = SerifDisplay, fontWeight = FontWeight.Bold, fontSize = 44.sp, lineHeight = 48.sp, letterSpacing = (-0.02).em, fontFeatureSettings = "lnum"),
     displaySmall = TextStyle(fontFamily = SerifDisplay, fontWeight = FontWeight.Bold, fontSize = 34.sp, lineHeight = 40.sp, letterSpacing = (-0.015).em),

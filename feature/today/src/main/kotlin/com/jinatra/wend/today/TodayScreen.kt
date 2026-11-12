@@ -39,6 +39,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.AlignmentLine
+import androidx.compose.ui.layout.FirstBaseline
+import androidx.compose.ui.layout.LastBaseline
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
@@ -187,7 +191,10 @@ private fun HeroBlock(model: TodayModel, time: TimeFormat) {
         Row {
             Text(
                 numeral,
-                modifier = Modifier.alignByBaseline(),
+                // Cut the numeral's descent so the activity sits tight under it, as one phrase.
+                modifier = Modifier
+                    .alignByBaseline()
+                    .trimBelowBaseline(Space.sm),
                 style = MaterialTheme.typography.displayLarge.cappedScale(1.25f),
                 color = MaterialTheme.colorScheme.primary,
                 maxLines = 1,
@@ -229,14 +236,13 @@ private fun Stats(model: TodayModel) {
             VerticalHairline()
             StatColumn(stringResource(R.string.stat_left), model.left.toString(), Modifier.weight(1f))
         }
-        Hairline()
     }
 }
 
 private fun LazyListScope.timeline(model: TodayModel, time: TimeFormat, actions: TodayActions) {
     for (section in model.sections) {
         item(key = "part-${section.part}") {
-            Column(Modifier.padding(top = Space.section, bottom = Space.sm)) {
+            Column(Modifier.padding(top = Space.lg, bottom = Space.sm)) {
                 SectionHeading(stringResource(section.part.label))
             }
         }
@@ -293,8 +299,8 @@ private fun AnchorRow(item: TimelineItem.Anchor, time: TimeFormat) {
         TimeCell(time.format(item.time))
         Text(
             stringResource(if (item.kind == AnchorKind.WAKE) R.string.anchor_wake else R.string.anchor_bedtime),
-            style = MaterialTheme.typography.titleSmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.onBackground,
         )
     }
 }
@@ -311,7 +317,7 @@ private fun GapRow(item: TimelineItem.Gap, time: TimeFormat) {
         Spacer(Modifier.width(timeColumn()))
         Text(
             stringResource(R.string.gap_free, durationText(item.minutes)),
-            style = MaterialTheme.typography.bodyLarge.copy(fontFamily = SerifText),
+            style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
@@ -348,7 +354,7 @@ private fun BlockRow(block: Block, isNow: Boolean, time: TimeFormat, actions: To
                 .weight(1f)
                 .alignByBaseline(),
         ) {
-            Text(block.title, style = MaterialTheme.typography.bodyLarge, color = ink, maxLines = 2, overflow = TextOverflow.Ellipsis)
+            Text(block.title, style = MaterialTheme.typography.bodyLarge.copy(fontFamily = SerifText), color = ink, maxLines = 2, overflow = TextOverflow.Ellipsis)
             Text(meta(block), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
         status(block, isNow)?.let { (label, color) ->
@@ -383,7 +389,7 @@ private fun status(block: Block, isNow: Boolean): Pair<String, Color>? = when {
 private fun LazyListScope.offPlan(blocks: List<Block>, time: TimeFormat, actions: TodayActions) {
     if (blocks.isEmpty()) return
     item(key = "off-plan") {
-        Column(Modifier.padding(top = Space.section, bottom = Space.sm)) {
+        Column(Modifier.padding(top = Space.lg, bottom = Space.sm)) {
             SectionHeading(stringResource(R.string.off_plan_title))
         }
     }
@@ -477,13 +483,31 @@ private fun messageText(outcome: Outcome): String? = when (outcome) {
     is Outcome.NeedsApproval -> null
 }
 
-/** Lets display type grow with the system font scale only up to [max], so the numeral never breaks the line. */
+/**
+ * Lets display type grow with the system font scale up to [max] times its 1x size, measured on
+ * the resolved pixel size, since Android 14 scales large text non-linearly. Never smaller than 1x.
+ */
 @Composable
 internal fun TextStyle.cappedScale(max: Float): TextStyle {
-    val scale = LocalDensity.current.fontScale
-    if (scale <= max) return this
-    val factor = max / scale
-    return copy(fontSize = fontSize.times(factor), lineHeight = lineHeight.timesOrSame(factor))
+    val density = LocalDensity.current
+    val basePx = fontSize.value * density.density
+    val resolvedPx = with(density) { fontSize.toPx() }
+    val targetPx = basePx * max
+    if (resolvedPx <= targetPx) return this
+    val factor = targetPx / resolvedPx
+    return with(density) {
+        copy(
+            fontSize = targetPx.toSp(),
+            lineHeight = if (lineHeight == TextUnit.Unspecified) lineHeight else (lineHeight.toPx() * factor).toSp(),
+        )
+    }
 }
 
-private fun TextUnit.timesOrSame(factor: Float): TextUnit = if (this == TextUnit.Unspecified) this else times(factor)
+/** Cuts a text's height to [below] under its last baseline, keeping its baselines for alignment. */
+private fun Modifier.trimBelowBaseline(below: Dp): Modifier = layout { measurable, constraints ->
+    val placeable = measurable.measure(constraints)
+    val first = placeable[FirstBaseline]
+    val last = placeable[LastBaseline]
+    val height = if (last == AlignmentLine.Unspecified) placeable.height else minOf(placeable.height, last + below.roundToPx())
+    layout(placeable.width, height, mapOf(FirstBaseline to first, LastBaseline to last)) { placeable.place(0, 0) }
+}

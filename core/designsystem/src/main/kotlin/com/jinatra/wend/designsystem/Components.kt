@@ -47,15 +47,20 @@ fun Wordmark(text: String, modifier: Modifier = Modifier) {
     )
 }
 
-/** A serif section heading, marked as a heading for TalkBack. */
+/** A serif section heading under a hairline rule, marked as a heading for TalkBack. */
 @Composable
 fun SectionHeading(text: String, modifier: Modifier = Modifier) {
-    Text(
-        text = text,
-        modifier = modifier.semantics { heading() },
-        style = MaterialTheme.typography.headlineMedium,
-        color = MaterialTheme.colorScheme.onBackground,
-    )
+    Column(modifier) {
+        Hairline()
+        Text(
+            text = text,
+            modifier = Modifier
+                .padding(top = Space.lg)
+                .semantics { heading() },
+            style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.onBackground,
+        )
+    }
 }
 
 /** A label over a large serif numeral, used in rows of three split by vertical hairlines. */
