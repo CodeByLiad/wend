@@ -12,3 +12,6 @@ captures/
 *.keystore
 .env
 *.hprof
+
+# Impeccable review captures (regenerated per review)
+.impeccable/review/

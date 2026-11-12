@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Placeholder mark (three timetable rules) until Jinatra supplies the Wend logo. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path android:fillColor="#F7F3EC" android:pathData="M36,40h36v3h-36z" />
+    <path android:fillColor="#F7F3EC" android:pathData="M36,52.5h36v3h-36z" />
+    <path android:fillColor="#F7F3EC" android:pathData="M36,65h22v3h-22z" />
+</vector>

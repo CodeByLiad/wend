@@ -15,3 +15,4 @@ rootProject.name = "wend"
 include(":core:engine")
 include(":core:ai", ":tools:benchmark")
 include(":tools:eval")
+include(":core:designsystem", ":feature:today", ":app")
