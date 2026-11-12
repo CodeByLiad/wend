@@ -1,13 +1,15 @@
 # Wend handoff
 
-Updated: 2026-11-12 by Codex. This is shared working context for Claude Code and
+Updated: 2026-11-13 by Claude Code (overnight, unattended). This is shared working context for Claude Code and
 Codex. Read `AGENTS.md` fully first. The engine spec decides engine behaviour;
 the Phase 0 PRD decides scope. Verify this snapshot against Git before acting.
 
 ## Repository and branch
 
 - Public repository: https://github.com/CodeByLiad/wend
-- Current working branch: `feat/eval`.
+- Current working branch: `feat/design-system` (stacked on `feat/eval`), for the
+  owner-requested UI prototype. Evaluation follow-up still belongs on `feat/eval`.
+- PR #3 — `feat/design-system` into `feat/eval` (see the session note below).
 - `main` contains the completed engine work, through `37f1f58`.
 - PR #1: https://github.com/CodeByLiad/wend/pull/1 — `feat/benchmark` into `main`.
 - PR #2: https://github.com/CodeByLiad/wend/pull/2 — `feat/eval` into `feat/benchmark`.
@@ -158,6 +160,75 @@ Normal connected tests skip costly model inference without explicit arguments.
 5. The Phase 0 companion probe, two-week people study and final five-question
    feasibility report remain outstanding. Do not start Phase 1 features.
 
+## UI prototype (2026-11-13, `feat/design-system`)
+
+The owner asked (2026-11-13, before going offline) for UI work in an editorial
+minimalism style following their sample screen (`Sample/08-stats.png`, kept
+outside the repo), using Mobbin for UX references and the Impeccable skill for
+UI, unattended and without questions. This is design work ahead of Phase 1 that
+Phase 0's PRD otherwise excludes; it was done because the owner asked for it.
+It stays a prototype: no database, onboarding, reminders, settings or AI.
+
+What was built:
+
+- `:core:designsystem`: `WendTheme` (light paper and dark night schemes, one
+  crimson accent), Source Serif 4 display/text cuts bundled as Latin-subset
+  static TTFs (OFL, licence in the module assets), platform sans for body,
+  spacing steps, `Hairline`, `SectionHeading`, `StatColumn`, buttons.
+- `:feature:today`: Today screen. Hero numeral = minutes left of the current
+  activity (or until the next one), Done/Skipped/Left stats, Morning/Afternoon/
+  Evening timeline with free gaps and wake/bedtime anchors, off-plan list with
+  "Put back" (retry). Tap marks done; long press opens skip, move later, ran
+  over, start, keep-at-this-time. "I'm running late" maps to `overrun` when a
+  block is in progress, `late_wake` before the day starts, otherwise
+  `rebuild_day` at now + delay. Proposals that change more than the target open
+  a review sheet with before/after times and a plain-language reason built from
+  `Reason`/`causeBlockId` (no AI); INFEASIBLE offers "Allow past bedtime".
+  Undo goes through the engine's `undo` command; it stays available in the
+  header after the snackbar. All logic lives in pure `TodayController` and
+  `buildTodayModel`, with 20 JVM tests.
+- `:app`: `com.jinatra.wend` shell with `foss` and `gms` flavours, no
+  INTERNET permission, backup disabled, placeholder launcher icon (three rules on
+  crimson) until Jinatra supplies the Wend logo.
+- Product and design records: `PRODUCT.md` (inferred from the PRD, labelled),
+  `.impeccable/surfaces/feature-today.md` (direction contract), `DESIGN.md` and
+  `.impeccable/design.json` (derived from the built system), screenshots in
+  `docs/design/today/`.
+
+Deliberate prototype limits and deviations to review:
+
+- In-memory only: the sample day is synthetic and the change log is a list in
+  `TodayController`. Hard rule 3 (ChangeLog) is honoured in memory; `:core:data`
+  must own the persistent ChangeLog in Phase 1.
+- The prototype clock starts at 10:25 and then runs in real time so the sample
+  day reads mid-morning. Replace with the system clock with real data.
+- No Hilt yet (manual ViewModel factory); the AGENTS stack lists Hilt for the app.
+- Marking done/started is a status-only edit applied outside the engine (no times
+  change), then logged; confirm this matches the intended reading of hard rule 1.
+- Bottom navigation is omitted because no other destinations exist yet.
+- R8 is not enabled; release APK is about 23.5 MB unminified.
+
+Verification on this machine (Windows, JDK 21 Temurin 21.0.13 in `~/.jdks`,
+emulator `cueplay_pixel`, API 35, x86_64, software rendering):
+
+- `./gradlew build test :core:engine:test lint spotlessCheck` passes. 126 JVM
+  tests: the existing 106 plus 20 new Today tests. No engine example changed.
+- Driven on the emulator: running late → review → apply → snackbar undo; mark
+  done; persistent undo after the snackbar; dark theme; system font scale 2.0.
+  Emulator evidence only: gestures, performance and the 500 ms render target need
+  a real phone.
+- Impeccable finish review: two rounds, the unattended budget. Round 1 found 7
+  material issues; round 2 scored 6 resolved, and seed recording partial, and
+  found two small regressions (undo alignment, stat spacing). The seed was then
+  recorded (`seed:22b0b40a26e1757e`, roll not adopted because the owner pinned
+  the world) and both regressions fixed and recaptured, but no third reviewer
+  verdict was run. Open ceiling ideas from the review: a day-shape track (crimson
+  elapsed fill) echoing the sample's bars; captures of the Up-next, Running-over,
+  Day-done heroes, the long-press sheet, skipped and off-plan rows.
+
+Next steps for this branch: owner review of the look and the deviations above;
+then fold into Phase 1 planning (`:core:data` ChangeLog, Hilt, onboarding).
+
 ## Session handback
 
 Before the Saturday handback or any agent switch, update this file with what
@@ -175,3 +246,7 @@ implementation commits `928a6d0`, `6bd6437`, `0b4cff6`, `5f47cfa`, `433bb6a`.
 All required software checks pass. One physical pilot completed, a second
 attempt stopped at import setup, and further device testing was deferred by
 the owner for a Claude Code handoff. Keep the frozen gold data unchanged.
+
+2026-11-13 — Claude Code: built the owner-requested editorial UI prototype on
+`feat/design-system` (see "UI prototype" above). Device work from "Next work"
+was not possible overnight (no phone); the evaluation items there are unchanged.
