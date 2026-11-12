@@ -1,7 +1,8 @@
 # Contributing to Wend
 
-Wend is in Phase 0. This repository currently implements the pure Kotlin scheduling
-engine only. Android screens, storage, reminders and AI belong to separate tasks.
+Wend is in Phase 0. This repository implements the pure Kotlin scheduling engine
+and a bare Android model benchmark. The production planner UI, storage, reminders,
+AI planner and companion belong to separate tasks.
 
 Before working, read [AGENTS.md](AGENTS.md),
 [the engine specification](docs/engine-spec.md), and Phase 0 of [the PRD](docs/PRD.md).
@@ -20,11 +21,11 @@ raise the discrepancy before implementing a different behavior.
 6. Run the checks below and describe acceptance criteria covered in the pull request.
 
 ```sh
-./gradlew build test :core:engine:test spotlessCheck
+./gradlew build test :core:engine:test lint spotlessCheck
 ```
 
-JDK 21 is required. On Windows use `.\gradlew.bat`. Format with
-`./gradlew spotlessApply`. Android lint is deferred until an Android module exists.
+JDK 21 and the Android SDK/NDK are required; see the benchmark protocol for versions.
+On Windows use `.\gradlew.bat`. Format with `./gradlew spotlessApply`.
 
 Property-test failures include a random seed and a reduced input. Include those
 details when reporting a scheduling bug, together with the expected rule and output.
