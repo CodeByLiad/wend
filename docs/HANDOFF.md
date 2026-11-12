@@ -13,7 +13,8 @@ the Phase 0 PRD decides scope. Verify this snapshot against Git before acting.
 - PR #2: https://github.com/CodeByLiad/wend/pull/2 — `feat/eval` into `feat/benchmark`.
 - These PRs are stacked and open. `feat/eval` contains all current prototypes.
   Preserve the stack when updating branches; inspect current PR state first.
-- Last implementation commit before this handoff: `433bb6a`.
+- Last implementation commit before this handoff: `433bb6a`; initial shared
+  handoff commit: `0a7532f`.
 
 At home, clone the working branch before starting Claude Code:
 
@@ -61,10 +62,15 @@ and this file; `AGENTS.md` also tells Codex to read this handoff.
 - A complete 150-case exploratory LiteRT GPU run failed the confirmed accuracy
   and latency targets. An initial llama.cpp full-prompt run was stopped after
   repeated 30-second timeouts and remains partial, not an accuracy result.
-- Current physical benchmark status: the first unplugged ten-minute llama.cpp
-  CPU pilot completed successfully and its private report was retained.
-  Two LiteRT pilots and final phone cleanup remain pending. Update
-  this paragraph after each run and before pushing the handoff.
+- Device testing stopped for the day at the owner's request. The unplugged
+  ten-minute llama.cpp CPU pilot completed successfully; its private report
+  was retained. The LiteRT CPU attempt failed before inference: the UI test
+  found no imported model at its `assertNotNull`, so no timed result exists.
+  The LiteRT GPU ten-minute pilot was not started. Do not report either as a
+  measured performance failure. Phone cleanup is verified: the AI test package,
+  benchmark app and benchmark test package were uninstalled; their private
+  model copies and explicit temporary staging files were removed. No temporary
+  test package remains installed.
 
 Private profiles and raw measurements are in ignored local `.gradle/evaluation`
 on the testing workstation. Model binaries are in ignored `.gradle/models`.
@@ -139,7 +145,11 @@ Normal connected tests skip costly model inference without explicit arguments.
 
 ## Next work
 
-1. Finish pending device pilots and cleanup, updating the status above.
+1. Resume device work only when the owner makes a phone available again.
+   Investigate/retry the LiteRT import setup, then finish CPU/GPU pilots.
+   The source passed its pinned SHA check and storage was sufficient. The
+   cause of the missing imported model is not established; inspect lifecycle
+   cancellation/foreground state and add useful test diagnostics if needed.
 2. Review the stacked PRs and verify their latest checks before changing bases.
 3. Run corrected-prompt comparative evaluations and test further compatible,
    current models. Keep the 150 requests frozen and record source/configuration.
@@ -155,7 +165,13 @@ changed, relevant implementation commits, exact checks and remaining work.
 Commit and push the code and updated notes. On Sunday, Codex should fetch/pull
 the clean tracking branch, read the updated rules and this file, and continue
 from the recorded next step. Do not copy private agent directories or chat dumps.
+For current evaluation follow-up, use `feat/eval`. If work moves to another task
+branch, record its exact name and PR in the handback so the returning agent can
+check out the right context. If the expected tracking branch has not changed,
+inspect recent remote handoff commits and PRs before assuming no work occurred.
 
 2026-11-12 — Codex: built the frozen evaluation harness and device automation;
 implementation commits `928a6d0`, `6bd6437`, `0b4cff6`, `5f47cfa`, `433bb6a`.
-All required software checks pass; physical pilots are being completed.
+All required software checks pass. One physical pilot completed, a second
+attempt stopped at import setup, and further device testing was deferred by
+the owner for a Claude Code handoff. Keep the frozen gold data unchanged.

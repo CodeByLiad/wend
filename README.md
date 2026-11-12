@@ -69,6 +69,8 @@ regressions. HTML test results are generated at
 | [`docs/PRD.md`](docs/PRD.md) | Product requirements by phase |
 | [`docs/architecture.md`](docs/architecture.md) | Long-term technical context |
 | [`AGENTS.md`](AGENTS.md) | Project rules |
+| [`CLAUDE.md`](CLAUDE.md) | Claude Code entry point for shared project instructions |
+| [`docs/HANDOFF.md`](docs/HANDOFF.md) | Current branch, verified work, decisions and next steps for Claude/Codex |
 
 Only the engine may change planned block times. Later modules must send it commands
 and apply its proposals. The permanent Android package ID is `com.jinatra.wend`.
