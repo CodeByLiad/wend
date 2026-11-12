@@ -64,8 +64,9 @@ class PlannerEvaluationTest {
         val corpus = Corpus.load()
         val runId = UUID.randomUUID().toString()
         val createdAt = Instant.now().toString()
+        val controlOnly = arguments.getString("controlOnly") == "true"
         val output = File(context.filesDir, "evaluation/$runId.json").apply { parentFile!!.mkdirs() }
-        val config = InferenceConfig(4096, 512)
+        val config = InferenceConfig(4096, if (controlOnly) 128 else 512)
         val engine = LlmEngines.create(backend, context.cacheDir, config)
         val worker = Executors.newSingleThreadExecutor()
         var usable = true
@@ -77,7 +78,7 @@ class PlannerEvaluationTest {
             val battery = context.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
             val metadata = mapOf(
                 "id" to runId, "createdAt" to createdAt, "gitRevision" to revision,
-                "kind" to "DEVICE_EVALUATION",
+                "kind" to if (controlOnly) "RUNTIME_CONTROL_ONLY" else "DEVICE_EVALUATION",
                 "modelRevision" to sourceRevision, "modelSha256" to hash, "backend" to backend.name,
                 "runtime" to if (backend == RuntimeBackend.LLAMA_CPU) "llama.cpp 93cf736a8d1d46aa922e27eb64aa712bcd5ebc30" else "LiteRT-LM 0.19.1",
                 "contextTokens" to config.contextTokens, "outputTokens" to config.outputTokens,
@@ -91,23 +92,41 @@ class PlannerEvaluationTest {
                     "soc" to if (Build.VERSION.SDK_INT >= 31) Build.SOC_MODEL else null,
                 ),
             )
+            fun generate(prompt: String): Completion {
+                check(usable) { "Runtime did not stop after timeout" }
+                val future = worker.submit(Callable { engine.complete(prompt, true) })
+                return try {
+                    future.get(if (controlOnly) 60 else 30, TimeUnit.SECONDS)
+                } catch (_: TimeoutException) {
+                    engine.cancel()
+                    try {
+                        future.get(10, TimeUnit.SECONDS)
+                    } catch (_: TimeoutException) {
+                        usable = false
+                    } catch (_: Exception) { /* stopped */ }
+                    throw IllegalStateException("Inference timed out")
+                }
+            }
+            if (controlOnly) {
+                val started = System.nanoTime()
+                val completion = generate("Return exactly one JSON object with a single field named action whose value is rebuild_day.")
+                check(Json.parse(completion.text) is Map<*, *>) { "Runtime did not return a JSON object" }
+                output.writeText(
+                    Json.stringify(
+                        metadata + mapOf(
+                            "updatedAt" to Instant.now().toString(),
+                            "controlElapsedNanos" to System.nanoTime() - started,
+                            "outputTokens" to completion.metrics.outputTokens,
+                            "decodeNanos" to completion.metrics.decodeNanos,
+                            "validJsonObject" to true,
+                        ),
+                    ) + "\n",
+                )
+                return
+            }
             EvaluationSession.run(
                 corpus,
-                TextGenerator { prompt ->
-                    check(usable) { "Runtime did not stop after timeout" }
-                    val future = worker.submit(Callable { engine.complete(prompt, true).text })
-                    try {
-                        future.get(30, TimeUnit.SECONDS)
-                    } catch (_: TimeoutException) {
-                        engine.cancel()
-                        try {
-                            future.get(10, TimeUnit.SECONDS)
-                        } catch (_: TimeoutException) {
-                            usable = false
-                        } catch (_: Exception) { /* stopped */ }
-                        throw IllegalStateException("Inference timed out")
-                    }
-                },
+                TextGenerator { prompt -> generate(prompt).text },
             ) { attempts ->
                 val report = metadata + mapOf("updatedAt" to Instant.now().toString(), "results" to Evaluator.score(corpus, attempts).json())
                 val temporary = File(output.parentFile, "$runId.tmp")

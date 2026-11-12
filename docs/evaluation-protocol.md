@@ -90,6 +90,12 @@ there is no silent unconstrained fallback. Native chat templates must be
 supported by the pinned runtime or loading/generation fails explicitly.
 
 Inference times out after 30 seconds with cancellation and a ten-second grace
+period. Optional `controlOnly=true` runs one short JSON control request with a
+60-second timeout and 128 output-token limit. Its report is labeled
+`RUNTIME_CONTROL_ONLY`; it never produces planner accuracy or qualification.
+This distinguishes basic runtime operation from full-context performance.
+
+A normal evaluation uses a ten-second cancellation grace
 period. A runtime that does not stop aborts the run as partial. A private JSON
 checkpoint is replaced after every case. Reports contain model/runtime pins and
 the device profile; raw outputs are discarded after scoring. Export the report
