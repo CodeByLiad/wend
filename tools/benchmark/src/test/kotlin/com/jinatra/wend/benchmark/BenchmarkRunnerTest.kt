@@ -13,6 +13,7 @@ import java.io.File
 import java.util.concurrent.atomic.AtomicBoolean
 
 private class FakeEngine(private val failLoad: Boolean = false, private val failGenerate: Boolean = false) : LlmEngine {
+    override fun complete(prompt: String, constrainedJson: Boolean): com.jinatra.wend.ai.Completion = error("Not used by benchmark")
     val loaded = CompletableDeferred<Unit>()
     var closed = false
     var cancelled = AtomicBoolean(false)

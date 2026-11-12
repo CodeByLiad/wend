@@ -18,6 +18,6 @@ spotless {
     }
 }
 
-tasks.named("assemble") { dependsOn(":core:engine:assemble", ":core:ai:assemble", ":tools:benchmark:assemble") }
-tasks.named("check") { dependsOn(":core:engine:check", ":core:ai:check", ":tools:benchmark:check", "spotlessCheck") }
+tasks.named("assemble") { dependsOn(":core:engine:assemble", ":core:ai:assemble", ":tools:benchmark:assemble", ":tools:eval:assemble") }
+tasks.named("check") { dependsOn(":core:engine:check", ":core:ai:check", ":tools:benchmark:check", ":tools:eval:check", "spotlessCheck") }
 tasks.register("lint") { dependsOn(":core:ai:lint", ":tools:benchmark:lint") }

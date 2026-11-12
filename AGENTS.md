@@ -120,3 +120,9 @@ Set these up in Phase 0 and keep them working:
 - In the PR description, list which acceptance criteria or engine examples the change covers.
 - If behaviour changes, update the relevant doc in `docs/` in the same PR.
 - When a requirement is ambiguous, ask instead of inventing behaviour.
+
+## Continuity between agents and machines
+
+- At session start, inspect the working tree and fetch the remote. When the current tracking branch and working tree are clean, update with `git pull --ff-only`. Preserve local changes and divergent commits; never reset or force-push to synchronize notes.
+- Read `docs/HANDOFF.md` after synchronizing. If the pull changed this file or project rules, re-read the updated instructions before implementation. The handoff records context; the engine spec and PRD still decide behaviour and scope.
+- Before handing work back, update `docs/HANDOFF.md` with the branch, relevant commits, completed work, exact checks, unfinished work and the next concrete steps. Commit and push those notes with the work when authorized. Keep credentials, personal device profiles and raw private results out of the public repository.
