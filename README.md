@@ -7,10 +7,14 @@ Wend is a free, open-source Android day planner that plans and tracks your day
 and rebuilds the plan when life gets in the way. The product is designed to keep
 personal data on your phone, with optional on-device AI planned for later work.
 
-**Current status: Phase 0 — engine and model benchmark prototypes.** The scheduling
+**Current status: Phase 0 — engine, benchmark and evaluation prototypes.** The scheduling
 engine is a pure Kotlin/JVM module. A separate Android benchmark app compares local
 LiteRT-LM and llama.cpp inference. The production planner app, database, reminders,
 AI planner and companion are not implemented yet.
+
+A planner evaluation harness contains 150 frozen English requests, strict command
+validation, first-pass and corrected scoring, and an opt-in on-device runner.
+Candidate accuracy and physical-device performance are still unmeasured.
 
 ## What the engine does
 
@@ -57,6 +61,8 @@ regressions. HTML test results are generated at
 | [`core/engine`](core/engine) | Pure Kotlin engine and Kotest tests |
 | [`core/ai`](core/ai) | Local model import, LiteRT-LM and pinned llama.cpp adapters |
 | [`tools/benchmark`](tools/benchmark) | Bare Android model benchmark app |
+| [`tools/eval`](tools/eval) | Frozen 150-request corpus, command decoder and evaluation scorer |
+| [`docs/evaluation-protocol.md`](docs/evaluation-protocol.md) | Targets, scoring policy and private on-device execution |
 | [`docs/benchmark-protocol.md`](docs/benchmark-protocol.md) | Measurement definitions, device protocol and build instructions |
 | [`docs/engine-spec.md`](docs/engine-spec.md) | Authoritative behavior and 30 worked examples |
 | [`docs/engine-implementation.md`](docs/engine-implementation.md) | API, small implementation choices and verification coverage |

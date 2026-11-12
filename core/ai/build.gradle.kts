@@ -28,4 +28,5 @@ dependencies {
     testRuntimeOnly(libs.junit.launcher)
     androidTestImplementation(libs.android.test.runner)
     androidTestImplementation(libs.android.test.junit)
+    androidTestImplementation(project(":tools:eval"))
 }

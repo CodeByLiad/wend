@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "candidates": [
+    {
+      "id": "f0000000-0000-4000-8000-000000000001",
+      "repository": "Qwen/Qwen2.5-1.5B-Instruct-GGUF",
+      "revision": "91cad51170dc346986eccefdc2dd33a9da36ead9",
+      "file": "qwen2.5-1.5b-instruct-q4_k_m.gguf",
+      "bytes": 1117320736,
+      "sha256": "6a1a2eb6d15622bf3c96857206351ba97e1af16c30d7a74ee38970e434e9407e",
+      "license": "Apache-2.0",
+      "licenseUrl": "https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF/blob/91cad51170dc346986eccefdc2dd33a9da36ead9/LICENSE",
+      "backends": [
+        "LLAMA_CPU"
+      ],
+      "key": "qwen25-15b-gguf-q4km",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "f0000000-0000-4000-8000-000000000002",
+      "repository": "litert-community/Qwen2.5-1.5B-Instruct",
+      "revision": "60257f9f1d00ca1f24cc5ce3b829b4139be1ca2b",
+      "file": "Qwen2.5-1.5B-Instruct_multi-prefill-seq_q8_ekv4096.litertlm",
+      "bytes": 1597922856,
+      "sha256": "c4a9b7289365ab80fe599b844b77ad253eb3c53fb0e5d963d699146a6f01255e",
+      "license": "Apache-2.0",
+      "licenseUrl": "https://huggingface.co/litert-community/Qwen2.5-1.5B-Instruct/blob/60257f9f1d00ca1f24cc5ce3b829b4139be1ca2b/README.md",
+      "backends": [
+        "LITERT_CPU",
+        "LITERT_GPU"
+      ],
+      "key": "qwen25-15b-litert-q8",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    }
+  ]
+}

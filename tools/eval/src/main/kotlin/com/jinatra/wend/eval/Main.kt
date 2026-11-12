@@ -21,7 +21,7 @@ fun main(args: Array<String>) {
         "score" -> {
             require(args.size == 3) { "Usage: score INPUT.jsonl OUTPUT.json" }
             val attempts = File(args[1]).useLines { lines -> lines.filter(String::isNotBlank).map(Attempt::parse).toList() }
-            File(args[2]).writeText(Json.stringify(Evaluator.score(corpus, attempts).json()) + "\n")
+            File(args[2]).writeText(Json.stringify(mapOf("kind" to "EXTERNAL_UNVERIFIED_INPUT", "results" to Evaluator.score(corpus, attempts).json())) + "\n")
             println("Scored ${attempts.size} records. Results saved locally.")
         }
 

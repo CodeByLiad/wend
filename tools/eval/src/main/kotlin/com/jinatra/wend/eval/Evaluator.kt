@@ -13,6 +13,9 @@ data class Attempt(val id: String, val response: String?, val elapsedNanos: Long
         fun parse(line: String): Attempt {
             val root = Json.parse(line).objectValue()
             require(root.keys.all { it in setOf("id", "response", "elapsedNanos", "correction", "correctionNanos") })
+            require("response" in root && (root["response"] == null || root["response"] is String))
+            require(root["correction"] == null || root["correction"] is String)
+            require(root["correctionNanos"] == null || root["correctionNanos"] is Long)
             return Attempt(
                 root.getValue("id") as String,
                 root["response"] as? String,

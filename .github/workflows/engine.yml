@@ -2,7 +2,7 @@ name: Build and tests
 
 on:
   push:
-    branches: [main, feat/engine, feat/benchmark]
+    branches: [main, feat/engine, feat/benchmark, feat/eval]
   pull_request:
   workflow_dispatch:
 

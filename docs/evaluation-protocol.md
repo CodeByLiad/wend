@@ -72,3 +72,33 @@ runtime revision, backend, constraints mode, context/output limits, Git revision
 corpus hash, device profile, and thermal/charging conditions with actual runs.
 Never infer a RAM tier from one phone. Actual candidate runs and the other RAM
 tiers remain pending until measurements exist.
+
+## Android execution
+
+`core:ai` has a test-only dependency on the harness. Normal connected tests
+validate corpus loading and skip candidate inference. Explicitly selecting
+`PlannerEvaluationTest#evaluateImportedCandidate` requires instrumentation
+arguments `model` (a filename under the test package's private `files/models`),
+`sha256`, `backend`, `gitRevision` and `modelRevision`. Both revisions are full
+40-character Git hashes. Hash verification precedes loading. Use the target
+package reported by the test manifest, not the production package.
+
+The runner uses a fresh conversation per request, context limit 4096, output
+limit 512, greedy sampling, and JSON-object syntax constraints. Command-schema
+validation remains in Kotlin. Constraint initialization failure is a failed run;
+there is no silent unconstrained fallback. Native chat templates must be
+supported by the pinned runtime or loading/generation fails explicitly.
+
+Inference times out after 30 seconds with cancellation and a ten-second grace
+period. A runtime that does not stop aborts the run as partial. A private JSON
+checkpoint is replaced after every case. Reports contain model/runtime pins and
+the device profile; raw outputs are discarded after scoring. Export the report
+privately, then uninstall the temporary test package and its model files.
+
+`tools/eval/candidates.json` pins two initial compatibility baselines: Qwen2.5
+1.5B Instruct GGUF Q4_K_M and its community LiteRT Q8 conversion. The different
+quantizations must be reported; this is not an isolated runtime comparison or a
+final model catalogue. Repository metadata supplies byte counts and LFS SHA-256
+pins. The host-only `Prepare-Candidate.ps1 -CandidateKey KEY` downloads the exact
+Hugging Face revision into ignored `.gradle/models`, resumes partial transfers,
+and verifies length and SHA-256. It does not install or run anything on a phone.
