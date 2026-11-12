@@ -1,8 +1,8 @@
-name: Engine checks
+name: Build and tests
 
 on:
   push:
-    branches: [main, feat/engine]
+    branches: [main, feat/engine, feat/benchmark]
   pull_request:
   workflow_dispatch:
 
@@ -12,7 +12,7 @@ permissions:
 jobs:
   engine:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - name: Check out source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -22,5 +22,13 @@ jobs:
           distribution: temurin
           java-version: '21'
           cache: gradle
-      - name: Build, test and check formatting
-        run: ./gradlew build test :core:engine:test spotlessCheck --no-daemon
+      - name: Install Android build tools
+        run: sdkmanager "platforms;android-37.0" "build-tools;36.0.0" "ndk;28.2.13676358" "cmake;3.22.1"
+      - name: Build, test, lint and check formatting
+        run: ./gradlew build test :core:engine:test lint spotlessCheck --no-daemon
+      - name: Upload prototype benchmark APK
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: wend-benchmark-debug
+          path: tools/benchmark/build/outputs/apk/debug/benchmark-debug.apk
+          if-no-files-found: error
