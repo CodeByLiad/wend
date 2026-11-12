@@ -12,6 +12,12 @@ engine is a pure Kotlin/JVM module. A separate Android benchmark app compares lo
 LiteRT-LM and llama.cpp inference. The production planner app, database, reminders,
 AI planner and companion are not implemented yet.
 
+A design prototype of the Today screen, requested by the owner ahead of Phase 1,
+runs the real engine on an in-memory, synthetic sample day: the current activity's
+time left, day progress, a timeline with free gaps, "I'm running late", and rebuild
+proposals that explain each change and can be undone. It stores nothing and makes
+no network calls. Its visual system is described in [`DESIGN.md`](DESIGN.md).
+
 A planner evaluation harness contains 150 frozen English requests, strict command
 validation, first-pass and corrected scoring, and an opt-in on-device runner.
 Model-selection and RAM-tier conclusions remain pending.
@@ -60,6 +66,9 @@ regressions. HTML test results are generated at
 | --- | --- |
 | [`core/engine`](core/engine) | Pure Kotlin engine and Kotest tests |
 | [`core/ai`](core/ai) | Local model import, LiteRT-LM and pinned llama.cpp adapters |
+| [`core/designsystem`](core/designsystem) | Compose theme, bundled Source Serif 4 and shared components |
+| [`feature/today`](feature/today) | Today screen prototype and its engine-driven state |
+| [`app`](app) | Prototype app shell (`foss` and `gms` flavours) |
 | [`tools/benchmark`](tools/benchmark) | Bare Android model benchmark app |
 | [`tools/eval`](tools/eval) | Frozen 150-request corpus, command decoder and evaluation scorer |
 | [`docs/evaluation-protocol.md`](docs/evaluation-protocol.md) | Targets, scoring policy and private on-device execution |

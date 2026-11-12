@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="paper">#F7F3EC</color>
+    <color name="night">#16120F</color>
+    <color name="crimson">#A3122C</color>
+    <color name="window_background">@color/paper</color>
+</resources>
