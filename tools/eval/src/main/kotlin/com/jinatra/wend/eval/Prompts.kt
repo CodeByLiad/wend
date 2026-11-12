@@ -20,7 +20,8 @@ object Prompts {
         New titles use sentence case; preserve explicitly capitalized names. The caller assigns new IDs.
         Use IDs from context, never invent IDs. No extra fields. Do not repair invalid requested times,
         change the user's intent, round minutes or avoid an engine rejection. The engine validates proposals.
-        "fixed"/"lock" means set_fixed; "retry" brings back a missed/dropped/unplaced/skipped block.
+        "fixed"/"lock" means set_fixed; "retry" asks the engine to reconsider a block's placement.
+        The engine validates whether its current status is retryable; do not avoid an engine rejection.
         Read-only schedule questions use {"action":"explain_day"}.
         If essential information is missing or ambiguous use {"action":"clarify","field":"time"}:
         field is target, time, duration, choice, history or date. "eight" without am/pm is ambiguous.

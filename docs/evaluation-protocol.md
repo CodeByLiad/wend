@@ -4,8 +4,10 @@ The 150 synthetic English requests in
 `tools/eval/src/main/resources/phase0-en-v1.json` were authored before candidate
 model testing. The adjacent SHA-256 file freezes their bytes. Fixtures and the
 prompt contract live in `:tools:eval`; record the Git revision with every run.
-Never tune this version to a candidate's answers. Revisions require a new corpus
-version and a fresh run for every compared candidate.
+Never tune these requests or expected answers to a candidate's output. Corpus
+revisions require a new corpus version and a fresh run for every compared
+candidate. Prompt/runtime revisions must be identified by Git revision; compare
+candidates only after rerunning them with the same prompt and configuration.
 
 ## Confirmed targets
 
@@ -30,6 +32,11 @@ contract. Time fields are integer minutes after midnight. They retain the exact
 requested value, including off-grid values: the engine decides whether a
 command is legal. A correctly translated command can correctly produce a
 rejected or infeasible proposal. No scheduling logic is duplicated in the model.
+Retry wording asks for reconsideration without promising that skipped blocks
+can return. The engine rejects that target status. Earlier prototype prompt
+revisions incorrectly described skipped blocks as restorable; retain their
+source revision with those exploratory measurements and do not mix them into
+comparisons using the corrected prompt. The frozen gold cases are unchanged.
 
 `clarify`, `refuse` and `explain_day` are harness decisions, not engine commands.
 Explanation cases measure intent selection, not prose quality. Future-day
