@@ -16,7 +16,7 @@ object ModelImport {
     suspend fun copy(context: Context, uri: Uri): ImportedModel = withContext(Dispatchers.IO) {
         val id = UUID.randomUUID().toString()
         val directory = File(context.filesDir, "models").apply { mkdirs() }
-        val destination = File(directory, "$id.model")
+        var destination = File(directory, "$id.model")
         val digest = MessageDigest.getInstance("SHA-256")
         try {
             context.contentResolver.openInputStream(uri).use { input ->
@@ -33,6 +33,19 @@ object ModelImport {
                 }
             }
             require(destination.length() > 0)
+            val header = ByteArray(8)
+            destination.inputStream().use { it.read(header) }
+            val signature = String(header, Charsets.US_ASCII)
+            val suffix = when {
+                signature.startsWith("LITERTLM") -> "litertlm"
+                signature.startsWith("GGUF") -> "gguf"
+                else -> "model"
+            }
+            val typedDestination = File(directory, "$id.$suffix")
+            if (typedDestination != destination) {
+                check(destination.renameTo(typedDestination))
+                destination = typedDestination
+            }
             ImportedModel(id, destination, digest.digest().joinToString("") { "%02x".format(it) }, destination.length())
         } catch (error: Throwable) {
             destination.delete()

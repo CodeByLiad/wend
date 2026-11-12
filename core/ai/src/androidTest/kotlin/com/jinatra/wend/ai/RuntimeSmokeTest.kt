@@ -13,6 +13,25 @@ import java.io.File
 
 @RunWith(AndroidJUnit4::class)
 class RuntimeSmokeTest {
+    @Test fun importedContainersKeepTheSuffixRequiredByPathBasedRuntimeLoading() = runBlocking {
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        for ((signature, suffix) in listOf("LITERTLMfixture" to "litertlm", "GGUFfixture" to "gguf")) {
+            val source = File(context.cacheDir, "opaque-source.bin").apply { writeText(signature) }
+            try {
+                val imported = ModelImport.copy(context, Uri.fromFile(source))
+                try {
+                    assertEquals(suffix, imported.file.extension)
+                    assertEquals(signature, imported.file.readText())
+                    assertTrue(imported.file.name.startsWith(imported.id))
+                } finally {
+                    imported.file.delete()
+                }
+            } finally {
+                source.delete()
+            }
+        }
+    }
+
     @Test fun localImportCopiesAndHashesTheExactBytes() = runBlocking {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val source = File(context.cacheDir, "import-test").apply { writeText("abc") }

@@ -17,6 +17,10 @@ through Android's file picker; then run the ten-minute test. Models are copied
 to private app storage and SHA-256 hashed. No model URLs or catalogue choices are
 implied by the file picker. Model format, conversion and license must be checked
 before a real experiment.
+Imports use an opaque UUID filename. Their `.litertlm` or `.gguf` suffix is detected
+from container magic bytes, preserving compatibility with path-based native loaders
+without retaining the source filename. Unknown bytes remain `.model` and fail at
+runtime validation rather than being relabelled as a compatible container.
 
 The app stores JSON results privately and exports them only when the tester picks
 a destination. It does not store prompts or generated text. The fixed workload is
@@ -110,7 +114,7 @@ crashing. Both ABI builds are compiled; a local x86-64 emulator can exercise nat
 loading. No valid candidate-model performance numbers are claimed from these tests.
 
 Verified locally on 2026-11-12: `build`, `test`, `lint` and `spotlessCheck` passed;
-all 83 JVM tests (including the unchanged 75 engine tests) and all three Android
+all 83 JVM tests (including the unchanged 75 engine tests) and all four Android
 smoke tests passed. The isolated API 36 emulator also launched the APK and exposed
 all controls through scrolling in dark mode with 200% font scaling. The merged
 debug/release manifests request no Internet permission. Runtime license assets
