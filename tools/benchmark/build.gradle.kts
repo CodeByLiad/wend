@@ -9,6 +9,7 @@ android {
         applicationId = "com.jinatra.wend.benchmark"
         minSdk = 28
         targetSdk = 37
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         versionCode = 1
         versionName = "0.1.0"
     }
@@ -36,4 +37,7 @@ dependencies {
     testImplementation(libs.kotest.assertions)
     testImplementation(libs.coroutines.test)
     testRuntimeOnly(libs.junit.launcher)
+    androidTestImplementation(libs.android.test.runner)
+    androidTestImplementation(libs.android.test.junit)
+    androidTestImplementation(libs.android.test.core)
 }

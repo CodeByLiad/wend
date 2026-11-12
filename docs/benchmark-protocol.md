@@ -26,6 +26,8 @@ The app stores JSON results privately and exports them only when the tester pick
 a destination. It does not store prompts or generated text. The fixed workload is
 the `organize-day-v1` prompt in `strings.xml`, greedy sampling, a requested 2048-token context,
 up to 128 generated tokens per fresh conversation and four CPU threads.
+Both adapters use the model-native chat template. Benchmark generation is
+unconstrained; the planner evaluation separately records JSON constraints.
 
 ## Runtime revisions
 
@@ -79,9 +81,9 @@ a Pixel or similar. No physical phone was connected when implementation began.
 Emulator smoke tests validate software operation; they are not device-performance
 or battery evidence.
 
-Before measuring candidate models, agree the candidate files, conversions and
-licenses, and confirm the PRD's proposed thresholds: 90% planner accuracy, under
-five seconds to proposal, and at least ten chat tokens/second. Planner accuracy and
+Before measuring candidate models, record the candidate files, conversions and
+licenses. The owner confirmed 90% planner accuracy, under
+five seconds to proposal, and at least ten chat tokens/second on 2026-11-12. Planner accuracy and
 proposal latency require the separate 150-request evaluation harness.
 Freeze that 150-request English set before testing candidates, as required by the
 PRD. Some compiled LiteRT models fix their context size; record that conversion
@@ -148,3 +150,13 @@ JDK 21, Android SDK 37.0, NDK 28.2.13676358 and CMake 3.22.1 are required. Point
 The APK is at `tools/benchmark/build/outputs/apk/debug/benchmark-debug.apk`.
 GitHub Actions publishes that prototype APK as a build artifact after checks pass.
 It is not a production release.
+
+An opt-in `DeviceBenchmarkTest#benchmarkVerifiedCandidateForTenMinutes` automates
+the same foreground Activity/ViewModel flow. Normal connected tests skip it
+without a `model` argument. It requires a private `files/models` filename,
+`sha256`, `backend`, `gitRevision` and `modelRevision` arguments, verifies the
+hash before import, and refuses to start while plugged in. Use wireless ADB for
+this run. It writes the normal private result with source revisions added, then
+checks completion and real elapsed time. A charging change during the run still
+makes drain unavailable. Export reports privately and uninstall both prototype
+and instrumentation packages after testing.

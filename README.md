@@ -14,7 +14,7 @@ AI planner and companion are not implemented yet.
 
 A planner evaluation harness contains 150 frozen English requests, strict command
 validation, first-pass and corrected scoring, and an opt-in on-device runner.
-Candidate accuracy and physical-device performance are still unmeasured.
+Model-selection and RAM-tier conclusions remain pending.
 
 ## What the engine does
 

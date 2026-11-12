@@ -43,40 +43,6 @@ Java_com_jinatra_wend_ai_LlamaEngine_nativeLoad(JNIEnv *env, jobject, jstring pa
     return reinterpret_cast<jlong>(state);
 }
 
-extern "C" JNIEXPORT jlongArray JNICALL
-Java_com_jinatra_wend_ai_LlamaEngine_nativeGenerate(JNIEnv *env, jobject, jlong handle, jstring prompt) {
-    auto *state = reinterpret_cast<State *>(handle);
-    if (!state) { fail(env); return nullptr; }
-    state->cancelled.store(false);
-    llama_memory_clear(llama_get_memory(state->context), true);
-    const auto *vocab = llama_model_get_vocab(state->model);
-    const char *text = env->GetStringUTFChars(prompt, nullptr);
-    const int bytes = env->GetStringUTFLength(prompt);
-    std::vector<llama_token> tokens(bytes + 16);
-    int size = llama_tokenize(vocab, text, bytes, tokens.data(), tokens.size(), true, true);
-    env->ReleaseStringUTFChars(prompt, text);
-    if (size <= 0 || size > 512) { fail(env); return nullptr; }
-    tokens.resize(size);
-    if (llama_decode(state->context, llama_batch_get_one(tokens.data(), size)) != 0) { fail(env); return nullptr; }
-    auto *sampler = llama_sampler_init_greedy();
-    int count = 0;
-    const auto started = std::chrono::steady_clock::now();
-    while (count < 128 && !state->cancelled.load()) {
-        llama_token token = llama_sampler_sample(sampler, state->context, -1);
-        if (llama_vocab_is_eog(vocab, token)) break;
-        ++count;
-        if (llama_decode(state->context, llama_batch_get_one(&token, 1)) != 0) {
-            llama_sampler_free(sampler); fail(env); return nullptr;
-        }
-    }
-    llama_sampler_free(sampler);
-    const auto nanos = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now() - started).count();
-    jlong values[] = {count, nanos};
-    auto result = env->NewLongArray(2);
-    env->SetLongArrayRegion(result, 0, 2, values);
-    return result;
-}
-
 // JSON syntax constraints only. The Kotlin decoder enforces command fields and IDs.
 static const char *json_grammar = R"gbnf(
 root ::= object
