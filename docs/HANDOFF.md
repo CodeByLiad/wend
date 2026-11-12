@@ -9,7 +9,8 @@ the Phase 0 PRD decides scope. Verify this snapshot against Git before acting.
 - Public repository: https://github.com/CodeByLiad/wend
 - Current working branch: `feat/design-system` (stacked on `feat/eval`), for the
   owner-requested UI prototype. Evaluation follow-up still belongs on `feat/eval`.
-- PR #3 — `feat/design-system` into `feat/eval` (see the session note below).
+- PR #3: https://github.com/CodeByLiad/wend/pull/3 — `feat/design-system` into
+  `feat/eval` (draft; see the UI prototype section below).
 - `main` contains the completed engine work, through `37f1f58`.
 - PR #1: https://github.com/CodeByLiad/wend/pull/1 — `feat/benchmark` into `main`.
 - PR #2: https://github.com/CodeByLiad/wend/pull/2 — `feat/eval` into `feat/benchmark`.
@@ -207,6 +208,9 @@ Deliberate prototype limits and deviations to review:
   change), then logged; confirm this matches the intended reading of hard rule 1.
 - Bottom navigation is omitted because no other destinations exist yet.
 - R8 is not enabled; release APK is about 23.5 MB unminified.
+- CI is unchanged: the push token lacks the `workflow` scope. The new modules
+  run under the existing build/lint/spotless steps; an optional step to upload
+  the prototype APK is written out in PR #3 for the owner to add.
 
 Verification on this machine (Windows, JDK 21 Temurin 21.0.13 in `~/.jdks`,
 emulator `cueplay_pixel`, API 35, x86_64, software rendering):
