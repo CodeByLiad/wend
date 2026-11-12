@@ -1,0 +1,74 @@
+# Phase 0 planner evaluation
+
+The 150 synthetic English requests in
+`tools/eval/src/main/resources/phase0-en-v1.json` were authored before candidate
+model testing. The adjacent SHA-256 file freezes their bytes. Fixtures and the
+prompt contract live in `:tools:eval`; record the Git revision with every run.
+Never tune this version to a candidate's answers. Revisions require a new corpus
+version and a fresh run for every compared candidate.
+
+## Confirmed targets
+
+The project owner confirmed 90% correct decisions, proposals under five seconds,
+and companion generation at least ten tokens per second on 2026-11-12.
+Planner timing includes inference, decoding and engine proposal creation, plus
+any correction. It excludes model loading. This headless measurement excludes
+rendering the proposal card, which still needs a later UI measurement. Report
+median, p95 and maximum. Conservatively, the five-second gate applies to every
+case; this is a measurement policy, not evidence of UI performance.
+
+## Corpus and scoring
+
+Coverage: 12 late starts, 10 rebuilds, 12 overruns, 10 retries, 18 moves, 12 skips,
+16 additions, 10 fixed-block conversions, 10 bedtime changes, 8 undos,
+8 read-only explanations, 16 clarification cases and 8 refusals. The fixtures
+are synthetic office, student and Saturday days, including running activities,
+previous-day history and duplicate activity names.
+
+The planner returns one strict JSON object. `Prompts.kt` defines the wire
+contract. Time fields are integer minutes after midnight. They retain the exact
+requested value, including off-grid values: the engine decides whether a
+command is legal. A correctly translated command can correctly produce a
+rejected or infeasible proposal. No scheduling logic is duplicated in the model.
+
+`clarify`, `refuse` and `explain_day` are harness decisions, not engine commands.
+Explanation cases measure intent selection, not prose quality. Future-day
+requests require date clarification; routines and unsupported operations are
+refused. Missing add duration requires clarification. In this test contract,
+additions default to flexible, normal priority, and minimum equal to duration.
+Titles use sentence case, retaining explicit capitalization. These are prototype
+policies, not decisions about the Phase 1 product.
+
+The caller supplies the new activity UUID. Compare decoded Kotlin commands and
+all their fields exactly, then validate their proposal status using the real
+engine. Formatting and JSON field order do not affect correctness. Unknown IDs,
+extra fields, duplicate JSON keys, prose wrappers and coercions are errors.
+
+One correction is allowed only after a decoding/schema error. It receives an
+error code, never the expected answer. A semantically wrong but valid command
+gets no gold-assisted second attempt. Report first-pass and corrected accuracy
+separately. Missing requests and failures stay in the denominator of 150; a
+partial run cannot pass. Correction latency is cumulative. Invalid requested
+commands are deliberately preserved rather than silently repaired.
+
+## Host commands
+
+```
+./gradlew :tools:eval:test
+./gradlew :tools:eval:run --args="validate"
+./gradlew :tools:eval:run --args="prompts /absolute/private/path/prompts.jsonl"
+./gradlew :tools:eval:run --args="score /absolute/private/path/attempts.jsonl /absolute/private/path/report.json"
+```
+
+Input JSONL records contain `id`, `response` (string or null for no output),
+`elapsedNanos`, and optionally `correction` with `correctionNanos`. Duplicate or
+unknown request IDs fail the run. Imported timings are externally supplied and
+must not be presented as verified physical-device measurements. A perfect gold
+replay tests the scorer only; it is never a model result.
+
+Reports omit raw responses and requests. Keep physical device profiles, reports
+and model files private and outside Git. Record model revision and SHA-256,
+runtime revision, backend, constraints mode, context/output limits, Git revision,
+corpus hash, device profile, and thermal/charging conditions with actual runs.
+Never infer a RAM tier from one phone. Actual candidate runs and the other RAM
+tiers remain pending until measurements exist.

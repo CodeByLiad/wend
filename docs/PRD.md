@@ -97,6 +97,11 @@ No design work, onboarding, settings or polish. The code may be reused but doesn
 
 Proposed numbers, to confirm before testing starts:
 
+Confirmed on 2026-11-12: the 90% correct-command, under-five-second proposal,
+and ten-token-per-second chat targets below. The people-test threshold remains
+proposed until that test is arranged. Evaluation reports must distinguish
+first-pass results, any permitted correction, and incomplete runs.
+
 | Result | Threshold | Decides |
 | --- | --- | --- |
 | AI planner correct-command rate | 90% or higher on the 150-request set | Which tiers get the AI planner in Phase 1; below it on every tier, the AI planner moves to Phase 2 |

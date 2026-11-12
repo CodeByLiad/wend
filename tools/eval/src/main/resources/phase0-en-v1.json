@@ -1,0 +1,2483 @@
+{
+  "schemaVersion": 1,
+  "version": "phase0-en-v1",
+  "cases": [
+    {
+      "id": "e0000000-0000-4000-8000-000000000001",
+      "index": 1,
+      "category": "late_wake",
+      "request": "I woke up at 7:05 today. Adjust my day.",
+      "context": {
+        "fixture": "office",
+        "now": 425
+      },
+      "expected": {
+        "action": "late_wake",
+        "time": 425
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000002",
+      "index": 2,
+      "category": "late_wake",
+      "request": "Started my morning ten minutes late, at 7:10 am.",
+      "context": {
+        "fixture": "office",
+        "now": 430
+      },
+      "expected": {
+        "action": "late_wake",
+        "time": 430
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000003",
+      "index": 3,
+      "category": "late_wake",
+      "request": "Wake-up was 7:15 am; rebuild from there.",
+      "context": {
+        "fixture": "office",
+        "now": 435
+      },
+      "expected": {
+        "action": "late_wake",
+        "time": 435
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000004",
+      "index": 4,
+      "category": "late_wake",
+      "request": "I only got up at 07:20. Fix the plan.",
+      "context": {
+        "fixture": "office",
+        "now": 440
+      },
+      "expected": {
+        "action": "late_wake",
+        "time": 440
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000005",
+      "index": 5,
+      "category": "late_wake",
+      "request": "I woke at exactly 7:23 this morning.",
+      "context": {
+        "fixture": "office",
+        "now": 443
+      },
+      "expected": {
+        "action": "late_wake",
+        "time": 443
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000006",
+      "index": 6,
+      "category": "late_wake",
+      "request": "My wake-up time today is 07:25.",
+      "context": {
+        "fixture": "office",
+        "now": 445
+      },
+      "expected": {
+        "action": "late_wake",
+        "time": 445
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000007",
+      "index": 7,
+      "category": "late_wake",
+      "request": "Got out of bed at 7:35 am. Please adjust.",
+      "context": {
+        "fixture": "office",
+        "now": 455
+      },
+      "expected": {
+        "action": "late_wake",
+        "time": 455
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000008",
+      "index": 8,
+      "category": "late_wake",
+      "request": "I overslept until a quarter to eight.",
+      "context": {
+        "fixture": "office",
+        "now": 465
+      },
+      "expected": {
+        "action": "late_wake",
+        "time": 465
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000009",
+      "index": 9,
+      "category": "late_wake",
+      "request": "I woke at ten to eight. Replan today.",
+      "context": {
+        "fixture": "office",
+        "now": 470
+      },
+      "expected": {
+        "action": "late_wake",
+        "time": 470
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000000a",
+      "index": 10,
+      "category": "late_wake",
+      "request": "I woke up at eight this morning.",
+      "context": {
+        "fixture": "office",
+        "now": 480
+      },
+      "expected": {
+        "action": "late_wake",
+        "time": 480
+      },
+      "proposalStatus": "INFEASIBLE",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000000b",
+      "index": 11,
+      "category": "late_wake",
+      "request": "I got up at 8:05 am today.",
+      "context": {
+        "fixture": "office",
+        "now": 485
+      },
+      "expected": {
+        "action": "late_wake",
+        "time": 485
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000000c",
+      "index": 12,
+      "category": "late_wake",
+      "request": "I slept in until 9:30 am. Rebuild my day.",
+      "context": {
+        "fixture": "office",
+        "now": 570
+      },
+      "expected": {
+        "action": "late_wake",
+        "time": 570
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000000d",
+      "index": 13,
+      "category": "rebuild",
+      "request": "Rebuild my day.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "rebuild_day"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000000e",
+      "index": 14,
+      "category": "rebuild",
+      "request": "Replan the rest of today.",
+      "context": {
+        "fixture": "office_evening"
+      },
+      "expected": {
+        "action": "rebuild_day"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000000f",
+      "index": 15,
+      "category": "rebuild",
+      "request": "Please recalculate my schedule.",
+      "context": {
+        "fixture": "student"
+      },
+      "expected": {
+        "action": "rebuild_day"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000010",
+      "index": 16,
+      "category": "rebuild",
+      "request": "Fit my remaining activities around the fixed ones.",
+      "context": {
+        "fixture": "saturday"
+      },
+      "expected": {
+        "action": "rebuild_day"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000011",
+      "index": 17,
+      "category": "rebuild",
+      "request": "Refresh today using my existing priorities.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "rebuild_day"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000012",
+      "index": 18,
+      "category": "rebuild",
+      "request": "Adjust the remaining plan from now.",
+      "context": {
+        "fixture": "office_evening"
+      },
+      "expected": {
+        "action": "rebuild_day"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000013",
+      "index": 19,
+      "category": "rebuild",
+      "request": "Rebuild without changing my settings.",
+      "context": {
+        "fixture": "student"
+      },
+      "expected": {
+        "action": "rebuild_day"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000014",
+      "index": 20,
+      "category": "rebuild",
+      "request": "Find room for the remaining Saturday activities.",
+      "context": {
+        "fixture": "saturday"
+      },
+      "expected": {
+        "action": "rebuild_day"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000015",
+      "index": 21,
+      "category": "rebuild",
+      "request": "Run the scheduler again.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "rebuild_day"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000016",
+      "index": 22,
+      "category": "rebuild",
+      "request": "Recalculate what is left this evening.",
+      "context": {
+        "fixture": "office_evening"
+      },
+      "expected": {
+        "action": "rebuild_day"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000017",
+      "index": 23,
+      "category": "overrun",
+      "request": "Gym is running until 8:10 pm.",
+      "context": {
+        "fixture": "gym_running"
+      },
+      "expected": {
+        "action": "overrun",
+        "id": "a0000000-0000-4000-8000-000000000006",
+        "newEnd": 1210
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000018",
+      "index": 24,
+      "category": "overrun",
+      "request": "My current gym session will finish at 20:25.",
+      "context": {
+        "fixture": "gym_running"
+      },
+      "expected": {
+        "action": "overrun",
+        "id": "a0000000-0000-4000-8000-000000000006",
+        "newEnd": 1225
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000019",
+      "index": 25,
+      "category": "overrun",
+      "request": "I need to keep exercising until quarter to nine tonight.",
+      "context": {
+        "fixture": "gym_running"
+      },
+      "expected": {
+        "action": "overrun",
+        "id": "a0000000-0000-4000-8000-000000000006",
+        "newEnd": 1245
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000001a",
+      "index": 26,
+      "category": "overrun",
+      "request": "Gym will overrun to 9 pm.",
+      "context": {
+        "fixture": "gym_running"
+      },
+      "expected": {
+        "action": "overrun",
+        "id": "a0000000-0000-4000-8000-000000000006",
+        "newEnd": 1260
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000001b",
+      "index": 27,
+      "category": "overrun",
+      "request": "Extend this gym session to 21:20.",
+      "context": {
+        "fixture": "gym_running"
+      },
+      "expected": {
+        "action": "overrun",
+        "id": "a0000000-0000-4000-8000-000000000006",
+        "newEnd": 1280
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000001c",
+      "index": 28,
+      "category": "overrun",
+      "request": "I am staying at the gym until 9:40 tonight.",
+      "context": {
+        "fixture": "gym_running"
+      },
+      "expected": {
+        "action": "overrun",
+        "id": "a0000000-0000-4000-8000-000000000006",
+        "newEnd": 1300
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000001d",
+      "index": 29,
+      "category": "overrun",
+      "request": "Gym will not end until 10 pm.",
+      "context": {
+        "fixture": "gym_running"
+      },
+      "expected": {
+        "action": "overrun",
+        "id": "a0000000-0000-4000-8000-000000000006",
+        "newEnd": 1320
+      },
+      "proposalStatus": "INFEASIBLE",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000001e",
+      "index": 30,
+      "category": "overrun",
+      "request": "Evening class is running until 8 pm.",
+      "context": {
+        "fixture": "class_running"
+      },
+      "expected": {
+        "action": "overrun",
+        "id": "b0000000-0000-4000-8000-000000000001",
+        "newEnd": 1200
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000001f",
+      "index": 31,
+      "category": "overrun",
+      "request": "Class has overrun and now ends at 20:30.",
+      "context": {
+        "fixture": "class_running"
+      },
+      "expected": {
+        "action": "overrun",
+        "id": "b0000000-0000-4000-8000-000000000001",
+        "newEnd": 1230
+      },
+      "proposalStatus": "INFEASIBLE",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000020",
+      "index": 32,
+      "category": "overrun",
+      "request": "My current class will finish at 9 tonight.",
+      "context": {
+        "fixture": "class_running"
+      },
+      "expected": {
+        "action": "overrun",
+        "id": "b0000000-0000-4000-8000-000000000001",
+        "newEnd": 1260
+      },
+      "proposalStatus": "INFEASIBLE",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000021",
+      "index": 33,
+      "category": "overrun",
+      "request": "Saturday gym is running until 11:30 am.",
+      "context": {
+        "fixture": "saturday_gym_running"
+      },
+      "expected": {
+        "action": "overrun",
+        "id": "c0000000-0000-4000-8000-000000000002",
+        "newEnd": 690
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000022",
+      "index": 34,
+      "category": "overrun",
+      "request": "This gym session is going to finish at 12:50 pm.",
+      "context": {
+        "fixture": "saturday_gym_running"
+      },
+      "expected": {
+        "action": "overrun",
+        "id": "c0000000-0000-4000-8000-000000000002",
+        "newEnd": 770
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000023",
+      "index": 35,
+      "category": "retry",
+      "request": "Try fitting Reading into today again.",
+      "context": {
+        "fixture": "reading_late",
+        "statuses": {
+          "A8": "DROPPED"
+        }
+      },
+      "expected": {
+        "action": "retry_block",
+        "id": "a0000000-0000-4000-8000-000000000008"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000024",
+      "index": 36,
+      "category": "retry",
+      "request": "Retry the missed Reading block.",
+      "context": {
+        "fixture": "reading_late",
+        "statuses": {
+          "A8": "MISSED"
+        }
+      },
+      "expected": {
+        "action": "retry_block",
+        "id": "a0000000-0000-4000-8000-000000000008"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000025",
+      "index": 37,
+      "category": "retry",
+      "request": "Give the unplaced Reading activity another try.",
+      "context": {
+        "fixture": "reading_late",
+        "statuses": {
+          "A8": "UNPLACED"
+        }
+      },
+      "expected": {
+        "action": "retry_block",
+        "id": "a0000000-0000-4000-8000-000000000008"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000026",
+      "index": 38,
+      "category": "retry",
+      "request": "Bring back Reading and try scheduling it again.",
+      "context": {
+        "fixture": "reading_late",
+        "statuses": {
+          "A8": "DROPPED"
+        }
+      },
+      "expected": {
+        "action": "retry_block",
+        "id": "a0000000-0000-4000-8000-000000000008"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000027",
+      "index": 39,
+      "category": "retry",
+      "request": "Try the skipped Reading activity again.",
+      "context": {
+        "fixture": "reading_late",
+        "statuses": {
+          "A8": "SKIPPED"
+        }
+      },
+      "expected": {
+        "action": "retry_block",
+        "id": "a0000000-0000-4000-8000-000000000008"
+      },
+      "proposalStatus": "REJECTED",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000028",
+      "index": 40,
+      "category": "retry",
+      "request": "Retry Breakfast now that there is space.",
+      "context": {
+        "fixture": "breakfast_unplaced"
+      },
+      "expected": {
+        "action": "retry_block",
+        "id": "a0000000-0000-4000-8000-000000000002"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000029",
+      "index": 41,
+      "category": "retry",
+      "request": "Try scheduling Breakfast again.",
+      "context": {
+        "fixture": "breakfast_unplaced"
+      },
+      "expected": {
+        "action": "retry_block",
+        "id": "a0000000-0000-4000-8000-000000000002"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000002a",
+      "index": 42,
+      "category": "retry",
+      "request": "Reconsider my dropped groceries block.",
+      "context": {
+        "fixture": "saturday",
+        "statuses": {
+          "C5": "DROPPED"
+        }
+      },
+      "expected": {
+        "action": "retry_block",
+        "id": "c0000000-0000-4000-8000-000000000005"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000002b",
+      "index": 43,
+      "category": "retry",
+      "request": "Retry Groceries; it was left unplaced.",
+      "context": {
+        "fixture": "saturday",
+        "statuses": {
+          "C5": "UNPLACED"
+        }
+      },
+      "expected": {
+        "action": "retry_block",
+        "id": "c0000000-0000-4000-8000-000000000005"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000002c",
+      "index": 44,
+      "category": "retry",
+      "request": "I want the missed Reading block reconsidered.",
+      "context": {
+        "fixture": "reading_late",
+        "statuses": {
+          "A8": "MISSED"
+        }
+      },
+      "expected": {
+        "action": "retry_block",
+        "id": "a0000000-0000-4000-8000-000000000008"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000002d",
+      "index": 45,
+      "category": "move",
+      "request": "Move Gym to 7:30 pm.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "move_block",
+        "id": "a0000000-0000-4000-8000-000000000006",
+        "start": 1170
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000002e",
+      "index": 46,
+      "category": "move",
+      "request": "Start Gym at 19:15 instead.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "move_block",
+        "id": "a0000000-0000-4000-8000-000000000006",
+        "start": 1155
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000002f",
+      "index": 47,
+      "category": "move",
+      "request": "Reschedule Reading for 9:45 tonight.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "move_block",
+        "id": "a0000000-0000-4000-8000-000000000008",
+        "start": 1305
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000030",
+      "index": 48,
+      "category": "move",
+      "request": "Put Dinner at 8 pm.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "move_block",
+        "id": "a0000000-0000-4000-8000-000000000007",
+        "start": 1200
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000031",
+      "index": 49,
+      "category": "move",
+      "request": "Move Plan tomorrow to 10 pm.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "move_block",
+        "id": "a0000000-0000-4000-8000-000000000009",
+        "start": 1320
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000032",
+      "index": 50,
+      "category": "move",
+      "request": "Start Wind down at 22:30.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "move_block",
+        "id": "a0000000-0000-4000-8000-000000000010",
+        "start": 1350
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000033",
+      "index": 51,
+      "category": "move",
+      "request": "Move Reading to 9:35 pm.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "move_block",
+        "id": "a0000000-0000-4000-8000-000000000008",
+        "start": 1295
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000034",
+      "index": 52,
+      "category": "move",
+      "request": "Put Dinner at 19:45.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "move_block",
+        "id": "a0000000-0000-4000-8000-000000000007",
+        "start": 1185
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000035",
+      "index": 53,
+      "category": "move",
+      "request": "Move Gym to 10 am on Saturday.",
+      "context": {
+        "fixture": "saturday"
+      },
+      "expected": {
+        "action": "move_block",
+        "id": "c0000000-0000-4000-8000-000000000002",
+        "start": 600
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000036",
+      "index": 54,
+      "category": "move",
+      "request": "Schedule Laundry at 8:30 am.",
+      "context": {
+        "fixture": "saturday"
+      },
+      "expected": {
+        "action": "move_block",
+        "id": "c0000000-0000-4000-8000-000000000001",
+        "start": 510
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000037",
+      "index": 55,
+      "category": "move",
+      "request": "Move Groceries to 3 pm.",
+      "context": {
+        "fixture": "saturday"
+      },
+      "expected": {
+        "action": "move_block",
+        "id": "c0000000-0000-4000-8000-000000000005",
+        "start": 900
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000038",
+      "index": 56,
+      "category": "move",
+      "request": "Move Shower to 11:30 am.",
+      "context": {
+        "fixture": "saturday"
+      },
+      "expected": {
+        "action": "move_block",
+        "id": "c0000000-0000-4000-8000-000000000003",
+        "start": 690
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000039",
+      "index": 57,
+      "category": "move",
+      "request": "Move Call family to 10 pm.",
+      "context": {
+        "fixture": "student"
+      },
+      "expected": {
+        "action": "move_block",
+        "id": "b0000000-0000-4000-8000-000000000005",
+        "start": 1320
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000003a",
+      "index": 58,
+      "category": "move",
+      "request": "Start Study at 8:15 pm.",
+      "context": {
+        "fixture": "student"
+      },
+      "expected": {
+        "action": "move_block",
+        "id": "b0000000-0000-4000-8000-000000000003",
+        "start": 1215
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000003b",
+      "index": 59,
+      "category": "move",
+      "request": "Move Gym to 9:45 pm exactly.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "move_block",
+        "id": "a0000000-0000-4000-8000-000000000006",
+        "start": 1305
+      },
+      "proposalStatus": "REJECTED",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000003c",
+      "index": 60,
+      "category": "move",
+      "request": "Move Gym to 19:02 exactly.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "move_block",
+        "id": "a0000000-0000-4000-8000-000000000006",
+        "start": 1142
+      },
+      "proposalStatus": "REJECTED",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000003d",
+      "index": 61,
+      "category": "move",
+      "request": "Move Work to 10 am.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "move_block",
+        "id": "a0000000-0000-4000-8000-000000000004",
+        "start": 600
+      },
+      "proposalStatus": "REJECTED",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000003e",
+      "index": 62,
+      "category": "move",
+      "request": "Move Gym to 11 am, even though Shower starts at 11.",
+      "context": {
+        "fixture": "saturday"
+      },
+      "expected": {
+        "action": "move_block",
+        "id": "c0000000-0000-4000-8000-000000000002",
+        "start": 660
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000003f",
+      "index": 63,
+      "category": "skip",
+      "request": "Skip Reading today.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "skip_block",
+        "id": "a0000000-0000-4000-8000-000000000008"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000040",
+      "index": 64,
+      "category": "skip",
+      "request": "Make my evening lighter by skipping Reading.",
+      "context": {
+        "fixture": "office_evening"
+      },
+      "expected": {
+        "action": "skip_block",
+        "id": "a0000000-0000-4000-8000-000000000008"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000041",
+      "index": 65,
+      "category": "skip",
+      "request": "I do not want to do Gym today. Skip it.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "skip_block",
+        "id": "a0000000-0000-4000-8000-000000000006"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000042",
+      "index": 66,
+      "category": "skip",
+      "request": "Skip Plan tomorrow.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "skip_block",
+        "id": "a0000000-0000-4000-8000-000000000009"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000043",
+      "index": 67,
+      "category": "skip",
+      "request": "Leave out Dinner today.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "skip_block",
+        "id": "a0000000-0000-4000-8000-000000000007"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000044",
+      "index": 68,
+      "category": "skip",
+      "request": "Skip my morning routine.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "skip_block",
+        "id": "a0000000-0000-4000-8000-000000000001"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000045",
+      "index": 69,
+      "category": "skip",
+      "request": "I am not doing Groceries this Saturday.",
+      "context": {
+        "fixture": "saturday"
+      },
+      "expected": {
+        "action": "skip_block",
+        "id": "c0000000-0000-4000-8000-000000000005"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000046",
+      "index": 70,
+      "category": "skip",
+      "request": "Skip Laundry today.",
+      "context": {
+        "fixture": "saturday"
+      },
+      "expected": {
+        "action": "skip_block",
+        "id": "c0000000-0000-4000-8000-000000000001"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000047",
+      "index": 71,
+      "category": "skip",
+      "request": "Skip Series tonight.",
+      "context": {
+        "fixture": "student"
+      },
+      "expected": {
+        "action": "skip_block",
+        "id": "b0000000-0000-4000-8000-000000000004"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000048",
+      "index": 72,
+      "category": "skip",
+      "request": "Leave out Call family tonight.",
+      "context": {
+        "fixture": "student"
+      },
+      "expected": {
+        "action": "skip_block",
+        "id": "b0000000-0000-4000-8000-000000000005"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000049",
+      "index": 73,
+      "category": "skip",
+      "request": "Skip the evening class.",
+      "context": {
+        "fixture": "student"
+      },
+      "expected": {
+        "action": "skip_block",
+        "id": "b0000000-0000-4000-8000-000000000001"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000004a",
+      "index": 74,
+      "category": "skip",
+      "request": "Skip Commute to work today.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "skip_block",
+        "id": "a0000000-0000-4000-8000-000000000003"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000004b",
+      "index": 75,
+      "category": "add",
+      "request": "Add a 20-minute walk.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "add_block",
+        "title": "Walk",
+        "duration": 20
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000004c",
+      "index": 76,
+      "category": "add",
+      "request": "Add Meditation for ten minutes.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "add_block",
+        "title": "Meditation",
+        "duration": 10
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000004d",
+      "index": 77,
+      "category": "add",
+      "request": "Add Stretching for 15 minutes at 9:45 pm.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "add_block",
+        "title": "Stretching",
+        "duration": 15,
+        "requestedStart": 1305
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000004e",
+      "index": 78,
+      "category": "add",
+      "request": "Add a fixed Dentist appointment at 10 am lasting 30 minutes.",
+      "context": {
+        "fixture": "saturday"
+      },
+      "expected": {
+        "action": "add_block",
+        "title": "Dentist",
+        "duration": 30,
+        "kind": "FIXED",
+        "requestedStart": 600
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000004f",
+      "index": 79,
+      "category": "add",
+      "request": "Add optional Journaling for 15 minutes.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "add_block",
+        "title": "Journaling",
+        "duration": 15,
+        "kind": "OPTIONAL"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000050",
+      "index": 80,
+      "category": "add",
+      "request": "Add a high-priority 20-minute walk.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "add_block",
+        "title": "Walk",
+        "duration": 20,
+        "priority": "HIGH"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000051",
+      "index": 81,
+      "category": "add",
+      "request": "Add a 30-minute walk, minimum 15 minutes.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "add_block",
+        "title": "Walk",
+        "duration": 30,
+        "minDuration": 15
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000052",
+      "index": 82,
+      "category": "add",
+      "request": "Add Meditation for 20 minutes after Dinner.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "add_block",
+        "title": "Meditation",
+        "duration": 20,
+        "after": "a0000000-0000-4000-8000-000000000007"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000053",
+      "index": 83,
+      "category": "add",
+      "request": "Add a 25-minute walk between 7 pm and 9 pm.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "add_block",
+        "title": "Walk",
+        "duration": 25,
+        "window": {
+          "start": 1140,
+          "end": 1260
+        }
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000054",
+      "index": 84,
+      "category": "add",
+      "request": "Add a 10-minute Breathing activity in the last hour before bedtime.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "add_block",
+        "title": "Breathing",
+        "duration": 10,
+        "window": {
+          "start": {
+            "beforeBedtime": 60
+          },
+          "end": {
+            "beforeBedtime": 0
+          }
+        }
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000055",
+      "index": 85,
+      "category": "add",
+      "request": "Add low-priority Drawing for half an hour.",
+      "context": {
+        "fixture": "saturday"
+      },
+      "expected": {
+        "action": "add_block",
+        "title": "Drawing",
+        "duration": 30,
+        "priority": "LOW"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000056",
+      "index": 86,
+      "category": "add",
+      "request": "Add a flexible 15-minute Tea break.",
+      "context": {
+        "fixture": "saturday"
+      },
+      "expected": {
+        "action": "add_block",
+        "title": "Tea break",
+        "duration": 15,
+        "kind": "FLEXIBLE"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000057",
+      "index": 87,
+      "category": "add",
+      "request": "Add optional Music for 20 minutes, minimum 10.",
+      "context": {
+        "fixture": "student"
+      },
+      "expected": {
+        "action": "add_block",
+        "title": "Music",
+        "duration": 20,
+        "minDuration": 10,
+        "kind": "OPTIONAL"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000058",
+      "index": 88,
+      "category": "add",
+      "request": "Add a fixed 10-minute Phone call at 9:45 pm.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "add_block",
+        "title": "Phone call",
+        "duration": 10,
+        "kind": "FIXED",
+        "requestedStart": 1305
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000059",
+      "index": 89,
+      "category": "add",
+      "request": "Add Yoga for 40 minutes, at least 20 minutes, high priority, after Laundry.",
+      "context": {
+        "fixture": "saturday"
+      },
+      "expected": {
+        "action": "add_block",
+        "title": "Yoga",
+        "duration": 40,
+        "minDuration": 20,
+        "priority": "HIGH",
+        "after": "c0000000-0000-4000-8000-000000000001"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000005a",
+      "index": 90,
+      "category": "add",
+      "request": "Add Reading notes for five minutes at 10:15 pm.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "add_block",
+        "title": "Reading notes",
+        "duration": 5,
+        "requestedStart": 1335
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000005b",
+      "index": 91,
+      "category": "fixed",
+      "request": "Make Gym fixed.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "set_fixed",
+        "id": "a0000000-0000-4000-8000-000000000006"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000005c",
+      "index": 92,
+      "category": "fixed",
+      "request": "Lock Dinner in place.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "set_fixed",
+        "id": "a0000000-0000-4000-8000-000000000007"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000005d",
+      "index": 93,
+      "category": "fixed",
+      "request": "Fix Reading at its current time.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "set_fixed",
+        "id": "a0000000-0000-4000-8000-000000000008"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000005e",
+      "index": 94,
+      "category": "fixed",
+      "request": "Make Plan tomorrow a fixed block.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "set_fixed",
+        "id": "a0000000-0000-4000-8000-000000000009"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000005f",
+      "index": 95,
+      "category": "fixed",
+      "request": "Lock Wind down where it is.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "set_fixed",
+        "id": "a0000000-0000-4000-8000-000000000010"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000060",
+      "index": 96,
+      "category": "fixed",
+      "request": "Keep Laundry fixed at its current time.",
+      "context": {
+        "fixture": "saturday"
+      },
+      "expected": {
+        "action": "set_fixed",
+        "id": "c0000000-0000-4000-8000-000000000001"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000061",
+      "index": 97,
+      "category": "fixed",
+      "request": "Make Groceries fixed.",
+      "context": {
+        "fixture": "saturday"
+      },
+      "expected": {
+        "action": "set_fixed",
+        "id": "c0000000-0000-4000-8000-000000000005"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000062",
+      "index": 98,
+      "category": "fixed",
+      "request": "Lock Study into its current slot.",
+      "context": {
+        "fixture": "student"
+      },
+      "expected": {
+        "action": "set_fixed",
+        "id": "b0000000-0000-4000-8000-000000000003"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000063",
+      "index": 99,
+      "category": "fixed",
+      "request": "Make Call family fixed.",
+      "context": {
+        "fixture": "student"
+      },
+      "expected": {
+        "action": "set_fixed",
+        "id": "b0000000-0000-4000-8000-000000000005"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000064",
+      "index": 100,
+      "category": "fixed",
+      "request": "Fix Series at its current time.",
+      "context": {
+        "fixture": "student"
+      },
+      "expected": {
+        "action": "set_fixed",
+        "id": "b0000000-0000-4000-8000-000000000004"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000065",
+      "index": 101,
+      "category": "bedtime",
+      "request": "Set bedtime to 10:30 pm.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "set_bedtime",
+        "time": 1350
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000066",
+      "index": 102,
+      "category": "bedtime",
+      "request": "I want to sleep at 22:00 tonight.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "set_bedtime",
+        "time": 1320
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000067",
+      "index": 103,
+      "category": "bedtime",
+      "request": "Change my bedtime to 11:30 pm.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "set_bedtime",
+        "time": 1410
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000068",
+      "index": 104,
+      "category": "bedtime",
+      "request": "Set bedtime to 23:15.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "set_bedtime",
+        "time": 1395
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000069",
+      "index": 105,
+      "category": "bedtime",
+      "request": "My bedtime tonight is 10:45 pm.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "set_bedtime",
+        "time": 1365
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000006a",
+      "index": 106,
+      "category": "bedtime",
+      "request": "Protect a bedtime of 9:30 pm.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "set_bedtime",
+        "time": 1290
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000006b",
+      "index": 107,
+      "category": "bedtime",
+      "request": "Set my sleep time to 11 pm.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "set_bedtime",
+        "time": 1380
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000006c",
+      "index": 108,
+      "category": "bedtime",
+      "request": "Move bedtime to 22:15.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "set_bedtime",
+        "time": 1335
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000006d",
+      "index": 109,
+      "category": "bedtime",
+      "request": "Set bedtime to 23:45.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "set_bedtime",
+        "time": 1425
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000006e",
+      "index": 110,
+      "category": "bedtime",
+      "request": "I want bedtime at 21:45 tonight.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "set_bedtime",
+        "time": 1305
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000006f",
+      "index": 111,
+      "category": "undo",
+      "request": "Undo my last schedule change.",
+      "context": {
+        "fixture": "office_undo"
+      },
+      "expected": {
+        "action": "undo"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000070",
+      "index": 112,
+      "category": "undo",
+      "request": "Go back to the previous plan.",
+      "context": {
+        "fixture": "office_undo"
+      },
+      "expected": {
+        "action": "undo"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000071",
+      "index": 113,
+      "category": "undo",
+      "request": "Restore the day before that gym extension.",
+      "context": {
+        "fixture": "office_undo"
+      },
+      "expected": {
+        "action": "undo"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000072",
+      "index": 114,
+      "category": "undo",
+      "request": "Undo that.",
+      "context": {
+        "fixture": "office_undo"
+      },
+      "expected": {
+        "action": "undo"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000073",
+      "index": 115,
+      "category": "undo",
+      "request": "Revert the most recent change.",
+      "context": {
+        "fixture": "office_undo"
+      },
+      "expected": {
+        "action": "undo"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000074",
+      "index": 116,
+      "category": "undo",
+      "request": "Cancel the last adjustment and restore the old day.",
+      "context": {
+        "fixture": "office_undo"
+      },
+      "expected": {
+        "action": "undo"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000075",
+      "index": 117,
+      "category": "undo",
+      "request": "Bring back the exact previous schedule.",
+      "context": {
+        "fixture": "office_undo"
+      },
+      "expected": {
+        "action": "undo"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000076",
+      "index": 118,
+      "category": "undo",
+      "request": "Undo the gym overrun change.",
+      "context": {
+        "fixture": "office_undo"
+      },
+      "expected": {
+        "action": "undo"
+      },
+      "proposalStatus": "OK",
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000077",
+      "index": 119,
+      "category": "explain",
+      "request": "What does my day look like?",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "explain_day"
+      },
+      "proposalStatus": null,
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000078",
+      "index": 120,
+      "category": "explain",
+      "request": "Show me what is left tonight.",
+      "context": {
+        "fixture": "office_evening"
+      },
+      "expected": {
+        "action": "explain_day"
+      },
+      "proposalStatus": null,
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000079",
+      "index": 121,
+      "category": "explain",
+      "request": "When is Gym?",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "explain_day"
+      },
+      "proposalStatus": null,
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000007a",
+      "index": 122,
+      "category": "explain",
+      "request": "How much free time do I have today?",
+      "context": {
+        "fixture": "saturday"
+      },
+      "expected": {
+        "action": "explain_day"
+      },
+      "proposalStatus": null,
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000007b",
+      "index": 123,
+      "category": "explain",
+      "request": "Explain my evening schedule.",
+      "context": {
+        "fixture": "student"
+      },
+      "expected": {
+        "action": "explain_day"
+      },
+      "proposalStatus": null,
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000007c",
+      "index": 124,
+      "category": "explain",
+      "request": "What comes after Gym?",
+      "context": {
+        "fixture": "saturday"
+      },
+      "expected": {
+        "action": "explain_day"
+      },
+      "proposalStatus": null,
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000007d",
+      "index": 125,
+      "category": "explain",
+      "request": "Tell me my bedtime.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "explain_day"
+      },
+      "proposalStatus": null,
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000007e",
+      "index": 126,
+      "category": "explain",
+      "request": "Summarize today without changing anything.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "explain_day"
+      },
+      "proposalStatus": null,
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000007f",
+      "index": 127,
+      "category": "clarify",
+      "request": "Move Gym later.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "clarify",
+        "field": "time"
+      },
+      "proposalStatus": null,
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000080",
+      "index": 128,
+      "category": "clarify",
+      "request": "Move it to 8 pm.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "clarify",
+        "field": "target"
+      },
+      "proposalStatus": null,
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000081",
+      "index": 129,
+      "category": "clarify",
+      "request": "Add a walk.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "clarify",
+        "field": "duration"
+      },
+      "proposalStatus": null,
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000082",
+      "index": 130,
+      "category": "clarify",
+      "request": "Make my evening lighter.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "clarify",
+        "field": "choice"
+      },
+      "proposalStatus": null,
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000083",
+      "index": 131,
+      "category": "clarify",
+      "request": "Skip the thing I dislike.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "clarify",
+        "field": "target"
+      },
+      "proposalStatus": null,
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000084",
+      "index": 132,
+      "category": "clarify",
+      "request": "Change bedtime.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "clarify",
+        "field": "time"
+      },
+      "proposalStatus": null,
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000085",
+      "index": 133,
+      "category": "clarify",
+      "request": "I woke up late.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "clarify",
+        "field": "time"
+      },
+      "proposalStatus": null,
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000086",
+      "index": 134,
+      "category": "clarify",
+      "request": "Gym will run longer.",
+      "context": {
+        "fixture": "gym_running"
+      },
+      "expected": {
+        "action": "clarify",
+        "field": "time"
+      },
+      "proposalStatus": null,
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000087",
+      "index": 135,
+      "category": "clarify",
+      "request": "Move Gym to 8 pm.",
+      "context": {
+        "fixture": "office_ambiguous"
+      },
+      "expected": {
+        "action": "clarify",
+        "field": "target"
+      },
+      "proposalStatus": null,
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000088",
+      "index": 136,
+      "category": "clarify",
+      "request": "Undo my last change.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "clarify",
+        "field": "history"
+      },
+      "proposalStatus": null,
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000089",
+      "index": 137,
+      "category": "clarify",
+      "request": "Add an appointment at 10 am.",
+      "context": {
+        "fixture": "saturday"
+      },
+      "expected": {
+        "action": "clarify",
+        "field": "duration"
+      },
+      "proposalStatus": null,
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000008a",
+      "index": 138,
+      "category": "clarify",
+      "request": "Move Dinner to eight.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "clarify",
+        "field": "time"
+      },
+      "proposalStatus": null,
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000008b",
+      "index": 139,
+      "category": "clarify",
+      "request": "Do something about my crowded schedule.",
+      "context": {
+        "fixture": "student"
+      },
+      "expected": {
+        "action": "clarify",
+        "field": "choice"
+      },
+      "proposalStatus": null,
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000008c",
+      "index": 140,
+      "category": "clarify",
+      "request": "Move Reading to tomorrow.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "clarify",
+        "field": "date"
+      },
+      "proposalStatus": null,
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000008d",
+      "index": 141,
+      "category": "clarify",
+      "request": "Make one of my activities fixed.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "clarify",
+        "field": "target"
+      },
+      "proposalStatus": null,
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000008e",
+      "index": 142,
+      "category": "clarify",
+      "request": "Add Exercise for a while.",
+      "context": {
+        "fixture": "saturday"
+      },
+      "expected": {
+        "action": "clarify",
+        "field": "duration"
+      },
+      "proposalStatus": null,
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-00000000008f",
+      "index": 143,
+      "category": "refuse",
+      "request": "Send my schedule to a cloud AI service.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "refuse"
+      },
+      "proposalStatus": null,
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000090",
+      "index": 144,
+      "category": "refuse",
+      "request": "Delete all of my stored history permanently.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "refuse"
+      },
+      "proposalStatus": null,
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000091",
+      "index": 145,
+      "category": "refuse",
+      "request": "Buy groceries online for me.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "refuse"
+      },
+      "proposalStatus": null,
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000092",
+      "index": 146,
+      "category": "refuse",
+      "request": "Diagnose my illness from this schedule.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "refuse"
+      },
+      "proposalStatus": null,
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000093",
+      "index": 147,
+      "category": "refuse",
+      "request": "Mark every activity done without asking me.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "refuse"
+      },
+      "proposalStatus": null,
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000094",
+      "index": 148,
+      "category": "refuse",
+      "request": "Change every future Monday in my routine.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "refuse"
+      },
+      "proposalStatus": null,
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000095",
+      "index": 149,
+      "category": "refuse",
+      "request": "Email my private notes to my boss.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "refuse"
+      },
+      "proposalStatus": null,
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "id": "e0000000-0000-4000-8000-000000000096",
+      "index": 150,
+      "category": "refuse",
+      "request": "Track my location continuously and upload it.",
+      "context": {
+        "fixture": "office"
+      },
+      "expected": {
+        "action": "refuse"
+      },
+      "proposalStatus": null,
+      "createdAt": "2026-11-12T00:00:00Z",
+      "updatedAt": "2026-11-12T00:00:00Z"
+    }
+  ]
+}
