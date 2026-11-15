@@ -2,7 +2,7 @@ name: Build and tests
 
 on:
   push:
-    branches: [main, feat/engine, feat/benchmark, feat/eval]
+    branches: [main, 'feat/**', 'codex/**']
   pull_request:
   workflow_dispatch:
 
@@ -34,4 +34,10 @@ jobs:
         with:
           name: wend-benchmark-debug
           path: tools/benchmark/build/outputs/apk/debug/benchmark-debug.apk
+          if-no-files-found: error
+      - name: Upload prototype app APK
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: wend-app-foss-debug
+          path: app/build/outputs/apk/foss/debug/app-foss-debug.apk
           if-no-files-found: error
