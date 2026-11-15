@@ -7,8 +7,10 @@ the Phase 0 PRD decides scope. Verify this snapshot against Git before acting.
 ## Repository and branch
 
 - Public repository: https://github.com/CodeByLiad/wend
-- Current working branch: `codex/prototype-followup`, stacked on
-  `feat/design-system`, for the prototype review-flow fix and CI APK delivery.
+- Current working branch: `codex/benchmark-import`, stacked on
+  `codex/prototype-followup`, for model-import cancellation cleanup and diagnostics.
+- PR #5: https://github.com/CodeByLiad/wend/pull/5 — `codex/benchmark-import`
+  into `codex/prototype-followup`.
 - PR #4: https://github.com/CodeByLiad/wend/pull/4 — `codex/prototype-followup`
   into `feat/design-system`.
 - PR #3: https://github.com/CodeByLiad/wend/pull/3 — `feat/design-system` into
@@ -21,13 +23,15 @@ the Phase 0 PRD decides scope. Verify this snapshot against Git before acting.
   Preserve the stack when updating branches; inspect current PR state first.
 - Latest implementation commits: `f1c307e` (bedtime request preservation),
   `dfa44ce` (wake-time-only changes) and `6136f1b` (prototype APK delivery).
+  Import follow-up: `3adff91` (cancellation cleanup/diagnostics/regressions),
+  `5d12f71` (CI compiles instrumentation tests).
   Claude's weekend branch ended at `4cfa00a`.
   Initial shared handoff commit: `0a7532f`.
 
 At home, clone the working branch before starting Claude Code:
 
 ```sh
-git clone --branch codex/prototype-followup https://github.com/CodeByLiad/wend.git
+git clone --branch codex/benchmark-import https://github.com/CodeByLiad/wend.git
 cd wend
 ```
 
@@ -67,6 +71,8 @@ and this file; `AGENTS.md` also tells Codex to read this handoff.
   include all 30 worked examples, full-block assertions and property tests.
   No engine example expectation was changed in this work.
 - Both GitHub push and PR checks passed for `433bb6a` before the handoff changes.
+- Both GitHub push and PR checks passed for prototype follow-up `02ba716`;
+  its benchmark and FOSS app APK artifacts were verified.
 - Android smoke checks passed for exact-byte import/hash, recognized model
   suffixes, rejection of invalid native models and loading the frozen corpus.
   Candidate inference is skipped unless instrumentation arguments select it.
@@ -160,8 +166,9 @@ Normal connected tests skip costly model inference without explicit arguments.
 1. Resume device work only when the owner makes a phone available again.
    Investigate/retry the LiteRT import setup, then finish CPU/GPU pilots.
    The source passed its pinned SHA check and storage was sufficient. The
-   cause of the missing imported model is not established; inspect lifecycle
-   cancellation/foreground state and add useful test diagnostics if needed.
+   cause of the missing imported model is not established. The import follow-up
+   below adds diagnostics and fixes a reproduced cancellation cleanup race;
+   retry the physical pilot before attributing the original failure to it.
 2. Review the stacked PRs and verify their latest checks before changing bases.
 3. Run corrected-prompt comparative evaluations and test further compatible,
    current models. Keep the 150 requests frozen and record source/configuration.
@@ -278,6 +285,36 @@ Next: review PR #4 and its APK artifact, then resume the Phase 0 evaluation
 backlog when a phone is available. The owner-requested UI exception does not
 advance the project to Phase 1.
 
+## Import follow-up (2026-11-15)
+
+The owner asked to continue until outside input was needed. The unfinished
+LiteRT pilot had only reported a null model after import. This follow-up fixes
+a separately reproduced cancellation race and improves the next diagnosis.
+
+- `ModelImport.copy` keeps ownership across the IO-to-caller return. If prompt
+  cancellation discards the already copied result, non-cancellable cleanup
+  removes the unclaimed file, including its renamed container suffix.
+- Benchmark import cancellation now has a distinct resource message. Failure
+  diagnostics report backend, busy/loading/stopping flags, model presence and
+  the resource error; no source paths, prompts or generated text are included.
+- The ten-minute test verifies the imported copy's SHA-256 against the pinned
+  candidate before inference. CI compiles both instrumentation test APKs.
+- `build test :core:engine:test lint spotlessCheck` passed (130 distinct JVM
+  tests); both instrumentation test APKs compile. API 36 isolated emulator:
+  six AI import/runtime smoke tests and one benchmark Activity lifecycle test
+  passed. Tests cover completed-copy cancellation, empty imports, retry and
+  preserving a good model after failed replacement. The emulator test apps
+  were uninstalled and that isolated emulator stopped.
+- No engine rules, worked examples, frozen corpus or model pins changed.
+- The owner reconnected a phone for the remaining pilots. The benchmark APKs
+  are installed and the pinned LiteRT file was copied and verified in private
+  storage. Wireless debugging required renewed authorization. No new physical
+  ten-minute result exists yet; do not infer the earlier import failure's cause
+  from the cancellation regression. Keep test reports and device details private.
+
+Next: finish wireless authorization, unplug charging, retry the LiteRT CPU/GPU
+pilots, retain separate reports and remove temporary phone apps/models afterward.
+
 ## Session handback
 
 Before the Saturday handback or any agent switch, update this file with what
@@ -289,7 +326,7 @@ For current evaluation follow-up, use `feat/eval`. If work moves to another task
 branch, record its exact name and PR in the handback so the returning agent can
 check out the right context. If the expected tracking branch has not changed,
 inspect recent remote handoff commits and PRs before assuming no work occurred.
-For the latest UI prototype and its fixes, use `codex/prototype-followup` until
+For the latest complete stack, use `codex/benchmark-import` until
 the stacked PRs are merged or the owner names a different branch.
 
 2026-11-12 — Codex: built the frozen evaluation harness and device automation;

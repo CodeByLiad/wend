@@ -69,8 +69,7 @@ cannot be controlled by an ordinary Android app and are explicitly marked
 uncontrolled in the export. Record cold/warm conditions externally; do not claim
 that a fresh app cache also clears the OS page cache.
 
-LiteRT-LM applies the model's conversation template, whereas the llama.cpp speed
-probe tokenizes the fixed text directly. Runtime tokenizers and compiled model
+Both adapters apply the model's conversation template. Runtime tokenizers and compiled model
 formats can differ. Record the original model/version, quantization and conversion
 settings with each comparison. This tool measures performance, not command accuracy.
 
@@ -115,6 +114,17 @@ loading each native library with an invalid model that must be rejected without
 crashing. Both ABI builds are compiled; a local x86-64 emulator can exercise native
 loading. No valid candidate-model performance numbers are claimed from these tests.
 
+Import regressions also cancel delivery after a complete copy and verify that
+the unclaimed private file is removed. Empty imports leave no copy. The benchmark
+Activity test cancels an import, retries successfully and rejects an inaccessible
+replacement while keeping the previous model. These use tiny synthetic containers,
+not candidate models or inference measurements. Cancellation is shown separately
+from file-access/storage failure; ten-minute test failures include backend and
+operation state without source paths, prompts or generated text. The test also
+compares the imported copy's SHA-256 against the verified source before inference.
+This closes a reproduced cleanup race; it does not establish why the earlier
+real-phone LiteRT import was cancelled or failed.
+
 Verified locally on 2026-11-12: `build`, `test`, `lint` and `spotlessCheck` passed;
 all 83 JVM tests (including the unchanged 75 engine tests) and all four Android
 smoke tests passed. The isolated API 36 emulator also launched the APK and exposed
@@ -145,11 +155,16 @@ JDK 21, Android SDK 37.0, NDK 28.2.13676358 and CMake 3.22.1 are required. Point
 ./gradlew build test lint spotlessCheck
 ./gradlew :tools:benchmark:assembleDebug
 ./gradlew :core:ai:connectedDebugAndroidTest
+./gradlew :tools:benchmark:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.jinatra.wend.benchmark.ModelImportLifecycleTest
 ```
 
 The APK is at `tools/benchmark/build/outputs/apk/debug/benchmark-debug.apk`.
 GitHub Actions publishes that prototype APK as a build artifact after checks pass.
 It is not a production release.
+
+CI compiles the AI and benchmark instrumentation test APKs. Execute the connected
+tests explicitly on a selected emulator/device; compiling them is not evidence
+that they ran. Without candidate arguments, these tests do not run real inference.
 
 An opt-in `DeviceBenchmarkTest#benchmarkVerifiedCandidateForTenMinutes` automates
 the same foreground Activity/ViewModel flow. Normal connected tests skip it
