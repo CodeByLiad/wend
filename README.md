@@ -91,8 +91,9 @@ rules and the engine spec first. Please keep changes within the current phase;
 report contradictions in the spec before changing expected example results.
 
 Use [GitHub issues](https://github.com/CodeByLiad/wend/issues) for reproducible bugs
-and focused proposals. The benchmark debug APK is available as a GitHub Actions
-artifact after checks pass; it is an internal Phase 0 tool, not a production release.
+and focused proposals. Successful GitHub Actions runs publish `wend-benchmark-debug`
+and `wend-app-foss-debug` artifacts. Both are internal prototypes. See the
+[handoff](docs/HANDOFF.md) for the active branch and stacked PRs.
 
 ## License and trademarks
 
