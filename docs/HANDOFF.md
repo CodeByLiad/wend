@@ -19,8 +19,9 @@ the Phase 0 PRD decides scope. Verify this snapshot against Git before acting.
 - These PRs are stacked and open. The active follow-up branch contains the full
   current prototype stack.
   Preserve the stack when updating branches; inspect current PR state first.
-- Latest implementation commits: `f1c307e` (bedtime request preservation) and
-  `6136f1b` (prototype APK delivery). Claude's weekend branch ended at `4cfa00a`.
+- Latest implementation commits: `f1c307e` (bedtime request preservation),
+  `dfa44ce` (wake-time-only changes) and `6136f1b` (prototype APK delivery).
+  Claude's weekend branch ended at `4cfa00a`.
   Initial shared handoff commit: `0a7532f`.
 
 At home, clone the working branch before starting Claude Code:
@@ -60,8 +61,8 @@ and this file; `AGENTS.md` also tells Codex to read this handoff.
 ## Verified state
 
 - `build test :core:engine:test lint spotlessCheck` passed locally for the
-  implementation in `6136f1b`, on 2026-11-15.
-- 129 distinct JVM tests pass: 75 engine, 8 benchmark, 23 evaluation and 23 Today.
+  implementation in `dfa44ce`, on 2026-11-15.
+- 130 distinct JVM tests pass: 75 engine, 8 benchmark, 23 evaluation and 24 Today.
   The engine tests
   include all 30 worked examples, full-block assertions and property tests.
   No engine example expectation was changed in this work.
@@ -256,15 +257,20 @@ the follow-up in PR #4.
 - Three regressions cover an evening overrun and its dependent, stale replay,
   and the ViewModel review → allow → approve → undo flow. No engine rules or
   worked-example expectations changed.
+- Fixed a second controller issue: a changed wake time was discarded when no
+  block moved. No-op detection now compares the complete Day. Under the existing
+  own-edit policy, a wake-only change is applied, logged and undoable. A fourth
+  regression verifies the unchanged blocks, changed wake, history and exact undo.
 - Enabled the FOSS prototype APK artifact and checks on `feat/**` / `codex/**`.
   The artifact is an internal prototype, not a production release.
 - Full local build, tests, engine tests, lint and formatting checks pass.
   The new bedtime edge case is covered by controller/ViewModel tests.
-- API 36 isolated emulator smoke: running late → 30 minutes → review → apply →
+- API 36 isolated emulator smoke at `f02128e`: running late → 30 minutes → review → apply →
   persistent header undo restored the original times. Light review, dark Today
   and 200% text were inspected; both bottom actions remain visible at 200%.
   Both app flavours retain `com.jinatra.wend` and request no Internet permission.
-  The test app was removed from the emulator and the emulator shut down.
+  The test app was removed from the emulator and the emulator shut down. The
+  subsequent wake-only correction is covered by its controller regression.
 - No physical phone was used. Physical timing, model benchmarks and the other
   Phase 0 feasibility work remain pending as recorded above.
 
@@ -297,6 +303,6 @@ the owner for a Claude Code handoff. Keep the frozen gold data unchanged.
 was not possible overnight (no phone); the evaluation items there are unchanged.
 
 2026-11-15 — Codex: synchronized `feat/design-system` at `4cfa00a`; fixed the
-review's bedtime recovery in `f1c307e`, completed CI APK delivery in `6136f1b`,
-and opened PR #4. 129 JVM tests and all required local checks pass; emulator
+review's bedtime recovery in `f1c307e`, fixed wake-only changes in `dfa44ce`,
+completed CI APK delivery in `6136f1b`, and opened PR #4. 130 JVM tests and all required local checks pass; emulator
 smoke checks passed. Physical device work was not resumed.
