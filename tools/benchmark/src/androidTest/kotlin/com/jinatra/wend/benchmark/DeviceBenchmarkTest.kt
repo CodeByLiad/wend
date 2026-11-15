@@ -12,7 +12,6 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.jinatra.wend.ai.RuntimeBackend
 import org.json.JSONObject
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Assume.assumeTrue
 import org.junit.Test
@@ -59,17 +58,18 @@ class DeviceBenchmarkTest {
             fun await(timeout: Long, finished: () -> Boolean) {
                 val deadline = SystemClock.elapsedRealtime() + timeout
                 while (!finished()) {
-                    check(SystemClock.elapsedRealtime() < deadline) { "Benchmark UI timed out" }
+                    check(SystemClock.elapsedRealtime() < deadline) { "Benchmark UI timed out: ${model.state.value.diagnostic()}" }
                     SystemClock.sleep(1000)
                 }
             }
             try {
                 await(120_000) { !model.state.value.busy }
-                assertNotNull(model.state.value.model)
+                val imported = requireNotNull(model.state.value.model) { "Model import did not complete: ${model.state.value.diagnostic()}" }
+                assertEquals("Imported copy differs from the verified candidate", expected, imported.sha256)
                 scenario.onActivity { model.start() }
                 await(1_200_000) { !model.state.value.busy }
                 val state = model.state.value
-                val result = requireNotNull(state.result) { "Benchmark did not produce a result" }
+                val result = requireNotNull(state.result) { "Benchmark did not produce a result: ${state.diagnostic()}" }
                 val report = JSONObject(requireNotNull(state.report)).put("gitRevision", revision).put("modelRevision", modelRevision).put("execution", "UI_INSTRUMENTATION")
                 File(context.filesDir, "results/${result.id}.json").writeText(report.toString(2))
                 assertEquals(RunOutcome.COMPLETED, result.outcome)
@@ -80,4 +80,8 @@ class DeviceBenchmarkTest {
             }
         }
     }
+
+    // Never include filenames, URIs, prompts or generated text in failure output.
+    private fun BenchmarkState.diagnostic(): String = "backend=$backend busy=$busy loading=$loading stopping=$stopping modelPresent=${model != null} " +
+        "error=${errorResource?.let { InstrumentationRegistry.getInstrumentation().targetContext.getString(it) }}"
 }

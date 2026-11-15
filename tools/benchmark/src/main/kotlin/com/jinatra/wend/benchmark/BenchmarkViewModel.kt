@@ -55,6 +55,7 @@ class BenchmarkViewModel(application: Application) : AndroidViewModel(applicatio
                 mutable.value = mutable.value.copy(model = imported, result = null, report = null)
             } catch (_: CancellationException) {
                 // The importer removes its partial file.
+                mutable.value = mutable.value.copy(errorResource = R.string.import_cancelled)
             } catch (_: Exception) {
                 mutable.value = mutable.value.copy(errorResource = R.string.import_failed)
             } finally {

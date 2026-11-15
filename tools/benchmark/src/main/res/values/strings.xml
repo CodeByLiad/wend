@@ -18,6 +18,7 @@
     <string name="cancelled">Cancelled · partial measurement</string>
     <string name="failed">Model operation failed. Check the file format, available RAM and selected runtime.</string>
     <string name="import_failed">Could not import the file. Check available storage and file access.</string>
+    <string name="import_cancelled">Model import cancelled. Keep this screen open and import again.</string>
     <string name="export_failed">Could not save the result.</string>
     <string name="result">Load: %1$.2f seconds\nDecode speed: %2$s tokens/second\nSampled peak PSS: %3$d MB\nPeak battery temperature: %4$s °C\nBattery drain: %5$s percentage points\nCompleted generations: %6$d</string>
     <string name="unavailable">Unavailable</string>
