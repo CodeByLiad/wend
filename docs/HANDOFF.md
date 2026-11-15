@@ -1,28 +1,33 @@
 # Wend handoff
 
-Updated: 2026-11-13 by Claude Code (overnight, unattended). This is shared working context for Claude Code and
+Updated: 2026-11-15 by Codex, after synchronizing Claude's weekend work. This is shared working context for Claude Code and
 Codex. Read `AGENTS.md` fully first. The engine spec decides engine behaviour;
 the Phase 0 PRD decides scope. Verify this snapshot against Git before acting.
 
 ## Repository and branch
 
 - Public repository: https://github.com/CodeByLiad/wend
-- Current working branch: `feat/design-system` (stacked on `feat/eval`), for the
-  owner-requested UI prototype. Evaluation follow-up still belongs on `feat/eval`.
+- Current working branch: `codex/prototype-followup`, stacked on
+  `feat/design-system`, for the prototype review-flow fix and CI APK delivery.
+- PR #4: https://github.com/CodeByLiad/wend/pull/4 — `codex/prototype-followup`
+  into `feat/design-system`.
 - PR #3: https://github.com/CodeByLiad/wend/pull/3 — `feat/design-system` into
   `feat/eval` (draft; see the UI prototype section below).
 - `main` contains the completed engine work, through `37f1f58`.
 - PR #1: https://github.com/CodeByLiad/wend/pull/1 — `feat/benchmark` into `main`.
 - PR #2: https://github.com/CodeByLiad/wend/pull/2 — `feat/eval` into `feat/benchmark`.
-- These PRs are stacked and open. `feat/eval` contains all current prototypes.
+- These PRs are stacked and open. The active follow-up branch contains the full
+  current prototype stack.
   Preserve the stack when updating branches; inspect current PR state first.
-- Last implementation commit before this handoff: `433bb6a`; initial shared
-  handoff commit: `0a7532f`.
+- Latest implementation commits: `f1c307e` (bedtime request preservation),
+  `dfa44ce` (wake-time-only changes) and `6136f1b` (prototype APK delivery).
+  Claude's weekend branch ended at `4cfa00a`.
+  Initial shared handoff commit: `0a7532f`.
 
 At home, clone the working branch before starting Claude Code:
 
 ```sh
-git clone --branch feat/eval https://github.com/CodeByLiad/wend.git
+git clone --branch codex/prototype-followup https://github.com/CodeByLiad/wend.git
 cd wend
 ```
 
@@ -49,12 +54,16 @@ and this file; `AGENTS.md` also tells Codex to read this handoff.
   `core:ai` Android tests provide opt-in on-device inference.
 - Gradle wrapper/catalog, Spotless/ktlint, Kotest, GPLv3, trademark notice,
   contribution files and GitHub Actions are set up. CI publishes a prototype
-  benchmark APK artifact. There is no production app, database or companion.
+  benchmark and FOSS prototype APK artifacts. The app shell, Today screen and
+  design system are synthetic in-memory prototypes; there is no production
+  database or companion.
 
 ## Verified state
 
-- `build test :core:engine:test lint spotlessCheck` passed locally at `433bb6a`.
-- 106 JVM tests pass: 75 engine, 8 benchmark, 23 evaluation. The engine tests
+- `build test :core:engine:test lint spotlessCheck` passed locally for the
+  implementation in `dfa44ce`, on 2026-11-15.
+- 130 distinct JVM tests pass: 75 engine, 8 benchmark, 23 evaluation and 24 Today.
+  The engine tests
   include all 30 worked examples, full-block assertions and property tests.
   No engine example expectation was changed in this work.
 - Both GitHub push and PR checks passed for `433bb6a` before the handoff changes.
@@ -208,9 +217,10 @@ Deliberate prototype limits and deviations to review:
   change), then logged; confirm this matches the intended reading of hard rule 1.
 - Bottom navigation is omitted because no other destinations exist yet.
 - R8 is not enabled; release APK is about 23.5 MB unminified.
-- CI is unchanged: the push token lacks the `workflow` scope. The new modules
-  run under the existing build/lint/spotless steps; an optional step to upload
-  the prototype APK is written out in PR #3 for the owner to add.
+- CI follow-up completed on 2026-11-15 in `6136f1b`: feature/follow-up branches
+  run checks, and the workflow uploads `wend-app-foss-debug` alongside
+  `wend-benchmark-debug`. The earlier workflow-scope limitation was local to
+  Claude's session; this workstation could push the workflow change.
 
 Verification on this machine (Windows, JDK 21 Temurin 21.0.13 in `~/.jdks`,
 emulator `cueplay_pixel`, API 35, x86_64, software rendering):
@@ -233,6 +243,41 @@ emulator `cueplay_pixel`, API 35, x86_64, software rendering):
 Next steps for this branch: owner review of the look and the deviations above;
 then fold into Phase 1 planning (`:core:data` ChangeLog, Hilt, onboarding).
 
+## Prototype follow-up (2026-11-15)
+
+The owner asked to fetch the latest code and continue. Codex found Claude's
+new branch through the remote handoff history, preserved the PR stack and made
+the follow-up in PR #4.
+
+- Fixed **Allow past bedtime** discarding the overrun under review. A pending
+  review now retains the original command, timestamp, target and settings.
+  The engine repeats that command with the allowance enabled, from the original
+  unchanged Day. The failed attempt's UNPLACED blocks are not committed before
+  retrying. Approval and exact undo remain intact, and stale requests are rejected.
+- Three regressions cover an evening overrun and its dependent, stale replay,
+  and the ViewModel review → allow → approve → undo flow. No engine rules or
+  worked-example expectations changed.
+- Fixed a second controller issue: a changed wake time was discarded when no
+  block moved. No-op detection now compares the complete Day. Under the existing
+  own-edit policy, a wake-only change is applied, logged and undoable. A fourth
+  regression verifies the unchanged blocks, changed wake, history and exact undo.
+- Enabled the FOSS prototype APK artifact and checks on `feat/**` / `codex/**`.
+  The artifact is an internal prototype, not a production release.
+- Full local build, tests, engine tests, lint and formatting checks pass.
+  The new bedtime edge case is covered by controller/ViewModel tests.
+- API 36 isolated emulator smoke at `f02128e`: running late → 30 minutes → review → apply →
+  persistent header undo restored the original times. Light review, dark Today
+  and 200% text were inspected; both bottom actions remain visible at 200%.
+  Both app flavours retain `com.jinatra.wend` and request no Internet permission.
+  The test app was removed from the emulator and the emulator shut down. The
+  subsequent wake-only correction is covered by its controller regression.
+- No physical phone was used. Physical timing, model benchmarks and the other
+  Phase 0 feasibility work remain pending as recorded above.
+
+Next: review PR #4 and its APK artifact, then resume the Phase 0 evaluation
+backlog when a phone is available. The owner-requested UI exception does not
+advance the project to Phase 1.
+
 ## Session handback
 
 Before the Saturday handback or any agent switch, update this file with what
@@ -244,6 +289,8 @@ For current evaluation follow-up, use `feat/eval`. If work moves to another task
 branch, record its exact name and PR in the handback so the returning agent can
 check out the right context. If the expected tracking branch has not changed,
 inspect recent remote handoff commits and PRs before assuming no work occurred.
+For the latest UI prototype and its fixes, use `codex/prototype-followup` until
+the stacked PRs are merged or the owner names a different branch.
 
 2026-11-12 — Codex: built the frozen evaluation harness and device automation;
 implementation commits `928a6d0`, `6bd6437`, `0b4cff6`, `5f47cfa`, `433bb6a`.
@@ -254,3 +301,8 @@ the owner for a Claude Code handoff. Keep the frozen gold data unchanged.
 2026-11-13 — Claude Code: built the owner-requested editorial UI prototype on
 `feat/design-system` (see "UI prototype" above). Device work from "Next work"
 was not possible overnight (no phone); the evaluation items there are unchanged.
+
+2026-11-15 — Codex: synchronized `feat/design-system` at `4cfa00a`; fixed the
+review's bedtime recovery in `f1c307e`, fixed wake-only changes in `dfa44ce`,
+completed CI APK delivery in `6136f1b`, and opened PR #4. 130 JVM tests and all required local checks pass; emulator
+smoke checks passed. Physical device work was not resumed.

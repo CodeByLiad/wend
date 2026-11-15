@@ -52,6 +52,23 @@ class TodayControllerTest :
             outcome.proposal.day.byTitle("Email and admin").start.value shouldBe 11 * 60 + 30
         }
 
+        test("a wake-time-only change is applied logged and exactly undoable") {
+            val original = notStarted().copy(wake = Minute(360))
+            val controller = TodayController(original)
+            val expected = SchedulingEngine.propose(original, Command.LateWake(Minute(405)), Minute(405))
+            expected.status shouldBe ProposalStatus.OK
+            expected.changes shouldHaveSize 0
+
+            controller.runningLate(15, 390).shouldBeInstanceOf<Outcome.Applied>().kind shouldBe AppliedKind.PLAN_UPDATED
+            controller.day shouldBe expected.day
+            controller.day.wake shouldBe Minute(405)
+            controller.day.blocks shouldBe original.blocks
+            controller.changeLog.single().before shouldBe original
+            controller.canUndo shouldBe true
+            controller.undo(405)
+            controller.day shouldBe original
+        }
+
         test("an approved proposal is logged and undo restores the exact previous day") {
             val controller = TodayController(sample())
             val outcome = controller.runningLate(60, now).shouldBeInstanceOf<Outcome.NeedsApproval>()
