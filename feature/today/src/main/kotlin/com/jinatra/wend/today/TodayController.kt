@@ -141,12 +141,12 @@ class TodayController(initial: Day) {
             ProposalStatus.NO_HORIZON -> Outcome.NoTimeLeft
 
             else -> when {
-                proposal.changes.isEmpty() -> Outcome.NothingToChange
+                proposal.day == day -> Outcome.NothingToChange
 
-                // The person's own edit with no knock-on effects needs no second confirmation.
-                proposal.status == ProposalStatus.OK && target != null && proposal.changes.all { it.blockId == target } -> {
+                // An own edit, including day metadata alone, needs no second confirmation without knock-on effects.
+                proposal.status == ProposalStatus.OK && proposal.changes.all { it.blockId == target } -> {
                     apply(proposal)
-                    Outcome.Applied(if (command is Command.SkipBlock) AppliedKind.SKIPPED else AppliedKind.PLAN_UPDATED, find(target)?.title)
+                    Outcome.Applied(if (command is Command.SkipBlock) AppliedKind.SKIPPED else AppliedKind.PLAN_UPDATED, target?.let(::find)?.title)
                 }
 
                 else -> Outcome.NeedsApproval(proposal, settings, command, now, target)
