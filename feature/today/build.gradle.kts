@@ -23,5 +23,6 @@ dependencies {
     debugImplementation(libs.compose.tooling)
     testImplementation(libs.kotest.runner)
     testImplementation(libs.kotest.assertions)
+    testImplementation(libs.coroutines.test)
     testRuntimeOnly(libs.junit.launcher)
 }

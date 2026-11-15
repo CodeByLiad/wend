@@ -23,7 +23,10 @@ sealed interface Sheet {
 
     data class BlockActions(val blockId: String) : Sheet
 
-    data class Review(val proposal: Proposal, val settings: Settings) : Sheet
+    data class Review(val request: Outcome.NeedsApproval) : Sheet {
+        val proposal: Proposal get() = request.proposal
+        val settings: Settings get() = request.settings
+    }
 }
 
 /** A one-off message; [id] keeps two equal outcomes in a row distinct. */
@@ -68,7 +71,10 @@ class TodayViewModel(
 
     fun rebuild() = handle(controller.rebuild(clock.now()))
 
-    fun rebuildPastBedtime() = handle(controller.rebuild(clock.now(), Settings(allowPastBedtime = true)))
+    fun allowPastBedtime() {
+        val review = _state.value.sheet as? Sheet.Review ?: return
+        handle(controller.allowPastBedtime(review.request))
+    }
 
     fun markDone(id: String) = handle(controller.markDone(id))
 
@@ -93,7 +99,7 @@ class TodayViewModel(
 
     private fun handle(outcome: Outcome) {
         if (outcome is Outcome.NeedsApproval) {
-            refresh(sheet = Sheet.Review(outcome.proposal, outcome.settings), message = null)
+            refresh(sheet = Sheet.Review(outcome), message = null)
         } else {
             refresh(sheet = null, message = message(outcome))
         }

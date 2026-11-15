@@ -28,7 +28,13 @@ sealed interface Outcome {
     data class Applied(val kind: AppliedKind, val blockTitle: String?) : Outcome
 
     /** Changes beyond the person's own edit: wait for approval. */
-    data class NeedsApproval(val proposal: Proposal, val settings: Settings) : Outcome
+    data class NeedsApproval(
+        val proposal: Proposal,
+        val settings: Settings,
+        val command: Command,
+        val now: Int,
+        val target: String?,
+    ) : Outcome
 
     /** The engine found nothing to change. */
     data object NothingToChange : Outcome
@@ -73,6 +79,12 @@ class TodayController(initial: Day) {
     }
 
     fun rebuild(now: Int, settings: Settings = Settings()): Outcome = propose(Command.RebuildDay, now, null, settings)
+
+    /** Repeats the reviewed request from its original input, allowing one extra hour. */
+    fun allowPastBedtime(request: Outcome.NeedsApproval): Outcome {
+        check(request.proposal.previousDay == day) { "Proposal is stale" }
+        return propose(request.command, request.now, request.target, request.settings.copy(allowPastBedtime = true))
+    }
 
     fun skip(id: String, now: Int): Outcome = propose(Command.SkipBlock(id), now, id)
 
@@ -137,7 +149,7 @@ class TodayController(initial: Day) {
                     Outcome.Applied(if (command is Command.SkipBlock) AppliedKind.SKIPPED else AppliedKind.PLAN_UPDATED, find(target)?.title)
                 }
 
-                else -> Outcome.NeedsApproval(proposal, settings)
+                else -> Outcome.NeedsApproval(proposal, settings, command, now, target)
             }
         }
     }

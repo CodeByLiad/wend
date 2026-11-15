@@ -96,7 +96,7 @@ fun TodayRoute(viewModel: TodayViewModel, modifier: Modifier = Modifier) {
             proposal = sheet.proposal,
             canAllowPastBedtime = !sheet.settings.allowPastBedtime,
             onApply = { viewModel.approve(sheet.proposal) },
-            onPastBedtime = viewModel::rebuildPastBedtime,
+            onPastBedtime = viewModel::allowPastBedtime,
             onDismiss = viewModel::dismissSheet,
         )
 
