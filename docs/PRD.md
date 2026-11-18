@@ -31,12 +31,22 @@ Each phase is a complete app on its own. If work stopped after any phase, what s
 
 | Phase | Delivers | Size | Gate to move on |
 | --- | --- | --- | --- |
-| 0 · Spike | Engine prototype, model benchmark, AI planner and companion tests | Small | AI planner pass rate and speed known per tier; companion feel tested |
+| 0 · Spike | Engine prototype, model benchmark, AI planner and companion tests | Small | Device AI results known per tier (pending); companion prototype built, people study waived |
 | 1 · Planner + AI planner | Today screen, routines, adaptive scheduling, habits, manual tracking, reminders, AI planner, export | Large | Beta testers still using it daily after 4 weeks; reminders reliable on the device matrix |
 | 2 · Companion | Chat with memory, personality, proactive check-ins, safety layer, voice, widgets, goals, backup | Large | Testers return to the companion unprompted; safety layer passes its test set |
 | 3 · Auto tracking + commute | Health Connect, screen time, places, commute estimates and leave-by reminders | Medium–large | Auto data is accurate on the device matrix within the battery budget |
 | 4 · Wear OS + tablets | Watch tiles and quick logging, tablet layouts | Medium | Watch actions sync reliably; tablet layouts pass review |
 | 5 · Languages + growth | Bangla and more languages, community translation, extra models | Ongoing | Per item, see Phase 5 |
+
+## Owner implementation directive (2026-11-18)
+
+The owner authorized software work through the remaining phases without waiting
+for their phone. Continue in dependency order while keeping hardware-dependent
+criteria and remaining release gates explicitly unverified. The Phase 0
+two-week companion people study is cancelled. This does not invent human results,
+qualify an AI tier, authorize a public release or waive unrelated later-phase
+human review. Later drafts may be implemented within the written scope, with
+unresolved requirements raised when they actually block work.
 
 ## How a phase ships
 
@@ -91,15 +101,17 @@ No design work, onboarding, settings or polish. The code may be reused but doesn
 
 **Engine cases:** 30 worked examples (input day, trigger, expected result), defined in the scheduling engine spec.
 
-**Companion people test:** 10–15 people on capable phones use the probe for 2 weeks with no instructions beyond "talk to it when you like". Collect a short survey at the end of each week, plus their honest answer to: would you miss it if it disappeared?
+**Companion people test:** Cancelled by the owner on 2026-11-18 because it
+requires real participants. The probe remains available for software and
+owner-driven model checks. No simulated people test replaces it, and conversation
+usefulness or return rate is not reported as validated.
 
 ## Exit criteria
 
 Proposed numbers, to confirm before testing starts:
 
 Confirmed on 2026-11-12: the 90% correct-command, under-five-second proposal,
-and ten-token-per-second chat targets below. The people-test threshold remains
-proposed until that test is arranged. Evaluation reports must distinguish
+and ten-token-per-second chat targets below. The people-test criterion is cancelled by the owner. Evaluation reports must distinguish
 first-pass results, any permitted correction, and incomplete runs.
 
 | Result | Threshold | Decides |
@@ -108,7 +120,7 @@ first-pass results, any permitted correction, and incomplete runs.
 | AI planner response time | Under 5 seconds from send to proposal card | Minimum tier for the AI planner |
 | Chat generation speed | 10 tokens per second or faster | Minimum tier for the companion in Phase 2 |
 | Engine worked examples | All 30 pass | Whether greedy placement is enough |
-| Companion return rate | At least half of testers use it unprompted in week 2 | Whether the companion stays the heart of Phase 2 or gets rethought |
+| Companion return rate | Cancelled by owner on 2026-11-18; not measured | No human-return claim; not an implementation gate |
 
 The report also names the runtime, the model catalogue for Phase 1 and the RAM boundaries between tiers.
 
