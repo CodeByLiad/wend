@@ -125,6 +125,29 @@ internal fun validateCommand(
             day.blocks.find { it.id != id && it.occupies() && overlaps(moved, it) }?.let { return error(ErrorCode.OVERLAPS_LOCKED, it.id) }
         }
 
+        is Command.EditBlock -> {
+            if (block!!.status != BlockStatus.PLANNED || command.block.status != BlockStatus.PLANNED || command.block.id != id) {
+                return error(ErrorCode.INVALID_TARGET, id)
+            }
+            val edited = day.copy(blocks = day.blocks.map { if (it.id == id) command.block else it })
+            validateDay(edited).takeIf { it.isNotEmpty() }?.let { return it }
+            val replacement = command.block
+            if (replacement.kind == Kind.FIXED) {
+                if (replacement.start.value < horizonStart(day, now)) return error(ErrorCode.IN_THE_PAST, id)
+                if (replacement.end.value > horizonEnd(day, settings)) return error(ErrorCode.PAST_BEDTIME_NOT_ALLOWED, id)
+                if (replacement.start.value < replacement.windowStart(day) || replacement.end.value > replacement.windowEnd(day)) {
+                    return error(ErrorCode.OUTSIDE_WINDOW, id)
+                }
+                if (day.blocks.any {
+                        it.id != id && it.occupies() &&
+                            ((it.id == replacement.after && replacement.start < it.end) || (it.after == id && replacement.end > it.start))
+                    }
+                ) {
+                    return error(ErrorCode.DEPENDENCY_VIOLATION, id)
+                }
+            }
+        }
+
         is Command.AddBlock -> {
             val errors = validateDay(day.copy(blocks = day.blocks + command.block))
             if (errors.isNotEmpty()) return errors
@@ -156,6 +179,7 @@ internal fun Command.targetId(): String? = when (this) {
     is Command.MoveBlock -> id
     is Command.SkipBlock -> id
     is Command.SetFixed -> id
+    is Command.EditBlock -> id
     is Command.AddBlock -> block.id
     else -> null
 }

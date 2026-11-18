@@ -123,4 +123,6 @@
     <string name="error_past_bedtime">That would run past bedtime.</string>
     <string name="error_dependency">That would put it after something that has to follow it.</string>
     <string name="error_invalid_target">That can\'t be changed right now.</string>
+    <string name="reason_user_edit">You edited this activity.</string>
+    <string name="effect_edited">Edited</string>
 </resources>

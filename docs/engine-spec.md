@@ -1,4 +1,4 @@
-# Wend — Scheduling Engine Spec v0.3
+# Wend — Scheduling Engine Spec v0.4
 
 Nov 11, 2026 · Liad Bin Aowlad
 
@@ -7,6 +7,8 @@ The scheduling engine is the only part of Wend that changes a schedule. This spe
 **v0.3** answers the second Codex review. Main changes: dropped and unplaced blocks are no longer retried automatically (new `retry_block` command replaces `mark_missed`), so rebuilds are idempotent; Keep requires a valid length; the horizon is capped at 2880; validation sub-codes are named; example 26 fixed. The "Answers" sections at the end map every review point to its resolution.
 
 **Approved implementation clarification:** `move_block` also rejects a move ending after any occupying dependent starts, with `DEPENDENCY_VIOLATION`. This keeps a pinned prerequisite compatible with the next rebuild after its pin is removed.
+
+**v0.4 (owner-approved 2026-11-18):** adds `edit_block` for Phase 1 activity editing. The 30 original examples and all v0.3 commands retain their behavior. Start/Done remain validated, logged status-only repository actions, not time edits.
 
 ## Time
 
@@ -24,8 +26,8 @@ The scheduling engine is the only part of Wend that changes a schedule. This spe
 | title | Display name |
 | kind | `FIXED` (never moved by a rebuild), `FLEXIBLE` (can move and shrink), `OPTIONAL` (can move, shrink or be dropped) |
 | start, end | Current interval. Actual length = end − start, which may differ from `duration` after shrinking or an overrun |
-| duration | Target full length in minutes. The engine never changes it |
-| minDuration | Shortest acceptable length in minutes. The engine never changes it |
+| duration | Target full length in minutes. Only an explicit `edit_block` changes it |
+| minDuration | Shortest acceptable length in minutes. Only an explicit `edit_block` changes it |
 | priority | `HIGH`, `NORMAL` or `LOW`. Required for FLEXIBLE and OPTIONAL; ignored for FIXED |
 | window | Optional. Each bound is either absolute (a minute) or relative to bedtime (bedtime − N minutes) |
 | after | Optional id of the block this one must follow |
@@ -53,11 +55,11 @@ The engine models carry no created/updated timestamps; the persistence layer (`:
 
 **Change entry:** `blockId`, `types` (a set), `reason` (exactly one), optional `causeBlockId`.
 
-Change types: `ADDED`, `MOVED` (start changed), `SHRUNK` (actual length decreased), `EXTENDED` (end moved later by an overrun), `DROPPED`, `UNPLACED`, `MISSED`, `SKIPPED`, `MADE_FIXED`, `RESTORED` (by undo). `ADDED` and `RESTORED` are exclusive: a block with either has a set containing only that type, whatever else differs.
+Change types: `ADDED`, `EDITED` (the edit target differs in any field), `MOVED` (start changed), `SHRUNK` (actual length decreased), `EXTENDED` (end moved later by an overrun, or actual length increased by an edit), `DROPPED`, `UNPLACED`, `MISSED`, `SKIPPED`, `MADE_FIXED`, `RESTORED` (by undo). `ADDED` and `RESTORED` are exclusive: a block with either has a set containing only that type, whatever else differs.
 
 **Reason, picked by the first rule that applies:**
 
-1. The block is the command's target → the command's reason: `USER_MOVE`, `USER_SKIP`, `USER_ADD`, `SET_FIXED`, `OVERRUN`, `RETRIED`. For `undo`, every changed block gets `UNDO`.
+1. The block is the command's target → the command's reason: `USER_MOVE`, `USER_SKIP`, `USER_ADD`, `USER_EDIT`, `SET_FIXED`, `OVERRUN`, `RETRIED`. For `undo`, every changed block gets `UNDO`.
 2. Became `MISSED` → `WINDOW_PASSED` (flexible or optional) or `FIXED_EXPIRED` (fixed).
 3. Became `DROPPED` → `DROPPED_TO_FIT`. Became `UNPLACED` → `NO_ROOM`.
 4. Shortened in step 5.4 as another block's dependency → `DEPENDENCY_SHRINK`.
@@ -73,7 +75,7 @@ Change types: `ADDED`, `MOVED` (start changed), `SHRUNK` (actual length decrease
 The steps run in this order; the first one that returns decides the status. So precedence is `REJECTED` > `CONFLICT` > `NO_HORIZON` > `INFEASIBLE` > `OK`.
 
 1. **Validate** the input day and the command (see Validation, and the command's preconditions). Any failure → `REJECTED`, day unchanged.
-2. **Apply the command's direct edit:** new wake time, new bedtime, overrun end, pinned move, added block, or status change. `skip_block`, `set_fixed`, `undo` and an `add_block` that succeeds on its fast path stop here with `OK`.
+2. **Apply the command's direct edit:** new wake time, new bedtime, overrun end, pinned move, added/replaced block, or status change. `skip_block`, `set_fixed`, `undo` and an `add_block` that succeeds on its fast path stop here with `OK`.
 3. **Conflict check:** if any two occupying blocks overlap → `CONFLICT`. The proposal contains the direct edit and nothing else, and lists the overlapping ids.
 4. **Horizon.** Start = the later of `now` and wake time, rounded up to the next 5 minutes. End = bedtime, plus 60 minutes if `allowPastBedtime` is on, capped at 2880. If start ≥ end → `NO_HORIZON`, with only the direct edit.
 5. **Rebuild** (next section). Any `UNPLACED` → `INFEASIBLE`, otherwise `OK`.
@@ -108,6 +110,7 @@ Every command that names a block is `REJECTED` with `UNKNOWN_BLOCK` if the id is
 | `move_block(id, start)` | Target is `FLEXIBLE` or `OPTIONAL`, status `PLANNED`, `MISSED`, `DROPPED` or `UNPLACED` (`INVALID_TARGET`). The new interval is start to start + `duration` and must: begin at or after the horizon start (`IN_THE_PAST`), end by the horizon end (`PAST_BEDTIME_NOT_ALLOWED`), sit inside its window (`OUTSIDE_WINDOW`), begin at or after its dependency's end when the dependency is occupying or `PLANNED`, end at or before the start of every occupying block that depends on it (either dependency failure is `DEPENDENCY_VIOLATION`), and not overlap any occupying block (`OVERLAPS_LOCKED`). Checks run in that order; the first failure is reported | Sets the interval and status `PLANNED`, and pins it for this rebuild only; rebuild |
 | `skip_block(id)` | Status `PLANNED`, `MISSED`, `DROPPED` or `UNPLACED`; any kind | Sets `SKIPPED`. No rebuild; nothing else moves |
 | `add_block(block, requestedStart?)` | New unique id; the block passes validation; status `PLANNED` | `FIXED`: added, then conflict check and rebuild. `FLEXIBLE` or `OPTIONAL`: fast path first — the earliest start at or after the latest of requested start, horizon start, window start and dependency end, where the full length fits inside its window and the horizon without overlapping any block that is `PLANNED`, `IN_PROGRESS` or `DONE`. If found, it's placed there with `OK` and nothing else changes. If not, a full rebuild runs with the new block as a candidate |
+| `edit_block(id, block)` | Existing target and replacement are `PLANNED`, and replacement id equals target id (`INVALID_TARGET`). Replace in place and validate the entire resulting Day, including dependencies/cycles, before any write. For a replacement `FIXED` block, check in order: start at/after horizon (`IN_THE_PAST`), end by horizon (`PAST_BEDTIME_NOT_ALLOWED`), interval inside window (`OUTSIDE_WINDOW`), interval after an occupying prerequisite and before every occupying dependent (`DEPENDENCY_VIOLATION`). Then ordinary occupying-overlap conflict check applies | Replace all editable Block fields in place, preserving id, status and list position; rebuild. FLEXIBLE/OPTIONAL interval is a placement preference, not a pin. FIXED interval is retained; conflicting fixed/locked intervals return `CONFLICT` with only the direct edit. The changed target gets `EDITED`, plus other applicable types, with reason `USER_EDIT` and null cause. Unchanged output has no change entry |
 | `set_fixed(id)` | Target is `FLEXIBLE` or `OPTIONAL` and `PLANNED` (`INVALID_TARGET`); its interval doesn't overlap an occupying block (`OVERLAPS_LOCKED`) | Sets kind `FIXED` at its current interval. No rebuild |
 | `set_bedtime(time)` | On grid; later than the wake time; at most 2880 | Sets bedtime; relative windows move with it; rebuild |
 | `undo(previousDay)` | `previousDay` passes validation | Returns `previousDay` with `OK`; every block that differs (including blocks that appear or disappear) gets `RESTORED`, `UNDO`. The caller keeps the history; a repeated undo passes an older day. Undo is offered only after a proposal was applied |
@@ -141,6 +144,16 @@ An interval whose length differs from `duration` is valid (it may have been shru
 - Same input, same output. No clock reads, randomness or I/O.
 - Idempotence: for a proposal whose command ran a rebuild (step 5) and returned `OK` or `INFEASIBLE`, applying it and running `rebuild_day` on the result with the same `now` returns no changes. Commands that stop at step 2 (`skip_block`, `set_fixed`, `undo`, fast-path `add_block`) don't rebuild, so this doesn't apply to them.
 - `undo` with the proposal's `previousDay` restores the day exactly, field for field.
+
+### Edit command details
+
+- This command edits one existing planned activity; it never resurrects dormant blocks or rewrites completed/in-progress history. Retry remains the explicit dormant-block path.
+- The caller supplies the complete replacement Block. Title, kind, interval, full/minimum duration, priority, window and dependency may change. Id and status may not change. Input validation precedes all placement checks; an unknown target is `UNKNOWN_BLOCK`.
+- A flexible replacement is an ordinary candidate, so its requested interval may move or shrink under the existing rules. A shrunk interval remains valid input, as before. Explicit duration edits are the sole exception to the old immutable target-duration rule.
+- Occupying prerequisites/dependents constrain a fixed replacement before rebuilding. Planned flexible prerequisites can be repositioned to finish before the fixed target under normal dependency placement rules. Other occupying blocks remain unchanged.
+- Overlap conflicts and exhausted horizons contain the direct replacement only; the caller must not apply them. Exact previousDay and persisted undo restore every field, including title, kind, durations and constraints.
+- `EDITED` is combined with MOVED/SHRUNK/EXTENDED/MADE_FIXED and status types as applicable. It records changes that otherwise have no time/status type (for example a title-only edit or FIXED to FLEXIBLE). It is not ADDED or RESTORED. USER_EDIT has target-reason precedence even if the edited target becomes missed, dropped or unplaced.
+- A no-op replacement still runs a rebuild; unrelated existing scheduling issues can therefore change. Applying an OK/INFEASIBLE edit then rebuilding with the same now/settings is idempotent.
 
 ## Base days
 

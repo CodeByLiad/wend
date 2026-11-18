@@ -17,12 +17,13 @@ enum class BlockStatus { PLANNED, IN_PROGRESS, DONE, SKIPPED, MISSED, DROPPED, U
 
 enum class ProposalStatus { OK, INFEASIBLE, CONFLICT, NO_HORIZON, REJECTED }
 
-enum class ChangeType { ADDED, MOVED, SHRUNK, EXTENDED, DROPPED, UNPLACED, MISSED, SKIPPED, MADE_FIXED, RESTORED }
+enum class ChangeType { ADDED, EDITED, MOVED, SHRUNK, EXTENDED, DROPPED, UNPLACED, MISSED, SKIPPED, MADE_FIXED, RESTORED }
 
 enum class Reason {
     USER_MOVE,
     USER_SKIP,
     USER_ADD,
+    USER_EDIT,
     SET_FIXED,
     OVERRUN,
     RETRIED,
@@ -166,6 +167,9 @@ sealed interface Command {
         val block: Block,
         val requestedStart: Minute? = null,
     ) : Command
+
+    /** Full replacement of editable fields; id and PLANNED status must be preserved. */
+    data class EditBlock(val id: String, val block: Block) : Command
 
     data class SetFixed(
         val id: String,

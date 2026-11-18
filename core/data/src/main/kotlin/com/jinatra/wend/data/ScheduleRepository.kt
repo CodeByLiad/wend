@@ -151,6 +151,7 @@ private fun operation(command: Command): String = when (command) {
     is Command.MoveBlock -> "MOVE_BLOCK"
     is Command.SkipBlock -> "SKIP_BLOCK"
     is Command.AddBlock -> "ADD_BLOCK"
+    is Command.EditBlock -> "EDIT_BLOCK"
     is Command.SetFixed -> "SET_FIXED"
     is Command.SetBedtime -> "SET_BEDTIME"
     is Command.Undo -> "UNDO"
