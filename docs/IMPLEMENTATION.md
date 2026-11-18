@@ -7,9 +7,11 @@ phone performance, model qualification or public-release readiness.
 
 ## Current work
 
-Production data foundation: Room on SQLCipher, Keystore-wrapped database key,
-transactional schedule updates and persistent exact ChangeLog/undo. Preserve the
-existing engine, examples, PR stack and editorial Today system.
+Production data foundation is implemented and emulator-tested: Room/SQLCipher,
+Keystore-wrapped key, transactional updates, stale-change protection, exact
+persistent ChangeLog/undo and settings. The app still uses the sample day.
+Next: real onboarding/routines/Today data. Preserve the existing engine,
+examples, PR stack and editorial Today system.
 
 Start/Done stay validated, logged status-only operations. They never edit planned
 times or other block scheduling fields. The owner delegated this choice on
