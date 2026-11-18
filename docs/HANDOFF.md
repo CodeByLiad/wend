@@ -1,14 +1,16 @@
 # Wend handoff
 
-Updated: 2026-11-15 by Codex, after synchronizing Claude's weekend work. This is shared working context for Claude Code and
+Updated: 2026-11-18 by Codex, after building the authorized companion probe. This is shared working context for Claude Code and
 Codex. Read `AGENTS.md` fully first. The engine spec decides engine behaviour;
 the Phase 0 PRD decides scope. Verify this snapshot against Git before acting.
 
 ## Repository and branch
 
 - Public repository: https://github.com/CodeByLiad/wend
-- Current working branch: `codex/benchmark-import`, stacked on
-  `codex/prototype-followup`, for model-import cancellation cleanup and diagnostics.
+- Current working branch: `codex/companion-probe`, stacked on
+  `codex/benchmark-import`, for the Phase 0 companion probe.
+- PR #6: https://github.com/CodeByLiad/wend/pull/6 - `codex/companion-probe`
+  into `codex/benchmark-import`.
 - PR #5: https://github.com/CodeByLiad/wend/pull/5 — `codex/benchmark-import`
   into `codex/prototype-followup`.
 - PR #4: https://github.com/CodeByLiad/wend/pull/4 — `codex/prototype-followup`
@@ -31,7 +33,7 @@ the Phase 0 PRD decides scope. Verify this snapshot against Git before acting.
 At home, clone the working branch before starting Claude Code:
 
 ```sh
-git clone --branch codex/benchmark-import https://github.com/CodeByLiad/wend.git
+git clone --branch codex/companion-probe https://github.com/CodeByLiad/wend.git
 cd wend
 ```
 
@@ -56,21 +58,28 @@ and this file; `AGENTS.md` also tells Codex to read this handoff.
 - `:tools:eval`: JVM CLI and reusable evaluation code, strict command decoder,
   scorer, fixtures, prompt and 150 frozen synthetic English requests. The
   `core:ai` Android tests provide opt-in on-device inference.
+- `:tools:companion`: plain research chat and explicit saved facts, encrypted
+  local snapshots, bounded context, draft/section continuity and cancellation.
+  No real-model qualification or people-study result is claimed.
 - Gradle wrapper/catalog, Spotless/ktlint, Kotest, GPLv3, trademark notice,
   contribution files and GitHub Actions are set up. CI publishes a prototype
-  benchmark and FOSS prototype APK artifacts. The app shell, Today screen and
+  benchmark, FOSS prototype and companion probe APK artifacts. The app shell, Today screen and
   design system are synthetic in-memory prototypes; there is no production
   database or companion.
 
 ## Verified state
 
-- `build test :core:engine:test lint spotlessCheck` passed locally for the
-  implementation in `dfa44ce`, on 2026-11-15.
-- 130 distinct JVM tests pass: 75 engine, 8 benchmark, 23 evaluation and 24 Today.
+- `build test :core:engine:test lint spotlessCheck` and the companion
+  instrumentation APK compilation passed locally for the implementation in
+  `e073f41` / `541a376`, on 2026-11-18.
+- 135 distinct JVM tests pass: 75 engine, 8 benchmark, 23 evaluation, 24 Today
+  and 5 companion. Eight companion Android tests passed on the isolated emulator.
   The engine tests
   include all 30 worked examples, full-block assertions and property tests.
   No engine example expectation was changed in this work.
 - Both GitHub push and PR checks passed for `433bb6a` before the handoff changes.
+- Both GitHub checks for import follow-up `1e2fe3d` were verified green on
+  2026-11-18. The new companion PR's checks can be inspected through PR #6.
 - Both GitHub push and PR checks passed for prototype follow-up `02ba716`;
   its benchmark and FOSS app APK artifacts were verified.
 - Android smoke checks passed for exact-byte import/hash, recognized model
@@ -80,15 +89,17 @@ and this file; `AGENTS.md` also tells Codex to read this handoff.
 - A complete 150-case exploratory LiteRT GPU run failed the confirmed accuracy
   and latency targets. An initial llama.cpp full-prompt run was stopped after
   repeated 30-second timeouts and remains partial, not an accuracy result.
-- Device testing stopped for the day at the owner's request. The unplugged
+- On 2026-11-12, device testing stopped at the owner's request. The unplugged
   ten-minute llama.cpp CPU pilot completed successfully; its private report
   was retained. The LiteRT CPU attempt failed before inference: the UI test
   found no imported model at its `assertNotNull`, so no timed result exists.
   The LiteRT GPU ten-minute pilot was not started. Do not report either as a
-  measured performance failure. Phone cleanup is verified: the AI test package,
+  measured performance failure. The 2026-11-12 phone cleanup was verified: the AI test package,
   benchmark app and benchmark test package were uninstalled; their private
   model copies and explicit temporary staging files were removed. No temporary
-  test package remains installed.
+  test package remained installed then. Benchmark packages and a staged model
+  were reinstalled on 2026-11-15; their latest cleanup remains unverified while
+  the phone is unavailable (see the companion follow-up).
 
 Private profiles and raw measurements are in ignored local `.gradle/evaluation`
 on the testing workstation. Model binaries are in ignored `.gradle/models`.
@@ -174,8 +185,9 @@ Normal connected tests skip costly model inference without explicit arguments.
    current models. Keep the 150 requests frozen and record source/configuration.
 4. Obtain the remaining RAM/device tiers and repeated trials. One device and
    one pilot per runtime cannot establish RAM boundaries or model selection.
-5. The Phase 0 companion probe, two-week people study and final five-question
-   feasibility report remain outstanding. Do not start Phase 1 features.
+5. The companion probe is built; its real-model trial, the two-week people
+   study and final five-question feasibility report remain outstanding.
+   Do not start Phase 1 features.
 
 ## UI prototype (2026-11-13, `feat/design-system`)
 
@@ -315,6 +327,63 @@ a separately reproduced cancellation race and improves the next diagnosis.
 Next: finish wireless authorization, unplug charging, retry the LiteRT CPU/GPU
 pilots, retain separate reports and remove temporary phone apps/models afterward.
 
+## Companion probe (2026-11-18)
+
+The phone was unavailable, so physical pilots were not resumed. The owner
+authorized persistent chats/facts in an encrypted local prototype file.
+
+- Added `:tools:companion`, disposable package
+  `com.jinatra.wend.companion.probe`. It does not change the permanent
+  `com.jinatra.wend` package or the planner.
+- Plain Material Chat / Saved facts / Model sections, explicit local imports
+  and backend selection, basic bounded transcript, Stop, fact removal and
+  confirmed deletion. No hidden memory, scheduler access, networking or
+  production database. The AI cannot write saved facts.
+- AES-256-GCM snapshots, fresh nonces, Android Keystore key, AtomicFile and
+  no-backup private storage. Unreadable data disables edits rather than being
+  overwritten; deletion removes the ciphertext and key.
+- Unsent drafts and section selection live in ViewModel memory across tab
+  changes/rotation. Failed saves retain drafts; completed saves clear them.
+  Unsent drafts do not persist across process death.
+- Explicit Phase 0 exception and prototype choices are in
+  `docs/companion-probe.md` and `docs/architecture.md`. Production storage
+  remains Room/SQLCipher. The guide includes weekly questions, a proposed
+  unprompted-return definition and private/manual study handling. The proposed
+  people-test threshold/definition still need confirmation before recruitment.
+- Commits: e073f41 (probe implementation), 541a376 (context/storage/
+  lifecycle tests), 156341f (probe artifact and instrumentation compilation).
+- Exact local check:
+  `spotlessApply build test :core:engine:test lint spotlessCheck :tools:companion:assembleDebugAndroidTest`
+  passed. 135 distinct JVM tests (previous 130 plus five prompt/data cases);
+  eight companion Android instrumentation tests passed on the isolated API 36
+  emulator using real Keystore and synthetic content/fake inference or injected
+  storage failures.
+- Android tests cover encrypted recreation/fresh nonces, tamper rejection,
+  ciphertext/key deletion, fail-closed editing, reply persistence/runtime close,
+  cancellation, draft/section recreation and failed-save draft retention.
+- Emulator UI: saved a synthetic fact, reopened the app, typed both drafts,
+  switched sections and verified they survived. Light, dark, 200% text and
+  landscape captures were inspected. A review found one draft-loss issue; the
+  verdict pass scored that issue resolved. Documentation conformance preserved
+  the production design files. No visual polish or new brand assets were added.
+- Debug/release packages request no Internet permission. Debug screenshots use
+  synthetic content; release capture protection is implemented with FLAG_SECURE.
+  Manual release/TalkBack and real-model testing remain pending.
+- CI now builds the probe and compiles its instrumentation APK, and publishes
+  `wend-companion-probe-debug`. Compiling instrumentation is not executing it.
+- Temporary companion test apps were removed from the isolated emulator and
+  that emulator stopped. No physical phone was used or modified on 2026-11-18.
+  The last known phone state from 2026-11-15 still had the benchmark APKs and a
+  verified private LiteRT staging copy; removal has not been reverified because
+  the phone was unavailable. Check and clean those temporary packages when it
+  reconnects.
+
+Next: when a phone is available, finish the LiteRT CPU/GPU pilots, test actual
+probe inference with pinned compatible models and remove temporary phone apps/
+copies afterward. Then complete corrected-prompt comparisons, remaining device
+tiers/repeated trials, the two-week people study and the five-question report.
+No model/tier is qualified and Phase 0 is not complete.
+
 ## Session handback
 
 Before the Saturday handback or any agent switch, update this file with what
@@ -326,7 +395,7 @@ For current evaluation follow-up, use `feat/eval`. If work moves to another task
 branch, record its exact name and PR in the handback so the returning agent can
 check out the right context. If the expected tracking branch has not changed,
 inspect recent remote handoff commits and PRs before assuming no work occurred.
-For the latest complete stack, use `codex/benchmark-import` until
+For the latest complete stack, use `codex/companion-probe` until
 the stacked PRs are merged or the owner names a different branch.
 
 2026-11-12 — Codex: built the frozen evaluation harness and device automation;

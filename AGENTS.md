@@ -73,6 +73,7 @@ guess and do not quietly pick one.
 :feature:settings         settings, data, about
 :tools:benchmark          Phase 0 only: model benchmark app
 :tools:eval               Phase 0 only: AI planner evaluation harness
+:tools:companion          Phase 0 only: disposable local companion probe
 ```
 
 Create modules only when the current phase needs them.
