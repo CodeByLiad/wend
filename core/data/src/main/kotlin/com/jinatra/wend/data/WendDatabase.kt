@@ -1,5 +1,6 @@
 package com.jinatra.wend.data
 
+import androidx.room.AutoMigration
 import androidx.room.Dao
 import androidx.room.Database
 import androidx.room.Insert
@@ -11,6 +12,38 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 internal interface WendDao {
+    @Transaction
+    @Query("SELECT * FROM routines ORDER BY name, id")
+    fun observeRoutines(): Flow<List<RoutineWithActivities>>
+
+    @Transaction
+    @Query("SELECT * FROM routines ORDER BY name, id")
+    suspend fun routines(): List<RoutineWithActivities>
+
+    @Transaction
+    @Query("SELECT * FROM routines WHERE id = :id")
+    suspend fun routine(id: String): RoutineWithActivities?
+
+    @Query("SELECT block_origins.* FROM block_origins INNER JOIN days ON days.id = block_origins.dayId WHERE days.date = :date")
+    fun observeOrigins(date: String): Flow<List<BlockOriginEntity>>
+
+    @Insert suspend fun insertOrigins(origins: List<BlockOriginEntity>)
+
+    @Insert suspend fun insertRoutine(routine: RoutineEntity)
+
+    @Update suspend fun updateRoutine(routine: RoutineEntity)
+
+    @Query("SELECT * FROM activity_templates WHERE id IN (:ids)")
+    suspend fun templates(ids: List<String>): List<ActivityTemplateEntity>
+
+    @Insert suspend fun insertTemplates(templates: List<ActivityTemplateEntity>)
+
+    @Query("DELETE FROM activity_templates WHERE routineId = :id")
+    suspend fun deleteTemplates(id: String)
+
+    @Query("DELETE FROM routines WHERE id = :id AND revision = :revision")
+    suspend fun deleteRoutine(id: String, revision: Long): Int
+
     @Transaction
     @Query("SELECT * FROM days WHERE date = :date")
     suspend fun day(date: String): DayWithBlocks?
@@ -52,7 +85,12 @@ internal interface WendDao {
     @Update suspend fun updatePreference(preference: PreferenceEntity)
 }
 
-@Database(entities = [DayEntity::class, PlannedBlockEntity::class, ChangeLogEntity::class, PreferenceEntity::class], version = 1, exportSchema = true)
+@Database(
+    entities = [DayEntity::class, PlannedBlockEntity::class, ChangeLogEntity::class, PreferenceEntity::class, RoutineEntity::class, ActivityTemplateEntity::class, BlockOriginEntity::class],
+    version = 2,
+    autoMigrations = [AutoMigration(from = 1, to = 2)],
+    exportSchema = true,
+)
 internal abstract class WendDatabase : RoomDatabase() {
     abstract fun dao(): WendDao
 }

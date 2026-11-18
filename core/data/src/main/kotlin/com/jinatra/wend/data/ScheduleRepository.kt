@@ -23,6 +23,10 @@ import javax.inject.Singleton
 @Singleton
 class ScheduleRepository @Inject internal constructor(private val db: WendDatabase, private val clock: Clock) {
     fun observe(date: LocalDate): Flow<StoredDay?> = db.dao().observeDay(date.toString()).map { it?.stored() }
+    fun observeDetails(date: LocalDate): Flow<Map<String, ActivityDetails>> = db.dao().observeOrigins(date.toString()).map { rows ->
+        rows.associate { it.id to ActivityDetails(it.templateId, it.routineId, it.category, it.icon) }
+    }
+
     suspend fun get(date: LocalDate): StoredDay? = db.dao().day(date.toString())?.stored()
 
     /** Initial empty container only; activities enter through AddBlock engine proposals. */
@@ -35,6 +39,20 @@ class ScheduleRepository @Inject internal constructor(private val db: WendDataba
         db.dao().insertDay(record)
         db.dao().insertChange(ChangeLogEntity(uuid(), record.id, 0, "CREATE_DAY", ChangeSource.SYSTEM.name, null, DayCodec.encode(day), "[]", false, null, now, now))
         StoredDay(record.id, record.revision, day, now, now)
+    }
+
+    /** Initial routine generation only: every stored planned interval is engine output. */
+    internal suspend fun createFromEngine(proposal: Proposal): StoredDay = db.withTransaction {
+        require(proposal.status == ProposalStatus.OK || proposal.status == ProposalStatus.INFEASIBLE)
+        val day = proposal.day
+        db.dao().day(day.date.toString())?.stored()?.let { return@withTransaction it }
+        validateIds(day)
+        val now = clock.millis()
+        val record = DayEntity(uuid(), day.date.toString(), day.wake.value, day.bedtime.value, 0, now, now)
+        db.dao().insertDay(record)
+        db.dao().insertBlocks(day.blocks.mapIndexed { position, block -> block.entity(record.id, position, now, now) })
+        db.dao().insertChange(ChangeLogEntity(uuid(), record.id, 0, "GENERATE_DAY", ChangeSource.SYSTEM.name, null, DayCodec.encode(day), DayCodec.encodeChanges(proposal.changes), false, null, now, now))
+        StoredDay(record.id, 0, day, now, now)
     }
 
     suspend fun preview(date: LocalDate, command: Command, now: Minute, settings: Settings = Settings()): SchedulePreview? {
