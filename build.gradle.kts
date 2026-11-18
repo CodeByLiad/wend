@@ -18,6 +18,6 @@ spotless {
     }
 }
 
-tasks.named("assemble") { dependsOn(":core:engine:assemble", ":core:ai:assemble", ":tools:benchmark:assemble", ":tools:eval:assemble", ":core:designsystem:assemble", ":feature:today:assemble", ":app:assemble") }
-tasks.named("check") { dependsOn(":core:engine:check", ":core:ai:check", ":tools:benchmark:check", ":tools:eval:check", ":core:designsystem:check", ":feature:today:check", ":app:check", "spotlessCheck") }
-tasks.register("lint") { dependsOn(":core:ai:lint", ":tools:benchmark:lint", ":core:designsystem:lint", ":feature:today:lint", ":app:lint") }
+tasks.named("assemble") { dependsOn(":tools:companion:assemble", ":core:engine:assemble", ":core:ai:assemble", ":tools:benchmark:assemble", ":tools:eval:assemble", ":core:designsystem:assemble", ":feature:today:assemble", ":app:assemble") }
+tasks.named("check") { dependsOn(":tools:companion:check", ":core:engine:check", ":core:ai:check", ":tools:benchmark:check", ":tools:eval:check", ":core:designsystem:check", ":feature:today:check", ":app:check", "spotlessCheck") }
+tasks.register("lint") { dependsOn(":tools:companion:lint", ":core:ai:lint", ":tools:benchmark:lint", ":core:designsystem:lint", ":feature:today:lint", ":app:lint") }
