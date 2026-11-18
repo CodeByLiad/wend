@@ -10,7 +10,7 @@ personal data on your phone, with optional on-device AI planned for later work.
 **Current status: Phase 0 — engine, benchmark and evaluation prototypes.** The scheduling
 engine is a pure Kotlin/JVM module. A separate Android benchmark app compares local
 LiteRT-LM and llama.cpp inference. The production planner app, database, reminders,
-AI planner and companion are not implemented yet.
+AI planner and production companion are not implemented yet.
 
 A design prototype of the Today screen, requested by the owner ahead of Phase 1,
 runs the real engine on an in-memory, synthetic sample day: the current activity's
@@ -21,6 +21,10 @@ no network calls. Its visual system is described in [`DESIGN.md`](DESIGN.md).
 A planner evaluation harness contains 150 frozen English requests, strict command
 validation, first-pass and corrected scoring, and an opt-in on-device runner.
 Model-selection and RAM-tier conclusions remain pending.
+
+A separate Phase 0 companion probe provides local chat and manually saved facts,
+persisted in a Keystore-encrypted private file. It is a research tool, not a
+qualified model or the Phase 2 companion. See [the probe and people-test protocol](docs/companion-probe.md).
 
 ## What the engine does
 
@@ -70,6 +74,7 @@ regressions. HTML test results are generated at
 | [`feature/today`](feature/today) | Today screen prototype and its engine-driven state |
 | [`app`](app) | Prototype app shell (`foss` and `gms` flavours) |
 | [`tools/benchmark`](tools/benchmark) | Bare Android model benchmark app |
+| [`tools/companion`](tools/companion) | Disposable chat probe with encrypted local history and explicit saved facts |
 | [`tools/eval`](tools/eval) | Frozen 150-request corpus, command decoder and evaluation scorer |
 | [`docs/evaluation-protocol.md`](docs/evaluation-protocol.md) | Targets, scoring policy and private on-device execution |
 | [`docs/benchmark-protocol.md`](docs/benchmark-protocol.md) | Measurement definitions, device protocol and build instructions |
@@ -91,8 +96,7 @@ rules and the engine spec first. Please keep changes within the current phase;
 report contradictions in the spec before changing expected example results.
 
 Use [GitHub issues](https://github.com/CodeByLiad/wend/issues) for reproducible bugs
-and focused proposals. Successful GitHub Actions runs publish `wend-benchmark-debug`
-and `wend-app-foss-debug` artifacts. Both are internal prototypes. See the
+and focused proposals. Successful GitHub Actions runs publish `wend-benchmark-debug`, `wend-app-foss-debug` and `wend-companion-probe-debug` artifacts. These are internal prototypes. See the
 [handoff](docs/HANDOFF.md) for the active branch and stacked PRs.
 
 ## License and trademarks

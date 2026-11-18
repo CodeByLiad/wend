@@ -1,14 +1,14 @@
 # Wend handoff
 
-Updated: 2026-11-15 by Codex, after synchronizing Claude's weekend work. This is shared working context for Claude Code and
+Updated: 2026-11-18 by Codex, after building the authorized companion probe. This is shared working context for Claude Code and
 Codex. Read `AGENTS.md` fully first. The engine spec decides engine behaviour;
 the Phase 0 PRD decides scope. Verify this snapshot against Git before acting.
 
 ## Repository and branch
 
 - Public repository: https://github.com/CodeByLiad/wend
-- Current working branch: `codex/benchmark-import`, stacked on
-  `codex/prototype-followup`, for model-import cancellation cleanup and diagnostics.
+- Current working branch: `codex/companion-probe`, stacked on
+  `codex/benchmark-import`, for the Phase 0 companion probe.
 - PR #5: https://github.com/CodeByLiad/wend/pull/5 — `codex/benchmark-import`
   into `codex/prototype-followup`.
 - PR #4: https://github.com/CodeByLiad/wend/pull/4 — `codex/prototype-followup`
@@ -31,7 +31,7 @@ the Phase 0 PRD decides scope. Verify this snapshot against Git before acting.
 At home, clone the working branch before starting Claude Code:
 
 ```sh
-git clone --branch codex/benchmark-import https://github.com/CodeByLiad/wend.git
+git clone --branch codex/companion-probe https://github.com/CodeByLiad/wend.git
 cd wend
 ```
 
@@ -315,6 +315,63 @@ a separately reproduced cancellation race and improves the next diagnosis.
 Next: finish wireless authorization, unplug charging, retry the LiteRT CPU/GPU
 pilots, retain separate reports and remove temporary phone apps/models afterward.
 
+## Companion probe (2026-11-18)
+
+The phone was unavailable, so physical pilots were not resumed. The owner
+authorized persistent chats/facts in an encrypted local prototype file.
+
+- Added `:tools:companion`, disposable package
+  `com.jinatra.wend.companion.probe`. It does not change the permanent
+  `com.jinatra.wend` package or the planner.
+- Plain Material Chat / Saved facts / Model sections, explicit local imports
+  and backend selection, basic bounded transcript, Stop, fact removal and
+  confirmed deletion. No hidden memory, scheduler access, networking or
+  production database. The AI cannot write saved facts.
+- AES-256-GCM snapshots, fresh nonces, Android Keystore key, AtomicFile and
+  no-backup private storage. Unreadable data disables edits rather than being
+  overwritten; deletion removes the ciphertext and key.
+- Unsent drafts and section selection live in ViewModel memory across tab
+  changes/rotation. Failed saves retain drafts; completed saves clear them.
+  Unsent drafts do not persist across process death.
+- Explicit Phase 0 exception and prototype choices are in
+  `docs/companion-probe.md` and `docs/architecture.md`. Production storage
+  remains Room/SQLCipher. The guide includes weekly questions, a proposed
+  unprompted-return definition and private/manual study handling. The proposed
+  people-test threshold/definition still need confirmation before recruitment.
+- Commits: e073f41 (probe implementation), 541a376 (context/storage/
+  lifecycle tests), 156341f (probe artifact and instrumentation compilation).
+- Exact local check:
+  `spotlessApply build test :core:engine:test lint spotlessCheck :tools:companion:assembleDebugAndroidTest`
+  passed. 135 distinct JVM tests (previous 130 plus five prompt/data cases);
+  eight companion Android instrumentation tests passed on the isolated API 36
+  emulator using real Keystore and synthetic content/fake inference or injected
+  storage failures.
+- Android tests cover encrypted recreation/fresh nonces, tamper rejection,
+  ciphertext/key deletion, fail-closed editing, reply persistence/runtime close,
+  cancellation, draft/section recreation and failed-save draft retention.
+- Emulator UI: saved a synthetic fact, reopened the app, typed both drafts,
+  switched sections and verified they survived. Light, dark, 200% text and
+  landscape captures were inspected. A review found one draft-loss issue; the
+  verdict pass scored that issue resolved. Documentation conformance preserved
+  the production design files. No visual polish or new brand assets were added.
+- Debug/release packages request no Internet permission. Debug screenshots use
+  synthetic content; release capture protection is implemented with FLAG_SECURE.
+  Manual release/TalkBack and real-model testing remain pending.
+- CI now builds the probe and compiles its instrumentation APK, and publishes
+  `wend-companion-probe-debug`. Compiling instrumentation is not executing it.
+- Temporary companion test apps were removed from the isolated emulator and
+  that emulator stopped. No physical phone was used or modified on 2026-11-18.
+  The last known phone state from 2026-11-15 still had the benchmark APKs and a
+  verified private LiteRT staging copy; removal has not been reverified because
+  the phone was unavailable. Check and clean those temporary packages when it
+  reconnects.
+
+Next: when a phone is available, finish the LiteRT CPU/GPU pilots, test actual
+probe inference with pinned compatible models and remove temporary phone apps/
+copies afterward. Then complete corrected-prompt comparisons, remaining device
+tiers/repeated trials, the two-week people study and the five-question report.
+No model/tier is qualified and Phase 0 is not complete.
+
 ## Session handback
 
 Before the Saturday handback or any agent switch, update this file with what
@@ -326,7 +383,7 @@ For current evaluation follow-up, use `feat/eval`. If work moves to another task
 branch, record its exact name and PR in the handback so the returning agent can
 check out the right context. If the expected tracking branch has not changed,
 inspect recent remote handoff commits and PRs before assuming no work occurred.
-For the latest complete stack, use `codex/benchmark-import` until
+For the latest complete stack, use `codex/companion-probe` until
 the stacked PRs are merged or the owner names a different branch.
 
 2026-11-12 — Codex: built the frozen evaluation harness and device automation;

@@ -59,6 +59,14 @@ Core modules
   Design system       Compose theme, components
 ```
 
+## Phase 0 storage exception
+
+On 2026-11-18 the owner chose an encrypted app-private prototype file for the
+disposable companion probe's chats and explicit facts. Its Keystore/AtomicFile
+implementation is isolated in `:tools:companion`; it does not introduce a
+production data layer. The persistent production architecture below is unchanged.
+See `docs/companion-probe.md` for prototype boundaries and the study protocol.
+
 ## Local data model and storage
 
 One encrypted SQLite database (Room on SQLCipher) holds everything. Its key is generated on first launch and wrapped by the Android Keystore. Every table gets a stable UUID primary key and created/updated timestamps so exports, imports and future device-to-device transfer can merge records without collisions.
