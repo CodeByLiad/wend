@@ -9,7 +9,9 @@ phone performance, model qualification or public-release readiness.
 
 Production data foundation is implemented and emulator-tested: Room/SQLCipher,
 Keystore-wrapped key, transactional updates, stale-change protection, exact
-persistent ChangeLog/undo and settings. The app still uses the sample day.
+persistent ChangeLog/undo and settings. Saved routine templates, recurrence,
+engine-based dated generation and encrypted schema upgrades are also tested.
+The app still uses the sample day.
 Next: real onboarding/routines/Today data. Preserve the existing engine,
 examples, PR stack and editorial Today system.
 

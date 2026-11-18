@@ -1,14 +1,16 @@
 # Wend handoff
 
-Updated: 2026-11-18 by Codex, after the production data foundation and approved engine edit extension. This is shared working context for Claude Code and
+Updated: 2026-11-18 by Codex, after saved routines and encrypted schema migration tests. This is shared working context for Claude Code and
 Codex. Read `AGENTS.md` fully first. The engine spec decides engine behaviour;
 the PRD plus the owner implementation directive decide scope. Verify this snapshot against Git before acting.
 
 ## Repository and branch
 
 - Public repository: https://github.com/CodeByLiad/wend
-- Current working branch: `codex/engine-edit`, stacked on
-  `codex/production-data`, for the approved engine edit command.
+- Current working branch: `codex/routines`, stacked on
+  `codex/engine-edit`, for routine templates and day generation.
+- PR #8: https://github.com/CodeByLiad/wend/pull/8 - `codex/engine-edit`
+  into `codex/production-data`.
 - PR #7: https://github.com/CodeByLiad/wend/pull/7 - `codex/production-data`
   into `codex/companion-probe`.
 - PR #6: https://github.com/CodeByLiad/wend/pull/6 - `codex/companion-probe`
@@ -35,7 +37,7 @@ the PRD plus the owner implementation directive decide scope. Verify this snapsh
 At home, clone the working branch before starting Claude Code:
 
 ```sh
-git clone --branch codex/engine-edit https://github.com/CodeByLiad/wend.git
+git clone --branch codex/routines https://github.com/CodeByLiad/wend.git
 cd wend
 ```
 
@@ -464,6 +466,41 @@ each date once through the engine, then connect onboarding and Today to real
 saved data and a real clock. The app remains the synthetic prototype until that
 integration is implemented and tested. No physical phone was used.
 
+## Saved routines foundation (2026-11-18)
+
+RoutineRepository stores named day-type routines and ordered ActivityTemplates,
+including category/icon and engine scheduling fields, in SQLCipher. Recurrence
+supports daily, selected weekdays, anchored every-N-days and monthly dates.
+Missing monthly dates skip shorter months. Matching returns all enabled matches
+rather than silently choosing; explicit one-off selection can ignore recurrence.
+Template graphs/UUIDs/display fields validate before saving. Stale revisions and
+cross-routine template ownership are rejected transactionally.
+
+Generation previews create distinct dated instance UUIDs and remap dependencies.
+The engine rebuilds; apply checks the routine version and recomputes. Conflict,
+rejection or no horizon writes no partial day. Existing dates are returned intact.
+Routine edits/deletion and one-off plan edits stay isolated. Initial GENERATE_DAY
+records exact output with no prior stored day; subsequent edits use ordinary undo.
+Instance origins/category/icon survive routine deletion and block replacement.
+
+Room schema 2 and automatic 1-to-2 migration are committed alongside schema 1.
+A real encrypted migration test builds schema 1 from committed statements and
+verifies old days, preferences and history remain exact after opening schema 2.
+Local build test :core:engine:test lint spotlessCheck passed; 162 distinct JVM
+tests pass (previous 156 plus six recurrence/template tests). All 18 data Android
+tests passed on the isolated API 36 emulator: previous eleven plus six routine
+integration tests and one encrypted migration test. No phone was used.
+
+Both CI runs for production-data were green: 44286650487 and 44288543616.
+Engine-edit PR run 44290424026 was green; push run 44290371507 was still running
+at the last check. Check live GitHub state rather than assuming completion.
+
+The app is still the sample prototype at this checkpoint. Next: connect real
+onboarding, routine/activity editing, stored Today/real clock and settings. The
+morning background job and production editor have not been implemented yet.
+See docs/routines-implementation.md for exact API and choices. The isolated
+emulator and temporary data-test package remain available for the next work.
+
 ## Session handback
 
 Before the Saturday handback or any agent switch, update this file with what
@@ -475,7 +512,7 @@ For current evaluation follow-up, use `feat/eval`. If work moves to another task
 branch, record its exact name and PR in the handback so the returning agent can
 check out the right context. If the expected tracking branch has not changed,
 inspect recent remote handoff commits and PRs before assuming no work occurred.
-For the latest complete stack, use `codex/engine-edit` until
+For the latest complete stack, use `codex/routines` until
 the stacked PRs are merged or the owner names a different branch.
 
 2026-11-12 — Codex: built the frozen evaluation harness and device automation;
