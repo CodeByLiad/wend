@@ -9,7 +9,7 @@ the Phase 0 PRD decides scope. Verify this snapshot against Git before acting.
 - Public repository: https://github.com/CodeByLiad/wend
 - Current working branch: `codex/companion-probe`, stacked on
   `codex/benchmark-import`, for the Phase 0 companion probe.
-- PR #6: https://github.com/CodeByLiad/wend/pull/6 — `codex/companion-probe`
+- PR #6: https://github.com/CodeByLiad/wend/pull/6 - `codex/companion-probe`
   into `codex/benchmark-import`.
 - PR #5: https://github.com/CodeByLiad/wend/pull/5 â€” `codex/benchmark-import`
   into `codex/prototype-followup`.
