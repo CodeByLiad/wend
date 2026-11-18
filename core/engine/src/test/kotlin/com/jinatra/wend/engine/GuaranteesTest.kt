@@ -41,11 +41,12 @@ private val cases = Arb.list(Arb.int(0..100000), 1..20).map { values ->
     val day = Day(LocalDate.of(2026, 11, 16), Minute(300 + seed % 5), Minute(1800 + seed % 150 * 5), blocks)
     val now = Minute(seed % 1500)
     val settings = Settings(seed % 2 == 0)
-    val command = when (seed % 5) {
+    val command = when (seed % 6) {
         0 -> Command.LateWake(now)
         1 -> blocks.firstOrNull { it.status == BlockStatus.IN_PROGRESS }?.let { Command.Overrun(it.id, Minute(it.end.value + 30)) } ?: Command.RebuildDay
         2 -> Command.SetBedtime(Minute(1600 + seed % 150 * 5))
         3 -> blocks.firstOrNull { it.kind != Kind.FIXED && it.status == BlockStatus.PLANNED }?.let { Command.MoveBlock(it.id, Minute(600 + seed % 100 * 5)) } ?: Command.RebuildDay
+        4 -> blocks.firstOrNull { it.status == BlockStatus.PLANNED }?.let { Command.EditBlock(it.id, it.copy(title = "Edited generated block", duration = 60, minDuration = 15)) } ?: Command.RebuildDay
         else -> Command.RebuildDay
     }
     Case(day, now, settings, command)

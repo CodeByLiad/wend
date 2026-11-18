@@ -110,6 +110,24 @@ class EncryptedDataTest {
         assertEquals(changes, DayCodec.decodeChanges(DayCodec.encodeChanges(changes)))
     }
 
+    @Test fun editMetadataAndExactUndoSurviveReopening() = fixture { f ->
+        f.create()
+        val before = f.add(firstId)
+        val replacement = before.day.blocks.single().copy(title = "Edited synthetic", duration = 90, minDuration = 45, end = Minute(510), kind = Kind.OPTIONAL)
+        val preview = requireNotNull(f.repo.preview(date, Command.EditBlock(firstId, replacement), Minute(420)))
+        assertEquals(ProposalStatus.OK, preview.proposal.status)
+        val after = (f.repo.apply(preview) as ScheduleResult.Applied).stored
+        f.reopen()
+        assertEquals(after, f.repo.get(date))
+        val history = f.repo.history(date).last()
+        assertEquals("EDIT_BLOCK", history.operation)
+        assertEquals(before.day, history.before)
+        assertEquals(after.day, history.after)
+        assertEquals(listOf(Change(firstId, setOf(ChangeType.EDITED, ChangeType.EXTENDED), Reason.USER_EDIT)), history.changes)
+        val undone = f.repo.undo(date, after.revision, Minute(420)) as ScheduleResult.Applied
+        assertEquals(before.day, undone.stored.day)
+    }
+
     @Test fun staleApprovalsNeverOverwriteAChangedSchedule() = fixture { f ->
         f.create()
         f.add(firstId)
