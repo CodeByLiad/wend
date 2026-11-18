@@ -1,14 +1,16 @@
 # Wend handoff
 
-Updated: 2026-11-18 by Codex, after the production data foundation. This is shared working context for Claude Code and
+Updated: 2026-11-18 by Codex, after the production data foundation and approved engine edit extension. This is shared working context for Claude Code and
 Codex. Read `AGENTS.md` fully first. The engine spec decides engine behaviour;
-the Phase 0 PRD decides scope. Verify this snapshot against Git before acting.
+the PRD plus the owner implementation directive decide scope. Verify this snapshot against Git before acting.
 
 ## Repository and branch
 
 - Public repository: https://github.com/CodeByLiad/wend
-- Current working branch: `codex/production-data`, stacked on
-  `codex/companion-probe`, for production storage.
+- Current working branch: `codex/engine-edit`, stacked on
+  `codex/production-data`, for the approved engine edit command.
+- PR #7: https://github.com/CodeByLiad/wend/pull/7 - `codex/production-data`
+  into `codex/companion-probe`.
 - PR #6: https://github.com/CodeByLiad/wend/pull/6 - `codex/companion-probe`
   into `codex/benchmark-import`.
 - PR #5: https://github.com/CodeByLiad/wend/pull/5 — `codex/benchmark-import`
@@ -33,7 +35,7 @@ the Phase 0 PRD decides scope. Verify this snapshot against Git before acting.
 At home, clone the working branch before starting Claude Code:
 
 ```sh
-git clone --branch codex/production-data https://github.com/CodeByLiad/wend.git
+git clone --branch codex/engine-edit https://github.com/CodeByLiad/wend.git
 cd wend
 ```
 
@@ -44,9 +46,9 @@ and this file; `AGENTS.md` also tells Codex to read this handoff.
 
 ## What is built
 
-- `:core:engine`: pure Kotlin/JVM deterministic scheduling engine. All ten
+- `:core:engine`: pure Kotlin/JVM deterministic scheduling engine. All eleven
   commands, typed validation, proposals with exact previous Day, and undo.
-  Engine-spec v0.3 is authoritative; the end tables resolve earlier reviews.
+  Engine-spec v0.4 is authoritative; the end tables resolve earlier reviews.
   See `docs/engine-implementation.md` for API and implementation choices.
 - `:core:ai`: local model import and runtime adapters for LiteRT-LM CPU/GPU and
   pinned llama.cpp CPU. Native chat templates, UTF-8 text completion, configurable
@@ -64,8 +66,9 @@ and this file; `AGENTS.md` also tells Codex to read this handoff.
 - Gradle wrapper/catalog, Spotless/ktlint, Kotest, GPLv3, trademark notice,
   contribution files and GitHub Actions are set up. CI publishes a prototype
   benchmark, FOSS prototype and companion probe APK artifacts. The app shell, Today screen and
-  design system are synthetic in-memory prototypes; there is no production
-  database or companion.
+  design system are synthetic in-memory prototypes. Production encrypted
+  storage now exists in :core:data but is not yet connected to the app.
+  There is no production companion.
 
 ## Verified state
 
@@ -381,7 +384,8 @@ authorized persistent chats/facts in an encrypted local prototype file.
 Next: when a phone is available, finish the LiteRT CPU/GPU pilots, test actual
 probe inference with pinned compatible models and remove temporary phone apps/
 copies afterward. Then complete corrected-prompt comparisons, remaining device
-tiers/repeated trials, the two-week people study and the five-question report.
+tiers/repeated trials and the final five-question report. The owner later
+cancelled the two-week people study; do not run it.
 No model/tier is qualified and Phase 0 is not complete.
 
 ## Production data foundation (2026-11-18)
@@ -429,6 +433,37 @@ See `docs/phase0-report.md`, `docs/IMPLEMENTATION.md` and
 
 Implementation commits: e5d502f and d8f6ca8.
 
+## Approved engine activity editing (2026-11-18)
+
+The owner approved adding edit_block after the PRD editing requirement exposed a
+missing engine command. Spec v0.4 and Command.EditBlock now replace a PLANNED
+block in place while preserving its id/status/list position. Full/minimum
+duration, title, kind, interval, priority, window and dependency are editable.
+All validation and rebuilding remain in the pure engine. Flexible edit intervals
+are preferences, not pins; fixed edits check horizon/window and occupying
+dependencies, and overlapping locked intervals expose a conflict without apply.
+Dormant/completed/in-progress records cannot be rewritten by this command.
+
+EDITED / USER_EDIT explain metadata-only edits; existing interval/status types
+combine normally. Undo restores all fields. Repository operation EDIT_BLOCK and
+exact typed metadata persist across restart. Today maps metadata-only edits to
+Edited rather than Retried, using resource copy; no editor control is exposed yet.
+
+Verification: spotlessApply build test :core:engine:test lint spotlessCheck
+passed after the final encoding correction. 156 distinct JVM tests pass (90
+engine including all 30 unchanged worked examples, 25 Today, and previous 41
+other tests). Six generated-day guarantee properties now also exercise edits.
+Eleven actual SQLCipher/Keystore tests passed on the isolated API 36 emulator,
+including persisted edit metadata and exact undo after reopen.
+The source/copy-only Today review and documentation audit passed; no new screen
+or visual validation is claimed. No layout/design files changed. Preexisting
+PRODUCT.md phase wording is stale and was not silently repaired.
+
+Next concrete step: persist routine/activity templates and recurrence, generate
+each date once through the engine, then connect onboarding and Today to real
+saved data and a real clock. The app remains the synthetic prototype until that
+integration is implemented and tested. No physical phone was used.
+
 ## Session handback
 
 Before the Saturday handback or any agent switch, update this file with what
@@ -440,7 +475,7 @@ For current evaluation follow-up, use `feat/eval`. If work moves to another task
 branch, record its exact name and PR in the handback so the returning agent can
 check out the right context. If the expected tracking branch has not changed,
 inspect recent remote handoff commits and PRs before assuming no work occurred.
-For the latest complete stack, use `codex/production-data` until
+For the latest complete stack, use `codex/engine-edit` until
 the stacked PRs are merged or the owner names a different branch.
 
 2026-11-12 — Codex: built the frozen evaluation harness and device automation;

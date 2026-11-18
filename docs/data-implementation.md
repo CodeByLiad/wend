@@ -81,3 +81,7 @@ exact reopen/history/codec behavior, ciphertext inspection, stale approvals,
 persistent repeated undo, transaction rollback, wrong/missing keys, lazy setup,
 settings/card order and status-only rollover. These are software storage tests,
 not phone power/performance or reminder reliability measurements.
+
+Engine spec v0.4 adds EditBlock: the repository previews/recomputes it exactly
+like other commands and logs EDIT_BLOCK. Its snapshots and EDITED/USER_EDIT
+metadata survive reopen, and undo restores the original scheduling fields.
