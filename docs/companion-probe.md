@@ -75,7 +75,13 @@ that it is AI and avoid diagnoses or dangerous instructions. The production
 Phase 2 independent safety layer is not implemented here. Do not treat this
 probe as a medical, crisis or professional support service.
 
-## Study protocol
+## Study protocol (cancelled)
+
+On 2026-11-18 the owner cancelled this two-week real-people study. The following
+design is retained as historical research context, not a remaining task or a
+passed criterion. Do not recruit participants or fabricate substitute results.
+
+### Historical design
 
 Arrange 10–15 voluntary participants with capable phones for 14 days. Choose
 and record the exact model hash, conversion, runtime/backend and app commit

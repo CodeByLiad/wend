@@ -69,6 +69,7 @@ regressions. HTML test results are generated at
 | Path | Contents |
 | --- | --- |
 | [`core/engine`](core/engine) | Pure Kotlin engine and Kotest tests |
+| [`core/data`](core/data) | Production Room/SQLCipher storage, settings and transactional ChangeLog/undo |
 | [`core/ai`](core/ai) | Local model import, LiteRT-LM and pinned llama.cpp adapters |
 | [`core/designsystem`](core/designsystem) | Compose theme, bundled Source Serif 4 and shared components |
 | [`feature/today`](feature/today) | Today screen prototype and its engine-driven state |

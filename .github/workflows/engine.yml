@@ -28,7 +28,7 @@ jobs:
           packages: platform-tools platforms;android-37.0 build-tools;36.0.0 ndk;28.2.13676358 cmake;3.22.1
           log-accepted-android-sdk-licenses: false
       - name: Build, test, lint and check formatting
-        run: ./gradlew build test :core:engine:test lint spotlessCheck :core:ai:assembleDebugAndroidTest :tools:benchmark:assembleDebugAndroidTest :tools:companion:assembleDebugAndroidTest --no-daemon
+        run: ./gradlew build test :core:engine:test lint spotlessCheck :core:ai:assembleDebugAndroidTest :tools:benchmark:assembleDebugAndroidTest :tools:companion:assembleDebugAndroidTest :core:data:assembleDebugAndroidTest --no-daemon
       - name: Upload prototype benchmark APK
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:

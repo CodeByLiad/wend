@@ -14,8 +14,11 @@ on-device AI planner (and later a companion). All user data stays on the phone.
 - minSdk 28 (Android 9), target the latest stable SDK
 - UI language: English only (all strings in resources, RTL-safe layouts)
 
-**Current phase: Phase 0 (feasibility spike).** Only build what the current
-phase's PRD asks for. Do not start features from later phases.
+**Current work: production implementation in phase order.** On 2026-11-18 the
+owner authorized continuing the remaining software phases without their phone
+and cancelled the Phase 0 two-week real-people study. Device/model qualification
+and release gates remain unverified until evidence exists. See
+`docs/IMPLEMENTATION.md`; never equate implementation permission with a passed gate.
 
 ## Where the truth lives
 
@@ -30,9 +33,11 @@ guess and do not quietly pick one.
 
 ## Hard rules — never break these
 
-1. **Only the engine changes a schedule.** UI, reminders and the AI planner
-   send commands to `:core:engine` and apply the proposal it returns. Nothing
-   else writes planned block times.
+1. **Only the engine changes planned block times.** UI, reminders and the AI
+   planner send commands to `:core:engine` and apply its proposal. Validated
+   Start/Done and daily-rollover status-only updates may be applied by the data
+   repository, with exact ChangeLog snapshots; they never edit planned times or
+   other scheduling fields. The owner delegated this choice on 2026-11-18.
 2. **The engine is pure Kotlin.** `:core:engine` is a JVM module with no Android
    imports, no I/O, no clock access (`now` is always a parameter) and no
    randomness. Same input, same output.

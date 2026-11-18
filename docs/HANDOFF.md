@@ -1,14 +1,14 @@
 # Wend handoff
 
-Updated: 2026-11-18 by Codex, after building the authorized companion probe. This is shared working context for Claude Code and
+Updated: 2026-11-18 by Codex, after the production data foundation. This is shared working context for Claude Code and
 Codex. Read `AGENTS.md` fully first. The engine spec decides engine behaviour;
 the Phase 0 PRD decides scope. Verify this snapshot against Git before acting.
 
 ## Repository and branch
 
 - Public repository: https://github.com/CodeByLiad/wend
-- Current working branch: `codex/companion-probe`, stacked on
-  `codex/benchmark-import`, for the Phase 0 companion probe.
+- Current working branch: `codex/production-data`, stacked on
+  `codex/companion-probe`, for production storage.
 - PR #6: https://github.com/CodeByLiad/wend/pull/6 - `codex/companion-probe`
   into `codex/benchmark-import`.
 - PR #5: https://github.com/CodeByLiad/wend/pull/5 — `codex/benchmark-import`
@@ -33,7 +33,7 @@ the Phase 0 PRD decides scope. Verify this snapshot against Git before acting.
 At home, clone the working branch before starting Claude Code:
 
 ```sh
-git clone --branch codex/companion-probe https://github.com/CodeByLiad/wend.git
+git clone --branch codex/production-data https://github.com/CodeByLiad/wend.git
 cd wend
 ```
 
@@ -110,7 +110,7 @@ device details and private measurement files. No model/tier has qualified.
 
 - The owner confirmed 90% correct commands, under five seconds to proposal and
   at least ten generated tokens/second on 2026-11-12. The people-test return
-  threshold remains proposed. Phase 0 is not complete.
+  criterion was cancelled by the owner on 2026-11-18. Phase 0 device evidence is incomplete.
 - Engine times are the spec's `Minute` offsets, supporting the next day up to
   2880, rather than `LocalTime`. Do not revert this to the original v0.1 request.
 - MISSED, DROPPED and UNPLACED blocks are not rebuild candidates until explicitly
@@ -186,8 +186,8 @@ Normal connected tests skip costly model inference without explicit arguments.
 4. Obtain the remaining RAM/device tiers and repeated trials. One device and
    one pilot per runtime cannot establish RAM boundaries or model selection.
 5. The companion probe is built; its real-model trial, the two-week people
-   study and final five-question feasibility report remain outstanding.
-   Do not start Phase 1 features.
+   study is cancelled. The provisional report records outstanding device evidence.
+   The owner authorized later software work; see the production data section.
 
 ## UI prototype (2026-11-13, `feat/design-system`)
 
@@ -384,6 +384,51 @@ copies afterward. Then complete corrected-prompt comparisons, remaining device
 tiers/repeated trials, the two-week people study and the five-question report.
 No model/tier is qualified and Phase 0 is not complete.
 
+## Production data foundation (2026-11-18)
+
+The owner authorized continuing the remaining software phases without the phone
+and cancelled the Phase 0 two-week real-people study. Do not recruit participants,
+invent substitute results or treat that cancelled criterion as passed.
+The owner delegated the Start/Done design choice: validated status-only updates
+stay in the repository, never changing planned times; every change is logged.
+
+- Added `:core:data`: Room 2.8.5 / SQLCipher 4.20.0, KSP 2.3.14 and Hilt 2.60.1
+  wiring. Versioned Room schema 1 is committed.
+- Normalized days/ordered blocks, exact ChangeLog before/after snapshots and
+  typed engine change metadata, source, UUIDs and creation/update timestamps.
+- Immutable preview capsules, transactional revision checks and engine
+  recomputation prevent stale/caller-edited proposals overwriting a plan.
+  Rejected/conflicting/no-horizon attempts are not written. Wake/bedtime-only
+  edits are retained by comparing the full Day.
+- Persistent repeated undo uses the engine and records its own transaction;
+  status-only Start/Done and idempotent past-day rollover preserve all scheduling
+  fields. Settings/card order persist in the encrypted database.
+- Key wrapping uses Android Keystore and AES-GCM in no-backup storage. Key
+  loading/native DB opening are lazy. Missing/wrong keys do not regenerate keys
+  or delete the database. No destructive migration/recovery fallback; Java
+  SQLCipher logging is disabled.
+- Exact local command:
+  `spotlessApply build test :core:engine:test lint spotlessCheck :core:data:assembleDebugAndroidTest`
+  passed (140 distinct JVM tests, previous 135 plus five data/status tests).
+  All ten data Android tests passed on the isolated API 36 emulator with real
+  Room/SQLCipher/Keystore. They cover exact snapshots, lazy opening, encrypted
+  reopen, stale approval, repeated undo, transaction rollback, wrong/missing
+  keys, persistent settings and rollover.
+- CI compiles the new data instrumentation APK; compilation is not execution.
+- App wiring is still the synthetic prototype at this checkpoint. Next work is
+  real onboarding/routines/Today persistence, not a claim that those screens are
+  already production-ready. Emulator data-test package remains installed for
+  continued work; clean up temporary packages/emulator before the session ends.
+- No engine behavior, example expectations or frozen AI corpus changed. No
+  physical phone was used. Model tiers, phone performance and other release
+  evidence remain unverified.
+
+See `docs/phase0-report.md`, `docs/IMPLEMENTATION.md` and
+`docs/data-implementation.md` for evidence, current scope and API choices.
+
+
+Implementation commits: e5d502f and d8f6ca8.
+
 ## Session handback
 
 Before the Saturday handback or any agent switch, update this file with what
@@ -395,7 +440,7 @@ For current evaluation follow-up, use `feat/eval`. If work moves to another task
 branch, record its exact name and PR in the handback so the returning agent can
 check out the right context. If the expected tracking branch has not changed,
 inspect recent remote handoff commits and PRs before assuming no work occurred.
-For the latest complete stack, use `codex/companion-probe` until
+For the latest complete stack, use `codex/production-data` until
 the stacked PRs are merged or the owner names a different branch.
 
 2026-11-12 — Codex: built the frozen evaluation harness and device automation;
