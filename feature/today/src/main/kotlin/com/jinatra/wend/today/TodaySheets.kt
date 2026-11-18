@@ -310,6 +310,7 @@ private fun effectText(line: ChangeLine, time: TimeFormat): String {
         Effect.MOVED -> stringResource(R.string.effect_moved)
         Effect.SHRUNK -> stringResource(R.string.effect_shrunk, length)
         Effect.MADE_FIXED -> stringResource(R.string.effect_made_fixed)
+        Effect.EDITED -> stringResource(R.string.effect_edited)
         Effect.RETRIED -> stringResource(R.string.effect_retried)
     }
 }
@@ -333,6 +334,7 @@ private fun reasonText(line: ChangeLine): String {
         Reason.USER_MOVE -> stringResource(R.string.reason_user_move)
         Reason.USER_SKIP -> stringResource(R.string.reason_user_skip)
         Reason.USER_ADD -> stringResource(R.string.reason_user_add)
+        Reason.USER_EDIT -> stringResource(R.string.reason_user_edit)
         Reason.SET_FIXED -> stringResource(R.string.reason_set_fixed)
         Reason.RETRIED -> stringResource(R.string.reason_retried)
         Reason.UNDO -> stringResource(R.string.reason_undo)

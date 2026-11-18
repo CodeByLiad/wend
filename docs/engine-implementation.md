@@ -8,7 +8,7 @@ the input. `previousDay` is the exact input Day. The caller owns application,
 persistence and undo history.
 
 This is one pure Kotlin/JVM module. No Android plugin, UI, database, networking,
-clock access or AI is included. Times follow spec v0.3's `Minute` representation,
+clock access or AI is included. Times follow spec v0.4's `Minute` representation,
 not the superseded LocalTime requirement. `RetryBlock` implements `retry_block`,
 which replaces the older `mark_missed` command.
 
@@ -84,3 +84,22 @@ The approved dependency rule is recorded in the spec. The status-only retry type
 set and new-block fallback display interval could be made explicit in a future
 revision; the choices above keep this implementation deterministic without adding
 new behavior or new enum values.
+
+## Phase 1 edit extension (2026-11-18)
+
+The owner approved `edit_block(id, block)` to implement F2/F3 editing through the
+engine. Spec v0.4 documents complete replacement of a PLANNED block in place,
+validation, fixed-interval boundary/dependency checks and normal rebuilds.
+Identity/status are immutable. Flexible edits are preferences, not temporary
+pins; fixed edits retain their requested interval or expose a conflict.
+Explicit edit commands may change full/minimum duration. Existing commands and
+the 30 original worked examples are unchanged.
+
+`EDITED` and `USER_EDIT` cover metadata/constraint-only changes; movement, length,
+fixed-kind and resulting status types are still combined where applicable.
+Changes to other blocks retain the existing precedence and causes. The data
+repository replays the command transactionally and logs EDIT_BLOCK with exact
+snapshots. Fifteen focused regressions and the six existing generated-day
+properties cover edits; a storage instrumentation regression verifies persisted
+edit metadata and exact undo after reopen. Today summary mapping labels a
+metadata-only edit as Edited rather than Retried.

@@ -46,6 +46,7 @@ private fun applyDirectEdit(day: Day, command: Command): Day {
         is Command.SkipBlock -> day.replace(target!!.copy(status = BlockStatus.SKIPPED))
         is Command.SetFixed -> day.replace(target!!.copy(kind = Kind.FIXED))
         is Command.MoveBlock -> day.replace(target!!.copy(start = command.start, end = Minute(command.start.value + target.duration), status = BlockStatus.PLANNED))
+        is Command.EditBlock -> day.replace(command.block)
         is Command.AddBlock -> day.copy(blocks = day.blocks + command.block)
         is Command.Undo -> command.previousDay
         Command.RebuildDay -> day
@@ -249,9 +250,11 @@ private fun explain(before: Day, after: Day, command: Command, work: Rebuild): L
         if (a == null) return@map Change(id, setOf(ChangeType.ADDED), Reason.USER_ADD)
         check(b != null)
         val types = buildSet {
+            if (command is Command.EditBlock && id == command.id) add(ChangeType.EDITED)
             if (a.start != b.start) add(ChangeType.MOVED)
             if (b.length < a.length) add(ChangeType.SHRUNK)
             if (command is Command.Overrun && id == command.id && b.end > a.end) add(ChangeType.EXTENDED)
+            if (command is Command.EditBlock && id == command.id && b.length > a.length) add(ChangeType.EXTENDED)
             if (a.kind != b.kind && b.kind == Kind.FIXED) add(ChangeType.MADE_FIXED)
             if (a.status != b.status) {
                 when (b.status) {
@@ -271,6 +274,7 @@ private fun explain(before: Day, after: Day, command: Command, work: Rebuild): L
                 is Command.Overrun -> Reason.OVERRUN
                 is Command.RetryBlock -> Reason.RETRIED
                 is Command.AddBlock -> Reason.USER_ADD
+                is Command.EditBlock -> Reason.USER_EDIT
                 else -> null
             }
         } else {

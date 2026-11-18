@@ -6,7 +6,7 @@ import com.jinatra.wend.engine.Proposal
 import com.jinatra.wend.engine.Reason
 
 /** What happens to one block, in the order the summary sentence names it. */
-enum class Effect { ADDED, RESTORED, DROPPED, UNPLACED, MISSED, SKIPPED, EXTENDED, MOVED_AND_SHRUNK, MOVED, SHRUNK, MADE_FIXED, RETRIED }
+enum class Effect { ADDED, RESTORED, DROPPED, UNPLACED, MISSED, SKIPPED, EXTENDED, MOVED_AND_SHRUNK, MOVED, SHRUNK, MADE_FIXED, EDITED, RETRIED }
 
 /** One line of a rebuild summary, built from structured engine data with no AI. */
 data class ChangeLine(
@@ -36,6 +36,7 @@ fun proposalLines(proposal: Proposal): List<ChangeLine> {
             ChangeType.MOVED in types -> Effect.MOVED
             ChangeType.SHRUNK in types -> Effect.SHRUNK
             ChangeType.MADE_FIXED in types -> Effect.MADE_FIXED
+            ChangeType.EDITED in types -> Effect.EDITED
             else -> Effect.RETRIED
         }
         ChangeLine(
