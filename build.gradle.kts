@@ -5,6 +5,9 @@ plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.library) apply false
     alias(libs.plugins.kotlin.compose) apply false
+    alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.room) apply false
+    alias(libs.plugins.hilt) apply false
 }
 
 spotless {
@@ -18,6 +21,6 @@ spotless {
     }
 }
 
-tasks.named("assemble") { dependsOn(":tools:companion:assemble", ":core:engine:assemble", ":core:ai:assemble", ":tools:benchmark:assemble", ":tools:eval:assemble", ":core:designsystem:assemble", ":feature:today:assemble", ":app:assemble") }
-tasks.named("check") { dependsOn(":tools:companion:check", ":core:engine:check", ":core:ai:check", ":tools:benchmark:check", ":tools:eval:check", ":core:designsystem:check", ":feature:today:check", ":app:check", "spotlessCheck") }
-tasks.register("lint") { dependsOn(":tools:companion:lint", ":core:ai:lint", ":tools:benchmark:lint", ":core:designsystem:lint", ":feature:today:lint", ":app:lint") }
+tasks.named("assemble") { dependsOn(":core:data:assemble", ":tools:companion:assemble", ":core:engine:assemble", ":core:ai:assemble", ":tools:benchmark:assemble", ":tools:eval:assemble", ":core:designsystem:assemble", ":feature:today:assemble", ":app:assemble") }
+tasks.named("check") { dependsOn(":core:data:check", ":tools:companion:check", ":core:engine:check", ":core:ai:check", ":tools:benchmark:check", ":tools:eval:check", ":core:designsystem:check", ":feature:today:check", ":app:check", "spotlessCheck") }
+tasks.register("lint") { dependsOn(":core:data:lint", ":tools:companion:lint", ":core:ai:lint", ":tools:benchmark:lint", ":core:designsystem:lint", ":feature:today:lint", ":app:lint") }
