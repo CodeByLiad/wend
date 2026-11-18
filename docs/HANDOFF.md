@@ -9,6 +9,8 @@ the Phase 0 PRD decides scope. Verify this snapshot against Git before acting.
 - Public repository: https://github.com/CodeByLiad/wend
 - Current working branch: `codex/companion-probe`, stacked on
   `codex/benchmark-import`, for the Phase 0 companion probe.
+- PR #6: https://github.com/CodeByLiad/wend/pull/6 � `codex/companion-probe`
+  into `codex/benchmark-import`.
 - PR #5: https://github.com/CodeByLiad/wend/pull/5 — `codex/benchmark-import`
   into `codex/prototype-followup`.
 - PR #4: https://github.com/CodeByLiad/wend/pull/4 — `codex/prototype-followup`
@@ -56,21 +58,28 @@ and this file; `AGENTS.md` also tells Codex to read this handoff.
 - `:tools:eval`: JVM CLI and reusable evaluation code, strict command decoder,
   scorer, fixtures, prompt and 150 frozen synthetic English requests. The
   `core:ai` Android tests provide opt-in on-device inference.
+- `:tools:companion`: plain research chat and explicit saved facts, encrypted
+  local snapshots, bounded context, draft/section continuity and cancellation.
+  No real-model qualification or people-study result is claimed.
 - Gradle wrapper/catalog, Spotless/ktlint, Kotest, GPLv3, trademark notice,
   contribution files and GitHub Actions are set up. CI publishes a prototype
-  benchmark and FOSS prototype APK artifacts. The app shell, Today screen and
+  benchmark, FOSS prototype and companion probe APK artifacts. The app shell, Today screen and
   design system are synthetic in-memory prototypes; there is no production
   database or companion.
 
 ## Verified state
 
-- `build test :core:engine:test lint spotlessCheck` passed locally for the
-  implementation in `dfa44ce`, on 2026-11-15.
-- 130 distinct JVM tests pass: 75 engine, 8 benchmark, 23 evaluation and 24 Today.
+- `build test :core:engine:test lint spotlessCheck` and the companion
+  instrumentation APK compilation passed locally for the implementation in
+  `e073f41` / `541a376`, on 2026-11-18.
+- 135 distinct JVM tests pass: 75 engine, 8 benchmark, 23 evaluation, 24 Today
+  and 5 companion. Eight companion Android tests passed on the isolated emulator.
   The engine tests
   include all 30 worked examples, full-block assertions and property tests.
   No engine example expectation was changed in this work.
 - Both GitHub push and PR checks passed for `433bb6a` before the handoff changes.
+- Both GitHub checks for import follow-up `1e2fe3d` were verified green on
+  2026-11-18. The new companion PR's checks can be inspected through PR #6.
 - Both GitHub push and PR checks passed for prototype follow-up `02ba716`;
   its benchmark and FOSS app APK artifacts were verified.
 - Android smoke checks passed for exact-byte import/hash, recognized model
@@ -80,15 +89,17 @@ and this file; `AGENTS.md` also tells Codex to read this handoff.
 - A complete 150-case exploratory LiteRT GPU run failed the confirmed accuracy
   and latency targets. An initial llama.cpp full-prompt run was stopped after
   repeated 30-second timeouts and remains partial, not an accuracy result.
-- Device testing stopped for the day at the owner's request. The unplugged
+- On 2026-11-12, device testing stopped at the owner's request. The unplugged
   ten-minute llama.cpp CPU pilot completed successfully; its private report
   was retained. The LiteRT CPU attempt failed before inference: the UI test
   found no imported model at its `assertNotNull`, so no timed result exists.
   The LiteRT GPU ten-minute pilot was not started. Do not report either as a
-  measured performance failure. Phone cleanup is verified: the AI test package,
+  measured performance failure. The 2026-11-12 phone cleanup was verified: the AI test package,
   benchmark app and benchmark test package were uninstalled; their private
   model copies and explicit temporary staging files were removed. No temporary
-  test package remains installed.
+  test package remained installed then. Benchmark packages and a staged model
+  were reinstalled on 2026-11-15; their latest cleanup remains unverified while
+  the phone is unavailable (see the companion follow-up).
 
 Private profiles and raw measurements are in ignored local `.gradle/evaluation`
 on the testing workstation. Model binaries are in ignored `.gradle/models`.
@@ -174,8 +185,9 @@ Normal connected tests skip costly model inference without explicit arguments.
    current models. Keep the 150 requests frozen and record source/configuration.
 4. Obtain the remaining RAM/device tiers and repeated trials. One device and
    one pilot per runtime cannot establish RAM boundaries or model selection.
-5. The Phase 0 companion probe, two-week people study and final five-question
-   feasibility report remain outstanding. Do not start Phase 1 features.
+5. The companion probe is built; its real-model trial, the two-week people
+   study and final five-question feasibility report remain outstanding.
+   Do not start Phase 1 features.
 
 ## UI prototype (2026-11-13, `feat/design-system`)
 
